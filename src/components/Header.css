@@ -12,13 +12,35 @@
 
 .my-header.scrolled {
   background-color: rgba(0, 0, 0, 0.7);
-  padding: 24px 64px;
+  padding: 20px;
 }
 
 .my-nav-link {
   color: white;
   text-wrap: nowrap;
   font-size: 16px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s ease-in-out;
+}
+
+.my-nav-link:hover {
+  color: white;
+  border-bottom: solid 1px white;
+}
+
+.main-logo {
+  width: 52px;
+}
+
+.burger {
+  display: none;
+}
+
+.burger-icon {
+  font-size: 32px;
+  cursor: pointer;
+  padding-left: 12px;
+  color: white;
 }
 
 @media (min-width: 1200px) {
@@ -40,24 +62,9 @@
   .burger {
     display: block;
   }
-  
+
   .my-nav-link {
     margin: 0 12px;
     color: black;
   }
-}
-
-.main-logo {
-  width: 52px;
-}
-
-.burger {
-  display: none;
-}
-
-.burger-icon {
-  font-size: 32px;
-  cursor: pointer;
-  padding-left: 12px;
-  color: white;
 }
