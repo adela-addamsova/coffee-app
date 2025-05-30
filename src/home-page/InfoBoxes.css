@@ -1,0 +1,43 @@
+.info-boxes {
+    display: flex;
+    justify-content: space-around;
+}
+
+.info-box {
+    color: white;
+    z-index: 5;
+    background-color: black;
+    border: solid 1px white;
+    width: 25%;
+    padding: 40px 56px 20px 56px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    text-align: left;
+}
+
+.info-box h4 {
+    font-family: 'Montagu Slab', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.info-box p, .info-box a {
+    font-size: 16px;
+    font-weight: 100;
+    color: white;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 767px) {
+    .info-boxes {
+    flex-direction: column;
+    position: relative;
+    top: -80px;
+}
+.info-box {
+    width: 80%;
+    margin: 0 auto 20px auto;
+}
+}

@@ -1,0 +1,28 @@
+.main-button {
+    padding: 14px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    text-wrap: nowrap;
+    width: fit-content;
+    font-family: "Montserrat", sans-serif;
+}
+
+.main-button .black {
+    color: black;
+    border: 1px solid black;
+}
+
+.main-button.white {
+    color: white;
+    border: 1px solid white;
+}
+
+
+
+/* @media (min-width: 1200px) {
+.main-button {
+    color: white;
+    font-size: 16px;
+    margin: 0 40px
+}
+} */

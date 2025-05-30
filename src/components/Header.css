@@ -1,0 +1,63 @@
+.my-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 64px;
+  position: fixed;
+  align-items: center;
+  z-index: 5;
+  transition: padding 0.5s ease, background-color 0.5s ease;
+
+}
+
+.my-header.scrolled {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 24px 64px;
+}
+
+.my-nav-link {
+  color: white;
+  text-wrap: nowrap;
+  font-size: 16px;
+}
+
+@media (min-width: 1200px) {
+  .my-nav-link {
+    font-size: 16px;
+    margin: 0 40px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .my-header {
+    padding: 24px;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+  
+  .my-nav-link {
+    margin: 0 12px;
+    color: black;
+  }
+}
+
+.main-logo {
+  width: 52px;
+}
+
+.burger {
+  display: none;
+}
+
+.burger-icon {
+  font-size: 32px;
+  cursor: pointer;
+  padding-left: 12px;
+  color: white;
+}
