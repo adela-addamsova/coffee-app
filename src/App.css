@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Montagu+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-
-
 body,
 html,
 #root {
@@ -21,9 +19,10 @@ body {
 
 p,
 a,
-form label {
+form label,
+td {
   font-family: 'Montagu Slab', serif;
-  text-decoration: none ;
+  text-decoration: none;
 }
 
 h1,
