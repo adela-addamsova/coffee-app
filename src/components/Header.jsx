@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
-import logo from '../assets/components/coffee-beans-white.png';
+import logoWhite from '../assets/components/coffee-beans-white.png';
+import logoBlack from '../assets/components/coffee-beans-black.png';
 import './Header.css';
 
 const Header = () => {
@@ -33,7 +34,7 @@ const Header = () => {
       {/* Logo */}
       <div className="nav-logo">
         <Navbar.Brand>
-          <img src={logo} alt="Logo" className='main-logo' />
+          <img src={logoWhite} alt="Logo" className='main-logo' />
         </Navbar.Brand>
       </div>
 
@@ -54,15 +55,15 @@ const Header = () => {
       {/* Offcanvas Menu */}
       <Offcanvas show={showMenu} onHide={() => setShowMenu(false)} placement="end">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Menu</Offcanvas.Title>
+          <img src={logoBlack} alt="Logo" className='main-logo' />
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-            <Nav.Link onClick={() => scrollTo('menu-section')} className="my-nav-link">Menu</Nav.Link>
-            <Nav.Link onClick={() => scrollTo('contact-section')} className="my-nav-link">Contact</Nav.Link>
-            <Nav.Link onClick={() => scrollTo('story-section')} className="my-nav-link">Our Story</Nav.Link>
-            <Nav.Link onClick={() => scrollTo('#')} className="my-nav-link">Reservation</Nav.Link>
-            <Nav.Link onClick={() => scrollTo('#')} className="my-nav-link">E-shop</Nav.Link>
+            <Nav.Link onClick={() => scrollTo('menu-section')} className="my-nav-link-mobile">Menu</Nav.Link>
+            <Nav.Link onClick={() => scrollTo('contact-section')} className="my-nav-link-mobile">Contact</Nav.Link>
+            <Nav.Link onClick={() => scrollTo('story-section')} className="my-nav-link-mobile">Our Story</Nav.Link>
+            <Nav.Link onClick={() => scrollTo('#')} className="my-nav-link-mobile">Reservation</Nav.Link>
+            <Nav.Link onClick={() => scrollTo('#')} className="my-nav-link-mobile">E-shop</Nav.Link>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
