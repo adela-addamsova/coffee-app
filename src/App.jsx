@@ -7,6 +7,8 @@ import HeroTextSection from './home-page/HeroTextSection';
 import ScrollStory from './home-page/StoryScroll';
 import Menu from './home-page/MenuSection';
 import GallerySection from './home-page/GallerySection';
+import ReservationSection from './home-page/ReservationSection';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
       <HeroTextSection />
       <ScrollStory />
       <Menu />
-      <GallerySection /> 
+      <GallerySection />
+      <ReservationSection />
+      <Footer />
     </>
   );
 }
