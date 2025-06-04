@@ -70,7 +70,7 @@ const StoryScroll = () => {
     const translateX = -Math.min(Math.max(scrollProgress * maxTranslateX, 0), maxTranslateX);
 
     return (
-        <div
+        <section
             ref={containerRef}
             className="story-scroll-section"
             id="story-section"
@@ -86,7 +86,7 @@ const StoryScroll = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

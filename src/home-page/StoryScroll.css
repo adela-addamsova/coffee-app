@@ -155,9 +155,9 @@
         width: 100%;
     }
 
-    .slide1-text {
+    .slide1-text, .slide2-text, .slide3-text {
         width: 100%;
-        padding: 20px;
+        padding: 20px 32px;
         gap: 20px;
     }
 
@@ -165,16 +165,5 @@
     .slide2-img,
     .slide3-img {
         display: none;
-    }
-
-    .slide2-text {
-        width: 100%;
-        padding: 20px;
-    }
-
-    .slide3-text {
-        width: 100%;
-        padding: 20px;
-        gap: 20px;
     }
 }
