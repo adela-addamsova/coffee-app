@@ -6,9 +6,7 @@ import InfoBoxes from './home-page/InfoBoxes';
 import HeroTextSection from './home-page/HeroTextSection';
 import ScrollStory from './home-page/StoryScroll';
 import Menu from './home-page/MenuSection';
-
-
-
+import GallerySection from './home-page/GallerySection';
 
 function App() {
   return (
@@ -19,6 +17,7 @@ function App() {
       <HeroTextSection />
       <ScrollStory />
       <Menu />
+      <GallerySection /> 
     </>
   );
 }
