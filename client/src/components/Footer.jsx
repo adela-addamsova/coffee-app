@@ -1,5 +1,7 @@
 import './Footer.css';
 import SocialIcons from './SocialIcons';
+import { Link } from 'react-router-dom';
+
 
 const Footer = () => {
     return (
@@ -7,7 +9,9 @@ const Footer = () => {
             <div className='footer-content'>
                 <div className='footer-text'>
                     <a href='#'>Eshop</a>
-                    <a href='#'>Reservation</a>
+                    <Link to="/reservation">
+                        Reservation
+                    </Link>
                     <a href='#menu-section'>Menu</a>
                 </div>
                 <div className='footer-text'>

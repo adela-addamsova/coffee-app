@@ -3,6 +3,8 @@ import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import logoWhite from '../assets/components/coffee-beans-white.png';
 import logoBlack from '../assets/components/coffee-beans-black.png';
 import './Header.css';
+import { Link } from 'react-router-dom';
+
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -43,7 +45,9 @@ const Header = () => {
           <Nav.Link onClick={() => scrollTo('menu-section')} className="my-nav-link">Menu</Nav.Link>
           <Nav.Link onClick={() => scrollTo('contact-section')} className="my-nav-link">Contact</Nav.Link>
           <Nav.Link onClick={() => scrollTo('story-section')} className="my-nav-link">Our Story</Nav.Link>
-          <Nav.Link onClick={() => scrollTo('#')} className="my-nav-link">Reservation</Nav.Link>
+          <Nav.Link as={Link} to="/reservation" className="my-nav-link">
+            Reservation
+          </Nav.Link>
           <Nav.Link onClick={() => scrollTo('#')} className="my-nav-link">E-shop</Nav.Link>
         </Nav>
 

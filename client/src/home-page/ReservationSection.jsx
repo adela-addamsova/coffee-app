@@ -11,12 +11,12 @@ const ReservationSection = () => {
             </div>
             <div className="reservation-content reservation-text">
                 <p>
-                    Do you want to make sure you’ll have free seat when you come?
-                    You can contact us on out email,
+                    Do you want to make sure you’ll have a free seat when you come?
+                    You can contact us on our email,
                     social media or make a reservation
                     in our system.
                 </p>
-                <MainButton text="RESERVATION" href="#" color="black" />
+                <MainButton text="RESERVATION" to="/reservation" color="black" />
             </div>
         </section>
     );
