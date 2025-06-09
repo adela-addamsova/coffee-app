@@ -1,11 +1,9 @@
 .hero-section {
   width: 100vw;
-  height: 100%;
 }
 
 .hero-img {
   width: 100vw;
-  height: 110vh;
   object-fit: cover;
 }
 
@@ -14,7 +12,6 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 110vh;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -54,10 +51,6 @@
 }
 
 @media (max-width: 767px) {
-  .hero-img, .hero-img-overlay {
-  height: 100vh;
-}
-
   .hero-heading {
     font-size: 54px;
   }
