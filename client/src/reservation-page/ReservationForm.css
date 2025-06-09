@@ -1,0 +1,147 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    width: 80%;
+}
+
+.form-group input {
+    padding: 8px;
+    border: 1px solid;
+}
+
+.row-group {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.guest-input label {
+    margin: 0 4px 0 0;
+}
+
+.reservation-form select,
+.reservation-form input {
+    border-radius: 0px !important;
+    border: 1px black solid !important;
+}
+
+.time-select {
+    padding: 8px;
+}
+
+.submit-button {
+    padding: 10px 40px;
+    text-decoration: none;
+    font-size: 16px;
+    text-wrap: nowrap;
+    width: fit-content;
+    font-family: "Montagu Slab", sans-serif;
+    margin: 20px 0;
+    background: #867A6E;
+    color: white;
+    border: rgb(255, 255, 255) 1px solid !important;
+}
+
+.submit-button:hover {
+    background: white;
+    color: black;
+    border: rgb(0, 0, 0) 1px solid !important;
+}
+
+.message {
+    width: 100%;
+    font-family: 'Montagu Slab';
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background: #94d85345;
+}
+
+.error-message {
+    width: 100%;
+    font-family: 'Montagu Slab';
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background: #d8535345;
+}
+
+/* Calendar */
+.react-calendar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    padding: 24px;
+    margin: 40px 0;
+    border: 0;
+}
+
+.react-calendar,
+.reservation-form select {
+    font-family: 'Montagu Slab', sans-serif;
+}
+
+.react-calendar__navigation button:disabled,
+.react-calendar__tile {
+    background-color: white !important;
+}
+
+.react-calendar__tile--now {
+    background: #867A6E !important;
+    border-radius: 50px;
+    flex: 0 0 9% !important;
+    margin: 0 11px !important;
+}
+
+.react-calendar__month-view__days__day--weekend,
+.react-calendar__tile--active {
+    color: #494949;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth,
+.react-calendar__decade-view__years__year--neighboringDecade,
+.react-calendar__century-view__decades__decade--neighboringCentury {
+    color: #757575;
+}
+
+input:-webkit-autofill,
+input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
+    box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset !important;
+    -webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
+    font-family: 'montagu slab', sans-serif !important;
+}
+
+@media (max-width: 767px) {
+    .form-group {
+        width: 90%;
+    }
+
+    .react-calendar {
+        width: 90%;
+        padding: 16px;
+        margin: 20px 0;
+    }
+
+    .react-calendar__tile--now {
+        background: #867a6e8e !important;
+        border-radius: 0px;
+        margin: 0 !important;
+        flex: 0 0 14.2857% !important;
+    }
+}
+
+@media (max-width: 460px) {
+    .time-select {
+        width: 50%;
+        margin: 12px 0;
+    }
+    .row-group {
+        flex-direction: column;
+    }
+}

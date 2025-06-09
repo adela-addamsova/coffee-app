@@ -1,0 +1,46 @@
+.my-header.scrolled {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 4px;
+}
+
+.reservation-hero .hero-img {
+    height: 70vh;
+}
+
+.reservation-hero .hero-img-overlay {
+    height: 70vh;
+}
+
+.main-content-reservation {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.reservation-form,
+.reservation-img {
+    width: 50%;
+}
+
+.reservation-form-container {
+    padding: 64px 0;
+}
+
+@media (max-width: 767px) {
+
+    .hero-img,
+    .hero-img-overlay {
+        height: 60vh;
+    }
+
+    .reservation-img {
+        display: none;
+    }
+
+    .reservation-form {
+    width: 100%;
+}
+}
+
