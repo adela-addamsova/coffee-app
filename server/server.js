@@ -1,22 +1,46 @@
 const express = require('express');
 const cors = require('cors');
+const { getAllReservations, createReservationIfAvailable } = require('./reservation-db');
+
 const app = express();
-const PORT = 5000;
+const port = 5000;
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Backend is working!');
+/**
+ * GET /api/reservations
+ * Returns all reservations from the database.
+ */
+app.get('/api/reservations', (req, res) => {
+  try {
+    const reservations = getAllReservations();
+    res.json(reservations);
+  } catch (err) {
+    console.error('GET /api/reservations error:', err);
+    res.status(500).json({ error: 'Failed to fetch reservations' });
+  }
 });
 
-// Example reservation endpoint
+/**
+ * POST /api/reserve
+ * Tries to create a new reservation if capacity allows.
+ */
 app.post('/api/reserve', (req, res) => {
-  const reservation = req.body;
-  console.log('Reservation received:', reservation);
-  res.status(200).json({ message: 'Reservation successful' });
-});
+  const { name, email, datetime, guests } = req.body;
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  if (!name || !email || !datetime || !guests) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    const success = createReservationIfAvailable(name, email, datetime, guests);
+    if (!success) {
+      return res.status(400).json({ message: '⚠️ Time slot already booked out' });
+    }
+    res.json({ message: 'Reservation successful' });
+  } catch (err) {
+    console.error('POST /api/reserve error:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
