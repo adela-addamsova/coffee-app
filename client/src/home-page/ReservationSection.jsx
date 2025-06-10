@@ -1,5 +1,6 @@
-import './ReservationSection.css';
+import './css/ReservationSection.css';
 import beansBackground from '../assets/main-page/coffee-beans-bck.png';
+import phoneBackground from '../assets/main-page/phone.png';
 import MainButton from '../components/MainButton';
 
 
@@ -7,7 +8,7 @@ const ReservationSection = () => {
     return (
         <section className="reservation-section" id='reservation-section'>
             <div className="reservation-content reservation-image">
-                <img src={beansBackground} alt="Beans Background" />
+                <img src={phoneBackground} alt="Beans Background" />
             </div>
             <div className="reservation-content reservation-text">
                 <p>
