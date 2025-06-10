@@ -10,7 +10,7 @@ import {
     isBefore,
     addHours,
 } from 'date-fns';
-import './ReservationForm.css';
+import './css/ReservationForm.css';
 
 const MAX_CAPACITY = 10;
 const API_URL = 'http://localhost:5000/api';
