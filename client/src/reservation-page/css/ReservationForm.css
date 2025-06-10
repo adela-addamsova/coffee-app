@@ -3,7 +3,6 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .form-group {
@@ -79,6 +78,7 @@ form {
     padding: 24px;
     margin: 40px 0;
     border: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .react-calendar,
@@ -91,11 +91,15 @@ form {
     background-color: white !important;
 }
 
-.react-calendar__tile--now {
+.react-calendar__tile--now.react-calendar__month-view__days__day {
     background: #867A6E !important;
     border-radius: 50px;
     flex: 0 0 9% !important;
     margin: 0 11px !important;
+}
+
+.react-calendar__tile--now.react-calendar__year-view__months__month {
+    background: #6e867a00 !important;
 }
 
 .react-calendar__month-view__days__day--weekend,
@@ -117,6 +121,23 @@ input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio"
     font-family: 'montagu slab', sans-serif !important;
 }
 
+
+@media (min-width: 1800px) {
+    .react-calendar__tile--now.react-calendar__month-view__days__day {
+        flex: 0 0 7% !important;
+        margin: 0px 20px !important;
+    }
+}
+
+@media (max-width: 1399px) {
+    .react-calendar__tile--now.react-calendar__month-view__days__day {
+        background: #867a6e8e !important;
+        border-radius: 0px !important;
+        margin: 0 !important;
+        flex: 0 0 14.2857% !important;
+    }
+}
+
 @media (max-width: 767px) {
     .form-group {
         width: 90%;
@@ -128,12 +149,7 @@ input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio"
         margin: 20px 0;
     }
 
-    .react-calendar__tile--now {
-        background: #867a6e8e !important;
-        border-radius: 0px;
-        margin: 0 !important;
-        flex: 0 0 14.2857% !important;
-    }
+
 }
 
 @media (max-width: 460px) {
@@ -141,6 +157,7 @@ input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio"
         width: 50%;
         margin: 12px 0;
     }
+
     .row-group {
         flex-direction: column;
     }

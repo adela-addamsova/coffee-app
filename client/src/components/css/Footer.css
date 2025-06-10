@@ -2,10 +2,11 @@
     background: black;
     color: #ffffff;
     width: 100vw;
-    height: 30vh;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px 0;
 }
 
 .footer-content {
@@ -38,13 +39,14 @@
         height: auto;
         padding: 28px 0;
     }
+
     .footer-content {
-    flex-direction: column;
-    margin: auto;
-    gap: 40px;
-}
-.footer-text {
-    align-items: center;
-    
-}
+        flex-direction: column;
+        margin: auto;
+        gap: 40px;
+    }
+
+    .footer-text {
+        align-items: center;
+    }
 }

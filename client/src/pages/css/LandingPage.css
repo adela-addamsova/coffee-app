@@ -7,8 +7,14 @@
 }
 
 @media (max-width: 767px) {
+
   .home-hero .hero-img,
   .home-hero .hero-img-overlay {
     height: 100vh;
   }
+}
+
+.info-boxes {
+  position: relative;
+  top: -12px;
 }

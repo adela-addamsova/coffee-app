@@ -1,8 +1,6 @@
 .info-boxes {
     display: flex;
     justify-content: space-around;
-    position: relative;
-    top: -12px;
 }
 
 .info-box {
@@ -48,7 +46,7 @@
     }
 
     .info-box {
-        width: 80%;
+        width: 90%;
         margin: 0 auto 20px auto;
     }
 }
