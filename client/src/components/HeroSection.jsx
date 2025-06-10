@@ -1,7 +1,5 @@
-import './HeroSection.css';
+import './css/HeroSection.css';
 import MainButton from './MainButton';
-
-import './HeroSection.css';
 
 const HeroSection = ({
   imgSrc,

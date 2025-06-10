@@ -3,7 +3,7 @@ import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import logoWhite from '../assets/components/coffee-beans-white.png';
 import logoBlack from '../assets/components/coffee-beans-black.png';
-import './Header.css';
+import './css/Header.css';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);

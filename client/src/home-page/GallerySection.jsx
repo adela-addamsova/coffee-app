@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import './GallerySection.css';
+import './css/GallerySection.css';
 import img1 from '../assets/main-page/interior-1.png';
 import img2 from '../assets/main-page/interior-2.png';
 import img3 from '../assets/main-page/interior-3.png';

@@ -3,15 +3,14 @@ import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import HeroImg from '../assets/main-page/hero-1.jpg';
-import InfoBoxes from '../home-page/InfoBoxes';
+import InfoBoxes from '../components/InfoBoxes';
 import HeroTextSection from '../home-page/HeroTextSection';
 import ScrollStory from '../home-page/StoryScroll';
 import Menu from '../home-page/MenuSection';
 import GallerySection from '../home-page/GallerySection';
 import ReservationSection from '../home-page/ReservationSection';
 import Footer from '../components/Footer';
-
-import './LandingPage.css';
+import './css/LandingPage.css';
 
 function LandingPage() {
   // Scroll to section
