@@ -1,4 +1,3 @@
-import './css/MenuSection.css';
 import coffeeCup from '../assets/main-page/cup.png';
 
 const HeroTextSection = () => {

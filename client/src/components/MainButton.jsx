@@ -1,4 +1,3 @@
-import './css/MainButton.css';
 import { Link } from 'react-router-dom';
 
 const MainButton = ({ text, href, to, onClick, color = "" }) => {

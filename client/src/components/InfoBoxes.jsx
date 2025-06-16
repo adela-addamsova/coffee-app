@@ -1,4 +1,3 @@
-import './css/InfoBoxes.css';
 import SocialIcons from './SocialIcons';
 
 const boxesData = [
@@ -37,7 +36,7 @@ const boxesData = [
 
 const InfoBoxes = () => {
   return (
-    <section className="info-boxes">
+    <div className="info-boxes">
       {boxesData.map((col) => (
         <div className="column info-box" key={col.title}>
           <h4>{col.title}</h4>
@@ -51,7 +50,7 @@ const InfoBoxes = () => {
           )}
         </div>
       ))}
-    </section>
+    </div>
   );
 };
 

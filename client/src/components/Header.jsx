@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import logoWhite from '../assets/components/coffee-beans-white.png';
 import logoBlack from '../assets/components/coffee-beans-black.png';
-import './css/Header.css';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -39,44 +37,58 @@ const Header = () => {
   }, []);
 
   return (
-    <Navbar expand="lg" className={`sticky-top my-header ${isScrolled ? 'scrolled' : ''}`}>
-      {/* Logo */}
+    <header
+      className={`page-header ${isScrolled ? 'scrolled' : ''}`}
+    >
       <div className="nav-logo">
-        <Navbar.Brand as={Link} to="/">
-          <img src={logoWhite} alt="Logo" className="main-logo" />
-        </Navbar.Brand>
+        <Link to="/">
+          <img src={logoWhite} alt="Logo" />
+        </Link>
       </div>
 
-      <div className="nav-wrapper">
-        <Nav className="nav-desktop">
-          <Nav.Link onClick={() => handleNavClick('menu-section')} className="my-nav-link">Menu</Nav.Link>
-          <Nav.Link onClick={() => handleNavClick('contact-section')} className="my-nav-link">Contact</Nav.Link>
-          <Nav.Link onClick={() => handleNavClick('story-section')} className="my-nav-link">Our Story</Nav.Link>
-          <Nav.Link as={Link} to="/reservation" className="my-nav-link">Reservation</Nav.Link>
-          <Nav.Link onClick={() => handleNavClick('')} className="my-nav-link">E-shop</Nav.Link>
-        </Nav>
+      <nav className="nav-desktop">
+        <button onClick={() => handleNavClick('menu-section')} className="nav-link">
+          Menu
+        </button>
+        <button onClick={() => handleNavClick('contact-section')} className="nav-link">
+          Contact
+        </button>
+        <button onClick={() => handleNavClick('story-section')} className="nav-link">
+          Our Story
+        </button>
+        <Link to="/reservation" className="nav-link">
+          Reservation
+        </Link>
+        <button onClick={() => handleNavClick('')} className="nav-link">
+          E-shop
+        </button>
+      </nav>
 
-        <div className="burger" onClick={() => setShowMenu(true)}>
-          <span className="burger-icon">&#9776;</span>
+      <div
+        className="burger"
+        onClick={() => setShowMenu(true)}
+      >
+        <span className="burger-icon text-[32px] cursor-pointer pl-3 text-white">&#9776;</span>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {showMenu && (
+        <div className="mobile-nav">
+          <div className="mobile-nav-head">
+            <img src={logoBlack} alt="Logo" className="nav-logo" />
+            <button onClick={() => setShowMenu(false)} className="x-icon">&times;</button>
+          </div>
+          <div className="mobile-nav-body">
+    
+            <button onClick={() => handleNavClick('menu-section')} className="nav-link-mobile">Menu</button>
+            <button onClick={() => handleNavClick('contact-section')} className="nav-link-mobile">Contact</button>
+            <button onClick={() => handleNavClick('story-section')} className="nav-link-mobile">Our Story</button>
+            <Link to="/reservation" className="nav-link-mobile">Reservation</Link>
+            <button onClick={() => handleNavClick('')} className="nav-link-mobile">E-shop</button>
+          </div>
         </div>
-      </div>
-
-      {/* Offcanvas Menu */}
-      <Offcanvas show={showMenu} onHide={() => setShowMenu(false)} placement="end">
-        <Offcanvas.Header closeButton>
-          <img src={logoBlack} alt="Logo" className="main-logo" />
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Nav className="flex-column">
-            <Nav.Link onClick={() => handleNavClick('menu-section')} className="my-nav-link-mobile">Menu</Nav.Link>
-            <Nav.Link onClick={() => handleNavClick('contact-section')} className="my-nav-link-mobile">Contact</Nav.Link>
-            <Nav.Link onClick={() => handleNavClick('story-section')} className="my-nav-link-mobile">Our Story</Nav.Link>
-            <Nav.Link as={Link} to="/reservation" className="my-nav-link-mobile">Reservation</Nav.Link>
-            <Nav.Link onClick={() => handleNavClick('')} className="my-nav-link-mobile">E-shop</Nav.Link>
-          </Nav>
-        </Offcanvas.Body>
-      </Offcanvas>
-    </Navbar>
+      )}
+    </header>
   );
 };
 

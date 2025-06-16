@@ -1,33 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Montagu+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+@import "tailwindcss";
+
+@import "./components/Components.css";
+@import "./home-page/Homepage.css";
+@import "./reservation-page/ReservationPage.css";
+
+@theme {
+  --font-slab: "Montagu Slab", serif;
+  --font-montserrat: "Montserrat", sans-serif;
+
+  --breakpoint-xs: 460px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1600px;
+}
+
 body,
 html,
 #root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+  @apply m-0 p-0 h-full w-full;
 }
 
 body {
-  overflow-x: hidden;
+  @apply overflow-x-hidden;
 }
 
 * {
-  box-sizing: border-box;
+  @apply box-border;
 }
 
 p,
 a,
 form label,
-td {
-  font-family: 'Montagu Slab', serif;
-  text-decoration: none;
+td,
+button {
+  @apply no-underline font-slab;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: 'Montserrat', sans-serif;
+  @apply font-montserrat;
 }

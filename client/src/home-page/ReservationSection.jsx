@@ -1,5 +1,3 @@
-import './css/ReservationSection.css';
-import beansBackground from '../assets/main-page/coffee-beans-bck.png';
 import phoneBackground from '../assets/main-page/phone.png';
 import MainButton from '../components/MainButton';
 

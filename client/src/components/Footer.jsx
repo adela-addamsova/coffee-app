@@ -1,4 +1,3 @@
-import './css/Footer.css';
 import SocialIcons from './SocialIcons';
 import { Link } from 'react-router-dom';
 

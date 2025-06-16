@@ -1,0 +1,153 @@
+/*--------------------
+  Header
+--------------------*/
+.page-header {
+    @apply w-screen flex justify-between items-center fixed z-[100] transition-all duration-500 px-6 py-6 xl:px-16 xl:py-16;
+}
+
+.page-header.scrolled {
+    @apply bg-black/70 py-3;
+}
+
+.nav-logo {
+    @apply w-[52px] h-[52px];
+}
+
+.nav-desktop {
+    @apply flex gap-8 max-[1199px]:hidden;
+}
+
+.nav-link {
+    @apply text-white whitespace-nowrap text-[20px] font-light border-b border-transparent transition-all duration-400 ease-in-out xl:text-[16px] xl:mx-10 cursor-pointer;
+}
+
+.nav-link:hover {
+    @apply border-white;
+}
+
+.burger {
+    @apply block min-[1200px]:hidden;
+}
+
+.mobile-nav {
+    @apply fixed top-0 right-0 w-full bg-white shadow-lg z-[200];
+}
+
+.mobile-nav-head {
+    @apply flex justify-between p-4 items-center;
+}
+
+.x-icon {
+    @apply text-[52px] font-extralight;
+}
+
+.mobile-nav-body {
+    @apply flex flex-col items-center;
+}
+
+.nav-link-mobile {
+    @apply py-5 border-b w-[90%] text-left;
+}
+
+/*--------------------
+  Footer
+--------------------*/
+.footer {
+    @apply bg-black text-white w-screen h-auto flex justify-center items-center py-[28px] md:py-[20px];
+}
+
+.footer-content {
+    @apply w-full max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between px-[40px] py-[20px] gap-[40px];
+}
+
+.footer-text {
+    @apply flex flex-col items-center md:items-start;
+}
+
+.footer-text a, .footer-text p {
+    @apply text-white leading-[24px] mb-[16px];
+}
+
+.footer-text .social-icons a {
+    @apply text-black;
+}
+
+/*--------------------
+  Main Button
+--------------------*/
+.main-button {
+    @apply px-[25px] py-[14px] no-underline text-[18px] whitespace-nowrap w-fit font-montserrat border;
+}
+
+.main-button.black {
+    @apply text-black border-black;
+}
+
+.main-button.white {
+    @apply text-white border-white;
+}
+
+/*--------------------
+  Social Icons
+--------------------*/
+.social-icons {
+    @apply flex gap-3 mt-3;
+}
+
+.social-icons a {
+    @apply flex justify-center items-center bg-white !text-black w-10 h-10 rounded-full no-underline !text-[20px] transition-all duration-300 ease-[ease];
+}
+
+.social-icons a:hover {
+    @apply scale-110;
+}
+
+/*--------------------
+  Hero Section
+--------------------*/
+.hero-section {
+    @apply w-screen;
+}
+
+.hero-img {
+    @apply w-screen object-cover;
+}
+
+.hero-img-overlay {
+    @apply absolute w-full top-[0] bg-[black]/40;
+}
+
+.hero-text-overlay {
+    @apply absolute left-[5%] flex flex-col justify-center text-left gap-[64px] top-[20%] md:top-[32%];
+}
+
+.hero-heading, .hero-subheading {
+    @apply text-white m-0;
+}
+
+.hero-heading {
+    @apply text-[54px] font-[500] xl:text-[72px];
+}
+
+.hero-subheading {
+    @apply text-[28px] font-[200] xl:text-[39px];
+}
+
+/*--------------------
+  Info Boxes
+--------------------*/
+.info-boxes {
+    @apply flex flex-col relative top-0 py-8 w-full mx-auto max-w-[1600px] md:flex-row md:justify-around md:py-0;
+}
+
+.info-box {
+    @apply text-white z-[5] bg-black border border-white p-[40px_56px_20px_56px] flex flex-col justify-start text-left w-[90%] mx-auto mb-[20px] md:w-[30%] xl:w-[25%];
+}
+
+.info-box h4 {
+    @apply font-slab font-normal text-[20px] mb-3;
+}
+
+.info-box p, .info-box a {
+    @apply text-[16px] font-thin text-white mb-2;
+}

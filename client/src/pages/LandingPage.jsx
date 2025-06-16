@@ -10,7 +10,6 @@ import Menu from '../home-page/MenuSection';
 import GallerySection from '../home-page/GallerySection';
 import ReservationSection from '../home-page/ReservationSection';
 import Footer from '../components/Footer';
-import './css/LandingPage.css';
 
 function LandingPage() {
   // Scroll to section
@@ -32,17 +31,20 @@ function LandingPage() {
   return (
     <>
       <Header />
-      <HeroSection
-        imgSrc={HeroImg}
-        heading="Morning Mist Coffee"
-        subheading="Fresh filter coffee, ready with the first light of morning."
-        buttonText="EXPLORE MORE"
-        buttonHref="#hero-text-section"
-        buttonColor="white"
-        height="100%"
-        className="home-hero"
-      />
-      <InfoBoxes />
+      <div className='homepage-hero'>
+        <HeroSection
+          imgSrc={HeroImg}
+          heading="Morning Mist Coffee"
+          subheading="Fresh filter coffee, ready with the first light of morning."
+          buttonText="EXPLORE MORE"
+          buttonHref="#hero-text-section"
+          buttonColor="white"
+          className="home-hero"
+        />
+      </div>
+      <div className='landing-page-info'>
+        <InfoBoxes />
+      </div>
       <HeroTextSection />
       <ScrollStory />
       <Menu />

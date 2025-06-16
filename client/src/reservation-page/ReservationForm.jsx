@@ -10,7 +10,6 @@ import {
     isBefore,
     addHours,
 } from 'date-fns';
-import './css/ReservationForm.css';
 
 const MAX_CAPACITY = 10;
 const API_URL = 'http://localhost:5000/api';
@@ -183,7 +182,7 @@ export default function ReservationForm() {
 
     return (
         <div className="reservation-form-container">
-            <form onSubmit={handleSubmit}>
+            <form className="reservation-form" onSubmit={handleSubmit}>
                 {/* Name Input */}
                 <div className='form-group'>
                     <label htmlFor="name">Your Name</label>

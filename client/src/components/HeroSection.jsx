@@ -1,4 +1,3 @@
-import './css/HeroSection.css';
 import MainButton from './MainButton';
 
 const HeroSection = ({
@@ -16,7 +15,7 @@ const HeroSection = ({
     <section className={`hero-section ${className}`} style={{ height }}>
       <img className="hero-img" src={imgSrc} alt="" />
       <div className="hero-img-overlay"></div>
-      
+
       {showText && (
         <div className="hero-text-overlay">
           {heading && <h1 className="hero-heading">{heading}</h1>}

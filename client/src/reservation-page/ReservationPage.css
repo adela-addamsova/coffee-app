@@ -1,0 +1,120 @@
+/*--------------------
+  Hero Section
+--------------------*/
+.reservation-page-hero .hero-section, .reservation-page-hero .hero-img, .reservation-page-hero .hero-img-overlay {
+    @apply flex items-center justify-center text-center h-[50vh] lg:h-[70vh];
+}
+
+.reservation-page-container {
+    @apply flex flex-col-reverse md:flex-col;
+}
+
+.reservation-page-container .info-boxes {
+    @apply relative top-[0] w-[95%] lg:top-[-20px] 2xl:top-[-92px];
+}
+
+/*--------------------
+  Main Section
+--------------------*/
+.main-content-reservation {
+    @apply flex flex-row w-full m-auto overflow-x-hidden;
+}
+
+.reservation-form-box {
+    @apply w-full flex items-center justify-center pt-[40px] lg:px-[20px] lg:w-1/2 lg:pt-0;
+}
+
+.reservation-form-box form {
+    @apply max-w-[95%] m-auto items-center lg:pl-[60px] lg:max-w-[85%] lg:items-end;
+}
+
+.reservation-img {
+    @apply hidden lg:flex w-1/2 items-end justify-end;
+}
+
+.reservation-img img {
+    @apply lg:h-[90%] 2xl:h-full;
+}
+
+/*--------------------
+  Reservation Form
+--------------------*/
+.reservation-form {
+    @apply flex flex-col items-center justify-center;
+}
+
+.reservation-form .form-group {
+    @apply w-[90%] flex flex-col mb-3 lg:w-[80%];
+}
+
+.reservation-form .form-group input {
+    @apply p-2 border border-solid border-black;
+}
+
+.reservation-form .row-group {
+    @apply flex flex-col justify-between sm:flex-row;
+}
+
+.reservation-form .guest-input label {
+    @apply mr-1;   
+}
+
+.reservation-form select, .reservation-form input {
+    @apply border border-solid border-black rounded-none; 
+}
+
+.reservation-form .time-select {
+    @apply w-full p-2 my-6 font-slab sm:w-1/2 sm:my-0;
+}
+
+.reservation-form .submit-button {
+    @apply w-full px-10 py-2 text-[16px] text-white text-nowrap font-slab my-5 bg-[#867A6E] border border-solid border-white transition-colors duration-400 lg:w-1/2;
+}
+
+.reservation-form .submit-button:hover {
+    @apply bg-white text-black border border-solid border-black cursor-pointer;
+}
+
+.reservation-form .message {
+    @apply w-full font-slab p-3 shadow-lg bg-[#94d85345] mb-10;
+}
+
+.reservation-form .error-message {
+    @apply w-full font-slab p-3 shadow-lg bg-[#d8535345] mb-10;
+}
+
+/* Calendar */
+.react-calendar {
+    @apply shadow-lg mx-0 my-10 p-6 !font-slab border !border-none lg:!w-[80%];
+}
+
+.react-calendar__navigation button:disabled, .react-calendar__tile {
+    @apply !bg-white;
+}
+
+.react-calendar__tile--now.react-calendar__month-view__days__day {
+    @apply !bg-[#867a6e8e];
+}
+
+.react-calendar__tile--now.react-calendar__year-view__months__month {
+    @apply !bg-[#6e867a00];
+}
+
+.react-calendar__month-view__days__day--weekend,
+.react-calendar__tile--active {
+    @apply !text-[#494949];
+}
+
+.react-calendar__month-view__days__day--neighboringMonth,
+.react-calendar__decade-view__years__year--neighboringDecade,
+.react-calendar__century-view__decades__decade--neighboringCentury {
+    @apply text-[#757575];
+}
+
+input:-webkit-autofill,
+input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
+    box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset !important;
+    --webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
+    font-family: 'montagu slab', sans-serif !important;
+}
