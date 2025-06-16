@@ -44,3 +44,5 @@ app.post('/api/reserve', (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+app.listen(port);
