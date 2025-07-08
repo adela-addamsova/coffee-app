@@ -12,21 +12,20 @@ import ReservationSection from '../home-page/ReservationSection';
 import Footer from '../components/Footer';
 
 function LandingPage() {
-  // Scroll to section
-  const location = useLocation();
+    const location = useLocation();
 
   useEffect(() => {
     const scrollToId = location.state?.scrollToId;
-
     if (scrollToId) {
       setTimeout(() => {
         const el = document.getElementById(scrollToId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
+        window.history.replaceState({}, document.title);
       }, 100);
     }
-  }, [location]);
+  }, [location.state?.scrollToId]);
 
   return (
     <>
