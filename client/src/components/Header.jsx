@@ -27,6 +27,14 @@ const Header = () => {
     setShowMenu(false);
   };
 
+  const scrollToTop = (smooth = false) => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: smooth ? 'smooth' : 'auto',
+  });
+};
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -41,7 +49,7 @@ const Header = () => {
       className={`page-header ${isScrolled ? 'scrolled' : ''}`}
     >
       <div className="nav-logo">
-        <Link to="/">
+        <Link to="/" onClick={() => scrollToTop(true)}>
           <img src={logoWhite} alt="Logo" />
         </Link>
       </div>
@@ -56,7 +64,7 @@ const Header = () => {
         <button onClick={() => handleNavClick('story-section')} className="nav-link">
           Our Story
         </button>
-        <Link to="/reservation" className="nav-link">
+        <Link to="/reservation" className="nav-link" onClick={() => scrollToTop(true)}>
           Reservation
         </Link>
         <button onClick={() => handleNavClick('')} className="nav-link">
