@@ -43,6 +43,7 @@ const StoryScroll = () => {
   return (
     <section
       className="scroll-section"
+      id="story-section"
       ref={sectionRef}
       style={{
         height: `calc(${slides} * ${slideHeightVh}vh + ${extraScrollVh}vh)`,

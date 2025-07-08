@@ -36,7 +36,7 @@ const boxesData = [
 
 const InfoBoxes = () => {
   return (
-    <div className="info-boxes">
+    <div className="info-boxes" id='info-boxes'>
       {boxesData.map((col) => (
         <div className="column info-box" key={col.title}>
           <h4>{col.title}</h4>
