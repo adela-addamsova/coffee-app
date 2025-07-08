@@ -13,7 +13,7 @@
   Hero Text Section
 --------------------*/
 .hero-text-section {
-    @apply max-w-[1200px] mx-auto flex flex-col pt-0 pb-9 gap-5 lg:flex-row lg:px-[100px] lg:pb-20 lg:p-0 xl:px-4;
+    @apply max-w-[1200px] mx-auto flex flex-col pt-0 pb-9 gap-5 lg:flex-row lg:px-[100px] lg:pb-20 lg:p-0 xl:px-4 lg:scroll-mt-[100px];
 }
 
 .hero-text-content {
@@ -39,7 +39,7 @@
 /*--------------------
   Story Section
 --------------------*/
- .scroll-section {
+.scroll-section {
     @apply relative mt-16;
     height: calc(3 * 70vh + 30vh); 
 }
@@ -59,7 +59,7 @@
 }
 
 .slide p {
-    @apply text-[16px] leading-[36px] w-full lg:text-[18px] lg:leading-[36px] lg:w-[80%] font-light;
+    @apply text-[14px] leading-[28px] w-full lg:text-[16px] lg:leading-[36px] 2xl:text-[18px] lg:w-[80%] font-light;
 }
 
 /* Slide 1 */
@@ -68,11 +68,11 @@
 }
 
 .slide1-text {
-    @apply w-full flex flex-col justify-between px-[20px] py-[32px] gap-[20px] lg:w-[60%] lg:px-[80px] lg:py-[40px] lg:gap-[40px];
+    @apply w-full flex flex-col justify-between px-[20px] py-[32px] gap-[20px] lg:w-[60%] lg:px-[80px] lg:py-[40px] lg:gap-[12px] 2xl:gap-[40px];
 }
 
 .slide1-text h2 {
-    @apply text-[56px] m-0;
+    @apply m-0 text-[56px] lg:text-[36px] xl:text-[44px];
 }
 
 .slide1-img {
@@ -85,7 +85,7 @@
 
 /* Slide 2 */
 .slide2-text {
-    @apply w-full flex lg:w-[40%] px-[20px] py-[32px] gap-[20px] lg:px-[80px] lg:py-[40px];
+    @apply w-full flex lg:w-[40%] px-[20px] py-[32px] gap-[20px] 2xl:px-[80px] 2xl:py-[40px];
 }
 
 .slide2-img {
@@ -106,7 +106,7 @@
 }
 
 .slide3-img {
-    @apply hidden lg:block lg:h-full; 
+    @apply hidden w-1/2 lg:block lg:h-full; 
 }
 
 .slide3-img img {

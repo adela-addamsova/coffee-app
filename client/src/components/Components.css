@@ -29,8 +29,12 @@
     @apply block min-[1200px]:hidden;
 }
 
+.burger-icon {
+    @apply text-[32px] cursor-pointer pl-3 text-white;
+}
+
 .mobile-nav {
-    @apply fixed top-0 right-0 w-full bg-white shadow-lg z-[200];
+    @apply fixed top-0 right-0 w-full bg-white shadow-lg z-[200] h-[80%];
 }
 
 .mobile-nav-head {
@@ -137,7 +141,7 @@
   Info Boxes
 --------------------*/
 .info-boxes {
-    @apply flex flex-col relative top-0 py-8 w-full mx-auto max-w-[1600px] md:flex-row md:justify-around md:py-0;
+    @apply flex flex-col relative top-0 py-8 w-full mx-auto max-w-[1600px] md:flex-row md:justify-around md:py-0 lg:scroll-mt-[250px];
 }
 
 .info-box {
