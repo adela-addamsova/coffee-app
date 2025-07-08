@@ -1,12 +1,13 @@
 import SocialIcons from './SocialIcons';
+import { contactInfo, addressInfo, openingHours } from '../config/CoffeeHouseData';
 
 const boxesData = [
   {
     title: 'CONTACT',
     text: (
       <>
-        <p>+420 777 777 777</p>
-        <a href="mailto:morningmistcoffee@gmail.com">morningmistcoffee@gmail.com</a>
+        <p>{contactInfo.phone}</p>
+         <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
       </>
     ),
     icons: ['social-icon'] 
@@ -15,8 +16,8 @@ const boxesData = [
     title: 'OPENING HOURS',
     text: (
       <>
-        <p>Monday–Friday<br />06:00–17:00</p>
-        <p>Saturday–Sunday<br />07:00–17:00</p>
+        <p>{openingHours.weekdays}<br />{openingHours.weekdaysTime}</p>
+        <p>{openingHours.weekend}<br />{openingHours.weekendTime}</p>
       </>
     ),
     icons: []
@@ -25,9 +26,9 @@ const boxesData = [
     title: 'LOCATION',
     text: (
       <>
-        <p>Kolumbijská 1720/17</p>
-        <p>Praha 5</p>
-        <p>15000</p>
+        <p>{addressInfo.street}</p>
+        <p>{addressInfo.city}</p>
+        <p>{addressInfo.zip}</p>
       </>
     ),
     icons: []
