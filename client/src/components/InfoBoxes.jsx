@@ -1,6 +1,10 @@
 import SocialIcons from './SocialIcons';
 import { contactInfo, addressInfo, openingHours } from '../config/CoffeeHouseData';
 
+/**
+ * boxesData
+ * Array defining the content and structure of each info box
+ */
 const boxesData = [
   {
     title: 'CONTACT',
@@ -10,7 +14,7 @@ const boxesData = [
          <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
       </>
     ),
-    icons: ['social-icon'] 
+    icons: ['social-icons'] 
   },
   {
     title: 'OPENING HOURS',
@@ -35,6 +39,11 @@ const boxesData = [
   }
 ];
 
+/**
+ * InfoBoxes component
+ * Renders a set of informational boxes (contact, opening hours, location)
+ * using the boxesData array
+ */
 const InfoBoxes = () => {
   return (
     <div className="info-boxes" id='info-boxes'>

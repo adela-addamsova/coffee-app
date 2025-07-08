@@ -3,6 +3,10 @@ import navItems from '../config/NavItems';
 import NavLink from './NavLink';
 import { contactInfo, addressInfo } from '../config/CoffeeHouseData';
 
+/**
+ * Footer component
+ * Displays part of the navigation and contact info
+*/
 const Footer = () => {
     const footerItems = navItems.filter(item =>
         ['E-shop', 'Reservation', 'Menu'].includes(item.label)

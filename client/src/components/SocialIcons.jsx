@@ -1,5 +1,10 @@
 import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 
+/**
+ * SocialIcons
+ * Renders a set of social media icons (Facebook, Instagram, YouTube)
+ * Each icon opens link in a new tab
+ */
 const SocialIcons = () => {
   return (
     <div className="social-icons">

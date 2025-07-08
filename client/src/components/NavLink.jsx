@@ -1,45 +1,23 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { handleNavigation } from '../utils/navigationFunctions';
 
 /**
- * NavLink
- * Navigation component that decides whether to render a <Link>
- * or an <a>. Handles scrolling, route changes, and optional cleanup
+ * NavLink Component
+ * Reusable navigation link that conditionally renders:
+ * - A React Router <Link>
+ * - A regular <a> tag that either scrolls to a section or navigates home and scrolls
+ *
+ * Props:
+ * - item: An object describing the link behavior (to, sectionId, scrollTop, etc.)
+ * - className: Optional CSS classes
+ * - closeMenu: Optional callback to close mobile nav
  */
 const NavLink = ({ item, className = '', closeMenu }) => {
-  const navigate = useNavigate();         
-  const location = useLocation();         
-
-  // Scrolls to top
-  const scrollToTop = () => window.scrollTo({ top: 0 });
-
-  // Scrolls to section
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView();
-  };
-
-  // Handle scroll or route change
-  const handleClick = (e) => {
-    if (item.to) return;
-
-    e.preventDefault();
-
-    if (item.scrollTop) {
-      scrollToTop();
-    } else if (item.sectionId) {
-      if (location.pathname === '/') {
-        scrollTo(item.sectionId);
-      } else {
-        navigate('/', { state: { scrollToId: item.sectionId } });
-      }
-    }
-
-    if (closeMenu) closeMenu();
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const isInternalLink = item.to;
 
-  // Render either <Link> or <a>
   return isInternalLink ? (
     <Link to={item.to} className={className} onClick={closeMenu}>
       {item.label}
@@ -48,7 +26,10 @@ const NavLink = ({ item, className = '', closeMenu }) => {
     <a
       href={`#${item.sectionId || ''}`}
       className={className}
-      onClick={handleClick}
+      onClick={(e) =>
+
+        handleNavigation(e, item, location, navigate, closeMenu)
+      }
     >
       {item.label}
     </a>
