@@ -1,29 +1,32 @@
 import SocialIcons from './SocialIcons';
-import { Link } from 'react-router-dom';
-
+import navItems from '../config/NavItems';
+import NavLink from './NavLink';
+import { contactInfo, addressInfo } from '../config/CoffeeHouseData';
 
 const Footer = () => {
+    const footerItems = navItems.filter(item =>
+        ['E-shop', 'Reservation', 'Menu'].includes(item.label)
+    );
+
     return (
         <footer className='footer'>
             <div className='footer-content'>
-                <div className='footer-text'>
-                    <a href='#'>Eshop</a>
-                    <Link to="/reservation">
-                        Reservation
-                    </Link>
-                    <a href='#menu-section'>Menu</a>
+                <div className="footer-text">
+                    {footerItems.map(item => (
+                        <NavLink key={item.label} item={item} className="footer-link" />
+                    ))}
                 </div>
                 <div className='footer-text'>
-                    <p>+420 777 777 777</p>
-                    <a href="mailto:morningmistcoffee@gmail.com">morningmistcoffee@gmail.com</a>
+                    <p>{contactInfo.phone}</p>
+                    <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
                     <div className='social-icon'>
                         <SocialIcons />
                     </div>
                 </div>
                 <div className='footer-text'>
-                    <p>Kolumbijská 1720/17</p>
-                    <p>Praha 5</p>
-                    <p>15000</p>
+                    <p>{addressInfo.street}</p>
+                    <p>{addressInfo.city}</p>
+                    <p>{addressInfo.zip}</p>
                 </div>
             </div>
         </footer>
