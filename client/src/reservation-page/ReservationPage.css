@@ -71,6 +71,10 @@
     @apply w-full px-10 py-2 text-[16px] text-white text-nowrap font-slab my-5 bg-[#867A6E] border border-solid border-white transition-colors duration-400 lg:w-1/2;
 }
 
+.submit-button {
+    @apply !w-fit;
+}
+
 .reservation-form .submit-button:hover {
     @apply bg-white text-black border border-solid border-black cursor-pointer;
 }
