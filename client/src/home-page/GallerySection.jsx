@@ -11,7 +11,6 @@ import galleryGrid3 from '../assets/main-page/gallery-grid-3.png';
 import galleryGrid4 from '../assets/main-page/gallery-grid-4.png';
 import galleryGrid5 from '../assets/main-page/gallery-grid-5.png';
 import { Navigation } from 'swiper/modules';
-
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 

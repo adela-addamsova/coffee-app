@@ -19,7 +19,7 @@ const ReservationPage = () => {
           buttonHref={false}
         />
       </div>
-      <div class="reservation-page-container">
+      <div className="reservation-page-container">
         <InfoBoxes />
         <div className="main-content-reservation">
           <div className='reservation-form-box'>
@@ -31,7 +31,6 @@ const ReservationPage = () => {
         </div>
       </div>
       <Footer />
-
     </>
   );
 }
