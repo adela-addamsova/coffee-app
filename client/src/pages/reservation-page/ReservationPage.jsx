@@ -1,10 +1,10 @@
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import ReservationForm from '../reservation-page/ReservationForm';
-import HeroSection from '../components/HeroSection';
-import HeroImg from '../assets/reservation-page/reservation-hero.png';
-import BeansBackground from '../assets/reservation-page/beans-bck.png';
-import InfoBoxes from '../components/InfoBoxes';
+import HeroSection from '../../components/HeroSection';
+import HeroImg from '../../assets/reservation-page/reservation-hero.png';
+import BeansBackground from '../../assets/reservation-page/beans-bck.png';
+import InfoBoxes from '../../components/InfoBoxes';
 
 const ReservationPage = () => {
   return (
