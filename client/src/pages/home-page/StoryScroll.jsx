@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import coffeePlant1 from "../assets/main-page/coffee-plant-1.jpg";
-import chemex from "../assets/main-page/chemex.png";
-import v60 from "../assets/main-page/v60.png";
-import coffeePackage from "../assets/main-page/coffee-package.png";
-import MainButton from '../components/MainButton';
+import coffeePlant1 from "../../assets/main-page/coffee-plant-1.jpg";
+import chemex from "../../assets/main-page/chemex.png";
+import v60 from "../../assets/main-page/v60.png";
+import coffeePackage from "../../assets/main-page/coffee-package.png";
+import MainButton from '../../components/MainButton';
 
 /**
  * StoryScroll

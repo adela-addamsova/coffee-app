@@ -3,8 +3,8 @@
 @import "tailwindcss";
 
 @import "./components/Components.css";
-@import "./home-page/Homepage.css";
-@import "./reservation-page/ReservationPage.css";
+@import "./pages/home-page/Homepage.css";
+@import "./pages/reservation-page/ReservationPage.css";
 
 @theme {
   --font-slab: "Montagu Slab", serif;

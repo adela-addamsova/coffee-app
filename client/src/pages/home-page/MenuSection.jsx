@@ -1,4 +1,4 @@
-import coffeeCup from '../assets/main-page/cup.png';
+import coffeeCup from '../../assets/main-page/cup.png';
 
 const HeroTextSection = () => {
     return (

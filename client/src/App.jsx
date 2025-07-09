@@ -2,8 +2,8 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
-import LandingPage from './pages/LandingPage'
-import ReservationPage from './pages/ReservationPage';
+import LandingPage from './pages/home-page/LandingPage'
+import ReservationPage from './pages/reservation-page/ReservationPage';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/reservation" element={<ReservationPage />} />
+        <Route path="/e-shop" element={<EshopMainPage />} />
       </Routes>
     </Router>
     </>

@@ -1,4 +1,4 @@
-import CoffeeSack from '../assets/main-page/coffee-sack.png';
+import CoffeeSack from '../../assets/main-page/coffee-sack.png';
 
 const HeroTextSection = () => {
     return (
