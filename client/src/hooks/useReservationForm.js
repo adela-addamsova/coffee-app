@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { reservationSchema, MAX_CAPACITY } from '../../../shared/ReservationFormValidationSchema';
 import { generateTimeSlots } from '../utils/reservationFormLogic';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 /**
  * Custom hook: useReservationForm
@@ -106,9 +106,7 @@ export function useReservationForm() {
             return;
         }
         
-        // Prepare sanitized payload
         const sanitized = { ...payload };
-        delete sanitized.remainingSeats;
 
         try {
             setLoading(true);
