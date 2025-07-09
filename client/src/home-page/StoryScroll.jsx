@@ -5,12 +5,22 @@ import v60 from "../assets/main-page/v60.png";
 import coffeePackage from "../assets/main-page/coffee-package.png";
 import MainButton from '../components/MainButton';
 
+/**
+ * StoryScroll
+ * 
+ * A horizontally scrolling section that scrolls slides using scrolljacking
+ * Uses refs and scroll event listener to calculate scroll progress and
+ * translates slides horizontally based on scroll position.
+ */
 const StoryScroll = () => {
+  // Reference for the whole section container
   const sectionRef = useRef(null);
+  // Ref for the track that holds all slides and will be translated horizontally
   const trackRef = useRef(null);
+
   const slides = 3;
-  const slideHeightVh = 70;
-  const extraScrollVh = 30;
+  const slideHeightVh = 70; 
+  const extraScrollVh = 30; // Additional scroll space to allow for finishing the last slide
 
   useEffect(() => {
     const onScroll = () => {
@@ -18,25 +28,35 @@ const StoryScroll = () => {
       const track = trackRef.current;
       if (!section || !track) return;
 
+      // Distance from top of page to top of this section
       const sectionTop = section.offsetTop;
 
+      // Convert vh to pixels
       const vh = window.innerHeight / 100;
       const slideHeightPx = slideHeightVh * vh;
       const extraScrollPx = extraScrollVh * vh;
 
+      // Total height needed for full scroll of all slides plus extra space
       const totalHeightPx = slides * slideHeightPx + extraScrollPx;
+      // Amount of scroll actually usable for sliding, subtract viewport height
       const totalScroll = totalHeightPx - window.innerHeight;
 
+      // Calculate scroll relative to this section
       const scrollY = window.scrollY - sectionTop;
 
+      // Clamp scroll position between 0 and total scroll height
       const clamped = Math.max(0, Math.min(scrollY, totalScroll));
+      // Calculate progress from 0 to 1
       const progress = clamped / totalScroll;
 
+      // Calculate horizontal translate in vw to slide the track
       const translate = -progress * (slides - 1) * 100;
+      // Apply horizontal transform to slides track
       track.style.transform = `translateX(${translate}vw)`;
     };
 
     window.addEventListener("scroll", onScroll);
+
     return () => window.removeEventListener("scroll", onScroll);
   }, [slides]);
 
@@ -51,6 +71,8 @@ const StoryScroll = () => {
     >
       <div className="sticky-container">
         <div className="slides-track" ref={trackRef}>
+
+          {/* Slide 1 */}
           <div className="slide slide-1">
             <div className="slide1-text">
               <h2>Our story</h2>
@@ -67,6 +89,8 @@ const StoryScroll = () => {
               <img src={coffeePlant1} alt="Coffee Plant" />
             </div>
           </div>
+
+          {/* Slide 2 */}
           <div className="slide slide-2">
             <div className="slide2-text" data-aos="fade-right">
               <p>
@@ -81,19 +105,22 @@ const StoryScroll = () => {
               <img src={chemex} alt="chemex" />
             </div>
           </div>
+
+          {/* Slide 3 */}
           <div className="slide slide-3">
             <div className="slide3-text">
-        <p>
-          Beyond our café, we offer our signature roasted beans through our online store, allowing coffee lovers
-          to enjoy premium-quality coffee at home. With a selection of carefully crafted roasts and nationwide delivery,
-          Morning Mist Coffee brings the art of coffee roasting straight to your doorstep.
-        </p>
-        <MainButton text="GO TO ESHOP" href="#" color="white" />
-      </div>
-      <div className="slide3-img">
-        <img src={coffeePackage} alt="package" />
-      </div>
+              <p>
+                Beyond our café, we offer our signature roasted beans through our online store, allowing coffee lovers
+                to enjoy premium-quality coffee at home. With a selection of carefully crafted roasts and nationwide delivery,
+                Morning Mist Coffee brings the art of coffee roasting straight to your doorstep.
+              </p>
+              <MainButton text="GO TO ESHOP" href="#" color="white" />
+            </div>
+            <div className="slide3-img">
+              <img src={coffeePackage} alt="package" />
+            </div>
           </div>
+
         </div>
       </div>
     </section>

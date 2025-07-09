@@ -11,8 +11,14 @@ import GallerySection from '../home-page/GallerySection';
 import ReservationSection from '../home-page/ReservationSection';
 import Footer from '../components/Footer';
 
+/**
+* LandingPage
+* 
+* Main landing page component
+* Handles scrolling to specific page sections
+*/
 function LandingPage() {
-    const location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     const scrollToId = location.state?.scrollToId;
@@ -20,7 +26,7 @@ function LandingPage() {
       setTimeout(() => {
         const el = document.getElementById(scrollToId);
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
+          el.scrollIntoView();
         }
         window.history.replaceState({}, document.title);
       }, 100);
