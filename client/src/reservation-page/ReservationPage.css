@@ -2,7 +2,7 @@
   Hero Section
 --------------------*/
 .reservation-page-hero .hero-section, .reservation-page-hero .hero-img, .reservation-page-hero .hero-img-overlay {
-    @apply flex items-center justify-center text-center h-[50vh] lg:h-[70vh];
+    @apply flex items-center w-full justify-center text-center h-[50vh] lg:h-[70vh];
 }
 
 .reservation-page-container {
@@ -64,7 +64,7 @@
 }
 
 .reservation-form .time-select {
-    @apply w-full p-2 my-6 font-slab sm:w-1/2 sm:my-0;
+    @apply w-full p-2 my-6 font-slab sm:my-0;
 }
 
 .reservation-form .submit-button {
@@ -83,13 +83,17 @@
     @apply w-full font-slab p-3 shadow-lg bg-[#94d85345] mb-10;
 }
 
+.reservation-form .field-error-message {
+    @apply text-[#d85353] font-slab text-wrap;
+}
+
 .reservation-form .error-message {
     @apply w-full font-slab p-3 shadow-lg bg-[#d8535345] mb-10;
 }
 
 /* Calendar */
 .react-calendar {
-    @apply shadow-lg mx-0 my-10 p-6 !font-slab border !border-none lg:!w-[80%];
+    @apply shadow-lg mx-0 my-5 p-6 !font-slab border !border-none lg:!w-[80%];
 }
 
 .react-calendar__navigation button:disabled, .react-calendar__tile {
