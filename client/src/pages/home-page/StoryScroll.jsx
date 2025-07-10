@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import navItems from "../../config/NavItems";
 import coffeePlant1 from "../../assets/main-page/coffee-plant-1.jpg";
 import chemex from "../../assets/main-page/chemex.png";
 import v60 from "../../assets/main-page/v60.png";
 import coffeePackage from "../../assets/main-page/coffee-package.png";
 import MainButton from '../../components/MainButton';
+
+const eshopPageLink = navItems.find(item => item.label === 'E-shop');
 
 /**
  * StoryScroll
@@ -114,7 +117,7 @@ const StoryScroll = () => {
                 to enjoy premium-quality coffee at home. With a selection of carefully crafted roasts and nationwide delivery,
                 Morning Mist Coffee brings the art of coffee roasting straight to your doorstep.
               </p>
-              <MainButton text="GO TO ESHOP" href="#" color="white" />
+              <MainButton text="GO TO ESHOP" to={eshopPageLink.to} color="white" />
             </div>
             <div className="slide3-img">
               <img src={coffeePackage} alt="package" />
