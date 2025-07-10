@@ -4,6 +4,8 @@ import Footer from '../../../../components/Footer';
 import HeroSection from '../../../../components/HeroSection';
 import HeroImg from '../../../../assets/e-shop/eshop-hero.jpg';
 import InlineMenu from '../../eshop-components/InlineMenu';
+import ProductCategories from './ProductCategories';
+import EshopInfoBoxes from '../../eshop-components/EshopInfoBoxes';
 
 const EshopLandingPage = () => {
   return (
@@ -17,7 +19,12 @@ const EshopLandingPage = () => {
           className="eshop-hero"
         />
       </div>
-      < InlineMenu />
+      {/* < InlineMenu /> */}
+      <div className='categories'>
+        <h2 className='eshop-heading'>Browse categories</h2>
+        < ProductCategories />
+      </div>
+      <EshopInfoBoxes />
       <Footer />
     </>
   );

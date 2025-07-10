@@ -12,6 +12,11 @@
     @apply w-full lg:w-[60%]
 }
 
+.eshop-hero-section .hero-heading,
+.eshop-hero-section .hero-subheading {
+    @apply w-full lg:w-[60%]
+}
+
 .eshop-hero-section .hero-text-overlay {
     @apply gap-[20px] 2xl:top-[25%]
 }
@@ -24,13 +29,79 @@
   Inline Menu
 --------------------*/
 .inline-menu-section {
-    @apply w-[1280px] bg-white flex justify-between items-center py-10 mx-auto
+    @apply w-[95%] bg-white flex justify-between items-center py-10 mx-auto xl:w-[1280px]
 }
 
 .inline-menu-section .shopping-cart-icon {
-    @apply w-[32px]
+    @apply w-[32px];
 }
 
 .inline-menu-item p {
     @apply font-slab font-[16px]
+}
+
+/*--------------------
+  Product Categories
+--------------------*/
+.categories {
+    @apply w-[95%] max-w-[1400px] mx-auto my-[100px] lg:w-full;
+}
+
+.categories .eshop-heading {
+    @apply text-left text-black text-[28px] md:text-[40px] font-medium mb-6;
+}
+
+.product-categories-section {
+    @apply grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-[1400px] mx-auto;
+}
+
+.product-category {
+    @apply text-center;
+}
+
+.product-category .img-box {
+    @apply relative overflow-hidden rounded-lg shadow-md;
+}
+
+.product-category .category-img {
+    @apply w-full h-auto object-cover rounded-lg shadow-md transition;
+}
+
+.product-category .img-overlay {
+    @apply absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300;
+}
+
+.product-category .category-name {
+    @apply text-[20px] font-semibold mt-2;
+}
+
+/*--------------------
+  E-shop Info Boxes
+--------------------*/
+.eshop-info-boxes-section {
+    @apply w-full bg-light-brown flex justify-center items-center p-15 lg:p-18;
+}
+
+.eshop-info-boxes {
+    @apply w-full max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0;
+}
+
+.eshop-info-box {
+    @apply flex flex-row gap-4 items-center justify-between;
+}
+
+.eshop-info-box-img {
+    @apply w-[56px] h-[56px];
+}
+
+.eshop-info-box-text {
+    @apply flex flex-col;
+}
+
+.eshop-info-box-text .title {
+    @apply font-slab text-[20px] font-medium;
+}
+
+.eshop-info-box-text .text {
+    @apply font-slab text-[16px] font-light;
 }
