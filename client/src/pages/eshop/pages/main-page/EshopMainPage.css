@@ -1,0 +1,36 @@
+/*--------------------
+  Hero Section
+--------------------*/
+.eshop-hero-section .hero-section,
+.eshop-hero-section .hero-img,
+.eshop-hero-section .hero-img-overlay {
+    @apply flex items-center w-full justify-center text-center h-[100vh] 2xl:h-[70vh];
+}
+
+.eshop-hero-section .hero-heading,
+.eshop-hero-section .hero-subheading {
+    @apply w-full lg:w-[60%]
+}
+
+.eshop-hero-section .hero-text-overlay {
+    @apply gap-[20px] 2xl:top-[25%]
+}
+
+.eshop-hero-section .hero-img-overlay {
+    @apply bg-[black]/40;
+}
+
+/*--------------------
+  Inline Menu
+--------------------*/
+.inline-menu-section {
+    @apply w-[1280px] bg-white flex justify-between items-center py-10 mx-auto
+}
+
+.inline-menu-section .shopping-cart-icon {
+    @apply w-[32px]
+}
+
+.inline-menu-item p {
+    @apply font-slab font-[16px]
+}
