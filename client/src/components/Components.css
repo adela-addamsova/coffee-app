@@ -118,7 +118,7 @@
 }
 
 .hero-img-overlay {
-    @apply absolute w-full top-[0] bg-[black]/40;
+    @apply absolute w-full top-[0] bg-[black]/30;
 }
 
 .hero-text-overlay {
