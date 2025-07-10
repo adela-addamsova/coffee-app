@@ -3,7 +3,7 @@ const navItems = [
   { label: 'Contact', sectionId: 'info-boxes' },
   { label: 'Our Story', sectionId: 'story-section' },
   { label: 'Reservation', to: '/reservation' },
-  { label: 'E-shop', sectionId: '' },
+  { label: 'E-shop', to: '/e-shop' },
 ];
 
 export default navItems;
