@@ -1,0 +1,91 @@
+/*--------------------
+  Inline Menu
+--------------------*/
+.inline-menu-section {
+    @apply w-[95%] bg-white flex justify-between items-center md:py-10 mx-auto xl:w-[1280px];
+}
+
+.inline-menu-section .shopping-cart-icon {
+    @apply w-[32px];
+}
+
+.inline-menu-item p {
+    @apply font-slab font-[16px]
+}
+
+/*--------------------
+  E-shop Info Boxes
+--------------------*/
+.eshop-info-boxes-section {
+    @apply w-full bg-light-brown flex justify-center items-center p-15 lg:p-18 mb-[100px] lg:mb-[160px];
+}
+
+.eshop-info-boxes {
+    @apply w-full max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0;
+}
+
+.eshop-info-box {
+    @apply flex flex-row gap-4 items-center justify-between;
+}
+
+.eshop-info-box-img {
+    @apply w-[56px] h-[56px];
+}
+
+.eshop-info-box-text {
+    @apply flex flex-col;
+}
+
+.eshop-info-box-text .title {
+    @apply font-slab text-[20px] font-medium;
+}
+
+.eshop-info-box-text .text {
+    @apply font-slab text-[16px] font-light;
+}
+
+/*--------------------
+  Newsletter Section
+--------------------*/
+.newsletter-section {
+    @apply bg-light-brown flex items-center justify-center py-12 px-4;
+}
+
+.newsletter-content {
+    @apply flex flex-col max-w-[1280px] mx-auto
+}
+
+.newsletter-content h2 {
+    @apply text-[32px] font-medium mb-4;
+}
+
+.newsletter-content form {
+    @apply max-w-md flex flex-row;
+}
+
+.newsletter-content input {
+    @apply flex-1 px-4 py-2 border border-black focus:outline-none focus:ring-2 focus:ring-black;
+}
+
+.newsletter-content form button {
+    @apply px-4 py-2 bg-black text-white flex items-center justify-center;
+}
+
+.newsletter-content-text {
+    @apply text-gray-600 mt-4 text-[12px];
+}
+
+/*--------------------
+  Product Miniature
+--------------------*/
+.eshop-product-miniature {
+    @apply w-full lg:w-[20%]
+}
+
+.product-info {
+    @apply flex flex-col bg-light-brown px-10 py-5 shadow-md 
+}
+
+.product-image img {
+    @apply w-[50%] mx-auto
+}
