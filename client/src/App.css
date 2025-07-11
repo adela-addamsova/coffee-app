@@ -6,6 +6,7 @@
 @import "./pages/home-page/Homepage.css";
 @import "./pages/reservation-page/ReservationPage.css";
 @import "./pages/eshop/pages/main-page/EshopMainPage.css";
+@import "./pages/eshop/eshop-components/EshopComponents.css";
 
 @theme {
   --font-slab: "Montagu Slab", serif;
