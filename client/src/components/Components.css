@@ -130,11 +130,11 @@
 }
 
 .hero-heading {
-    @apply text-[54px] font-[500] xl:text-[72px];
+    @apply text-[44px] font-[500] xl:text-[72px];
 }
 
 .hero-subheading {
-    @apply text-[28px] font-[200] xl:text-[39px];
+    @apply text-[28px] font-[200] xl:text-[40px];
 }
 
 /*--------------------
