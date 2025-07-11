@@ -1,4 +1,11 @@
 /*--------------------
+  Global
+--------------------*/
+.eshop-heading {
+    @apply text-left text-black text-[28px] md:text-[56px] font-medium;
+}
+
+/*--------------------
   Hero Section
 --------------------*/
 .eshop-hero-section .hero-section,
@@ -25,30 +32,17 @@
     @apply bg-[black]/40;
 }
 
-/*--------------------
-  Inline Menu
---------------------*/
-.inline-menu-section {
-    @apply w-[95%] bg-white flex justify-between items-center py-10 mx-auto xl:w-[1280px]
-}
 
-.inline-menu-section .shopping-cart-icon {
-    @apply w-[32px];
-}
-
-.inline-menu-item p {
-    @apply font-slab font-[16px]
-}
 
 /*--------------------
   Product Categories
 --------------------*/
 .categories {
-    @apply w-[95%] max-w-[1400px] mx-auto my-[100px] lg:w-full;
+    @apply w-[95%] max-w-[1400px] mt-[40px] mb-[100px] lg:mb-[160px] mx-auto md:my-[100px] lg:w-full;
 }
 
 .categories .eshop-heading {
-    @apply text-left text-black text-[28px] md:text-[40px] font-medium mb-6;
+    @apply mb-6;
 }
 
 .product-categories-section {
@@ -76,32 +70,30 @@
 }
 
 /*--------------------
-  E-shop Info Boxes
+  E-shop Story Section
 --------------------*/
-.eshop-info-boxes-section {
-    @apply w-full bg-light-brown flex justify-center items-center p-15 lg:p-18;
+.eshop-story-section {
+    @apply max-w-[1400px] mx-auto flex flex-col gap-5 lg:flex-row justify-between mb-[100px] lg:mb-[160px];
 }
 
-.eshop-info-boxes {
-    @apply w-full max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0;
+.eshop-story-text-content {
+    @apply flex flex-col w-[95%] justify-around mx-auto gap-5 lg:w-[60%] lg:pr-[60px] lg:gap-0 xl:w-[50%] lg:mx-0;
 }
 
-.eshop-info-box {
-    @apply flex flex-row gap-4 items-center justify-between;
+.eshop-story-text-content p {
+    @apply text-[16px] font-light lg:text-[20px];
 }
 
-.eshop-info-box-img {
-    @apply w-[56px] h-[56px];
+/*--------------------
+  New Products Section
+--------------------*/
+.selection {
+    @apply w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px]
 }
 
-.eshop-info-box-text {
-    @apply flex flex-col;
+.selection-new-products {
+    @apply flex flex-col justify-between md:flex-row gap-15 lg:gap-0
 }
 
-.eshop-info-box-text .title {
-    @apply font-slab text-[20px] font-medium;
-}
 
-.eshop-info-box-text .text {
-    @apply font-slab text-[16px] font-light;
-}
+
