@@ -32,8 +32,6 @@
     @apply bg-[black]/40;
 }
 
-
-
 /*--------------------
   Product Categories
 --------------------*/
@@ -73,11 +71,11 @@
   E-shop Story Section
 --------------------*/
 .eshop-story-section {
-    @apply max-w-[1400px] mx-auto flex flex-col gap-5 lg:flex-row justify-between mb-[100px] lg:mb-[160px];
+    @apply max-w-[1400px] mx-auto flex flex-col gap-15 lg:flex-row justify-between mb-[100px] lg:mb-[160px];
 }
 
 .eshop-story-text-content {
-    @apply flex flex-col w-[95%] justify-around mx-auto gap-5 lg:w-[60%] lg:pr-[60px] lg:gap-0 xl:w-[50%] lg:mx-0;
+    @apply flex flex-col w-[95%] justify-around mx-auto gap-10 lg:w-[60%] lg:pr-[60px] lg:gap-0 xl:w-[50%] lg:mx-0;
 }
 
 .eshop-story-text-content p {
@@ -94,6 +92,3 @@
 .selection-new-products {
     @apply flex flex-col justify-between md:flex-row gap-15 lg:gap-0
 }
-
-
-
