@@ -36,15 +36,15 @@ export default function ProductPageLayout() {
 
     if (error) {
         return (
-            <div className="text-center py-10">
-                <h2 className="text-xl font-bold text-red-600">{error}</h2>
+            <div className='subpage-error'>
+                <p className='pt-[100px]'>{error}</p>
             </div>
         );
     }
 
     if (!product) {
         return (
-            <div className="text-center py-10">
+            <div className='subpage-error'>
                 <p>Loading...</p>
             </div>
         );
