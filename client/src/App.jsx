@@ -6,6 +6,7 @@ import ReservationPage from './pages/reservation-page/ReservationPage';
 import EshopLayout from './pages/eshop/pages/EshopLayout';
 import EshopLandingPage from './pages/eshop/pages/main-page/EshopLandingPage';
 import CategoryPageLayout from './pages/eshop/pages/CategoryPageLayout';
+import ProductPageLayout from './pages/eshop/pages/ProductPageLayout';
 
 function App() {
   return (
@@ -18,7 +19,11 @@ function App() {
           <Route index element={<EshopLandingPage />} />
           <Route path="products" element={<CategoryPageLayout />} />
           <Route path="products/:category" element={<CategoryPageLayout />} />
+          <Route path="products/:category/:id" element={<ProductPageLayout />} />
         </Route>
+        <Route path="*" 
+        // element={<PageNotFound />} 
+        />
       </Routes>
     </Router>
   );
