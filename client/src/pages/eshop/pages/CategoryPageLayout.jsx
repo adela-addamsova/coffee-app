@@ -19,8 +19,8 @@ export default function CategoryPageLayout() {
 
   useEffect(() => {
     const url = category
-      ? `http://localhost:5000/api/products/${category}`
-      : 'http://localhost:5000/api/products';
+      ? `${import.meta.env.VITE_API_URL}/products/${category}`
+      : `${import.meta.env.VITE_API_URL}/products`;
 
     fetch(url)
       .then(res => res.json())
