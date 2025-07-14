@@ -1,5 +1,5 @@
 import MainButton from '../../../../components/MainButton';
-import navItems from "../../../../config/NavItems";
+import { navItems } from "../../../../config/NavItems";
 import StoryImg from '../../../../assets/e-shop/story-img.png';
 
 export default function StorySection() {
