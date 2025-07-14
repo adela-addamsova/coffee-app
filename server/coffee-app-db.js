@@ -69,6 +69,7 @@ function getLatestProducts(limit = 4) {
     SELECT id, title, category, price, image_url
     FROM products
     WHERE deleted_at IS NULL
+    AND stock > 0
     ORDER BY datetime(created_at) DESC
     LIMIT ?
   `).all(limit);
@@ -80,6 +81,7 @@ function getAllProducts() {
     SELECT id, title, category, price, image_url
     FROM products
     WHERE deleted_at IS NULL
+    AND stock > 0
   `).all();
 }
 
@@ -87,7 +89,7 @@ function getProductsByCategory(category) {
   return db.prepare(`
     SELECT id, title, category, price, image_url
     FROM products
-    WHERE deleted_at IS NULL AND category = ?
+    WHERE deleted_at IS NULL AND stock > 0 AND category = ?
   `).all(category);
 }
 
@@ -95,7 +97,7 @@ function getProductById(id, category) {
   return db.prepare(`
     SELECT *
     FROM products
-    WHERE deleted_at IS NULL AND id = ? AND category = ?
+    WHERE deleted_at IS NULL AND stock > 0 AND id = ? AND category = ?
   `).get(id, category);
 }
 
