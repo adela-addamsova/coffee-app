@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { getAllReservations, createReservationIfAvailable } = require('./reservation-db');
+const { getAllReservations, createReservationIfAvailable, getLatestProducts, getAllProducts,
+  getProductsByCategory  } = require('./coffee-app-db');
 const { reservationSchema } = require('../shared/ReservationFormValidationSchema');
 
 dotenv.config();
@@ -56,5 +57,50 @@ app.post('/api/reserve', (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+/**
+ * GET /api/products/latest
+ * Returns the latest products from the database.
+ */
+app.get('/api/products/latest', (req, res) => {
+  try {
+    const products = getLatestProducts(4); 
+    res.json(products);
+  } catch (err) {
+    console.error('GET /api/products/latest error:', err);
+    res.status(500).json({ error: 'Failed to fetch products' });
+  }
+});
+
+/**
+ * GET /api/products
+ * Returns all products from the database.
+ */
+app.get('/api/products', (req, res) => {
+  try {
+    const products = getAllProducts();
+    res.json(products);
+  } catch (err) {
+    console.error('GET /api/products error:', err);
+    res.status(500).json({ error: 'Failed to fetch products' });
+  }
+});
+
+/**
+ * GET /api/products/:category
+ * Returns products for a specific category.
+ */
+app.get('/api/products/:category', (req, res) => {
+  const { category } = req.params;
+
+  try {
+    const products = getProductsByCategory(category);
+    res.json(products);
+  } catch (err) {
+    console.error(`GET /api/products/${category} error:`, err);
+    res.status(500).json({ error: 'Failed to fetch category products' });
+  }
+});
+
 
 app.listen(process.env.PORT);
