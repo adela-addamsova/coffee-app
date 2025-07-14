@@ -91,11 +91,20 @@ function getProductsByCategory(category) {
   `).all(category);
 }
 
+function getProductById(id, category) {
+  return db.prepare(`
+    SELECT *
+    FROM products
+    WHERE deleted_at IS NULL AND id = ? AND category = ?
+  `).get(id, category);
+}
+
 module.exports = {
   getAllReservations,
   createReservationIfAvailable,
   getLatestProducts,
   getAllProducts, 
-  getProductsByCategory
+  getProductsByCategory,
+  getProductById
 };
 
