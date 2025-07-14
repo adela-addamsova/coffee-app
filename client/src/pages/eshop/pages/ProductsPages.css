@@ -67,3 +67,14 @@
 .product-description a.main-button {
   @apply w-full lg:!w-[80%] text-center;
 }
+
+/*--------------------
+  Errors
+--------------------*/
+.subpage-error {
+  @apply w-full max-w-[1400px] mx-auto text-center pb-12
+}
+
+.subpage-error p {
+  @apply text-[40px] py-15
+}

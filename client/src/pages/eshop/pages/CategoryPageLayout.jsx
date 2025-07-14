@@ -58,8 +58,8 @@ export default function CategoryPageLayout() {
 
   if (!validCategory) {
     return (
-      <div className="not-found">
-        <h2>Category not found</h2>
+      <div className='subpage-error pt-[100px]'>
+        <p className='font-bold'>Category not found</p>
         <p>The category "{category}" does not exist.</p>
       </div>
     );
@@ -68,7 +68,7 @@ export default function CategoryPageLayout() {
   return (
     <div>
       {/* Hero section */}
-      <div className='category-page-hero'>
+      <div className="category-page-hero">
         <HeroSection
           imgSrc={HeroImg}
           heading={heading}
@@ -81,21 +81,27 @@ export default function CategoryPageLayout() {
       <InlineMenu />
 
       {/* Loading / error states */}
-      {loading && <p>Loading products...</p>}
-      {error && <p className="error">{error}</p>}
+      <div className='subpage-error'>
+        {loading && <p>Loading products...</p>}
+        {error && <p className="error">{error}</p>}
+      </div>
 
-      {/* Products grid */}
+
+      {/* Products grid or fallback */}
       {!loading && !error && (
-        <section className="products-grid">
-          {products.length > 0 ? (
-            products.map(product => (
+        products.length > 0 ? (
+          <section className="products-grid">
+            {products.map(product => (
               <ProductMiniature key={product.id} {...product} />
-            ))
-          ) : (
+            ))}
+          </section>
+        ) : (
+          <div className='subpage-error'>
             <p>No products found in this category.</p>
-          )}
-        </section>
+          </div>
+        )
       )}
     </div>
   );
+
 }
