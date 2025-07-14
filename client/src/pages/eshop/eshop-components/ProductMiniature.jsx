@@ -1,15 +1,19 @@
-import PackageImg from '../../../assets/e-shop/product-packages/package.png';
+export default function ProductMiniature({ title, price, image_url, category }) {
+    const categoryLabels = {
+        light: 'Light roasted',
+        dark: 'Dark roasted',
+        decaf: 'Decaf'
+    };
 
-export default function ProductMiniature() {
     return (
         <div className="eshop-product-miniature">
             <div className="product-image">
-                <img src={PackageImg} alt="Product Package" />
+                <img src={image_url} alt={title} />
             </div>
             <div className="product-info">
-                <h3 className="product-title">Columbia</h3>
-                <p className="product-description">Light roasted</p>
-                <p className="product-price">$15.00</p>
+                <h3 className="product-title">{title}</h3>
+                <p className="product-description font-light">{categoryLabels[category] || category}</p>
+                <p className="product-price">${price.toFixed(2)}</p>
             </div>
         </div>
     );
