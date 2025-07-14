@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { getAllReservations, createReservationIfAvailable, getLatestProducts, getAllProducts,
-  getProductsByCategory  } = require('./coffee-app-db');
+  getProductsByCategory, getProductById  } = require('./coffee-app-db');
 const { reservationSchema } = require('../shared/ReservationFormValidationSchema');
 
 dotenv.config();
@@ -101,6 +101,28 @@ app.get('/api/products/:category', (req, res) => {
     res.status(500).json({ error: 'Failed to fetch category products' });
   }
 });
+
+/**
+ * GET /api/products/:id
+ * Returns product with specific id
+ */
+app.get('/api/products/:category/:id', (req, res) => {
+  const { category, id } = req.params;
+
+  try {
+    const product = getProductById(id, category);
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    res.json(product);
+  } catch (err) {
+    console.error(`GET /api/products/${category}/${id} error:`, err);
+    res.status(500).json({ error: 'Failed to fetch product' });
+  }
+});
+
 
 
 app.listen(process.env.PORT);
