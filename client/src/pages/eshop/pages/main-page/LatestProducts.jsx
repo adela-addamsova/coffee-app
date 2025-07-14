@@ -5,7 +5,7 @@ export default function LandingPage() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/products/latest')
+        fetch(`${import.meta.env.VITE_API_URL}/products/latest`)
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.error('Error fetching latest products:', err));
