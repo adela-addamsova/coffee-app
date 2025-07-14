@@ -2,15 +2,40 @@
   Inline Menu
 --------------------*/
 .inline-menu-section {
-    @apply w-[95%] bg-white flex justify-between items-center md:py-10 mx-auto xl:w-[1280px];
+    @apply w-[95%] bg-white flex flex-col-reverse relative gap-10 mt-5 items-end lg:flex-row justify-between md:py-10 mx-auto xl:w-[1280px];
+}
+
+.inline-menu-items {
+    @apply flex flex-row gap-4 lg:gap-8 w-full lg:w-auto;
+}
+
+.inline-menu-item {
+    @apply flex flex-row relative;
+}
+
+.inline-menu-item .arrow img {
+    @apply w-[20px] mr-4 lg:mr-10 inline
 }
 
 .inline-menu-section .shopping-cart-icon {
     @apply w-[32px];
 }
 
-.inline-menu-item p {
+.inline-menu-item p,
+span {
     @apply font-slab font-[16px]
+}
+
+.inline-menu-section .dropdown-menu {
+    @apply absolute top-full left-[20px] bg-white shadow-lg rounded-lg mt-2 z-10 transition-all duration-300 ease-in-out;
+}
+
+.inline-menu-section .dropdown-menu-list {
+    @apply py-2 min-w-[160px] flex flex-col gap-2;
+}
+
+.inline-menu-section .dropdown-menu-list .dropdown-link {
+    @apply block py-2 px-4 hover:bg-gray-100 whitespace-nowrap w-full;
 }
 
 /*--------------------
@@ -79,13 +104,13 @@
   Product Miniature
 --------------------*/
 .eshop-product-miniature {
-    @apply w-full lg:w-[20%]
+    @apply w-full mx-auto flex flex-col justify-end gap-2 mt-10;
 }
 
 .product-info {
-    @apply flex flex-col bg-light-brown px-10 py-5 shadow-md 
+    @apply flex flex-col bg-light-brown px-10 py-5 shadow-md gap-1;
 }
 
 .product-image img {
-    @apply w-[50%] mx-auto
+    @apply w-[45%] mx-auto;
 }
