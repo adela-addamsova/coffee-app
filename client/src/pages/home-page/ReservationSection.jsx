@@ -1,6 +1,6 @@
 import phoneBackground from '../../assets/main-page/phone.png';
 import MainButton from '../../components/MainButton';
-import navItems from '../../config/NavItems';
+import { navItems } from '../../config/NavItems';
 
 const ReservationSection = () => {
     const reservationPageLink = navItems.find(item => item.label === 'Reservation');
