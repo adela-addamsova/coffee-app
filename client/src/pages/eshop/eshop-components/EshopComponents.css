@@ -104,7 +104,7 @@ span {
   Product Miniature
 --------------------*/
 .eshop-product-miniature {
-    @apply w-full mx-auto flex flex-col justify-end gap-2 mt-10;
+    @apply w-full mx-auto flex flex-col justify-end gap-2 mt-10 hover:shadow-lg transition;
 }
 
 .product-info {

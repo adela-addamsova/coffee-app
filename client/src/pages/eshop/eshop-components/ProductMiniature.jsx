@@ -1,4 +1,6 @@
-export default function ProductMiniature({ title, price, image_url, category }) {
+import { Link } from 'react-router-dom';
+
+export default function ProductMiniature({ id, title, price, image_url, category }) {
     const categoryLabels = {
         light: 'Light roasted',
         dark: 'Dark roasted',
@@ -6,7 +8,7 @@ export default function ProductMiniature({ title, price, image_url, category }) 
     };
 
     return (
-        <div className="eshop-product-miniature">
+        <Link to={`/e-shop/products/${category}/${id}`} className="eshop-product-miniature">
             <div className="product-image">
                 <img src={image_url} alt={title} />
             </div>
@@ -15,6 +17,6 @@ export default function ProductMiniature({ title, price, image_url, category }) 
                 <p className="product-description font-light">{categoryLabels[category] || category}</p>
                 <p className="product-price">${price.toFixed(2)}</p>
             </div>
-        </div>
+        </Link>
     );
 }
