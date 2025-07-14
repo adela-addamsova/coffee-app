@@ -2,11 +2,11 @@
   Inline Menu
 --------------------*/
 .inline-menu-section {
-    @apply w-[95%] bg-white flex flex-col-reverse relative gap-10 mt-5 items-end lg:flex-row justify-between md:py-10 mx-auto xl:w-[1280px];
+    @apply w-[95%] bg-white flex flex-col-reverse md:flex-row relative gap-10 mt-5 items-end lg:flex-row justify-between md:py-10 mx-auto xl:w-[1280px];
 }
 
 .inline-menu-items {
-    @apply flex flex-row gap-4 lg:gap-8 w-full lg:w-auto;
+    @apply flex flex-row flex-wrap gap-4 lg:gap-8 w-full lg:w-auto;
 }
 
 .inline-menu-item {
@@ -114,3 +114,29 @@ span {
 .product-image img {
     @apply w-[45%] mx-auto;
 }
+
+/*--------------------
+  Product Counter
+--------------------*/
+.product-counter {
+    @apply flex items-center border border-black overflow-hidden w-fit
+}
+
+.product-counter button {
+    @apply px-4 py-1 bg-white text-lg hover:bg-gray-100 disabled:opacity-50 cursor-pointer;
+}
+
+.product-counter input {
+    @apply text-center border-x border-black h-full px-2 py-1 font-montserrat;
+}
+
+.product-counter input[type="number"]::-webkit-inner-spin-button,
+.product-counter input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.product-counter input[type="number"] {
+    -moz-appearance: textfield;
+}
+
