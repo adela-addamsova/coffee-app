@@ -17,7 +17,7 @@
 }
 
 .product-container {
-  @apply pb-10 lg:w-full max-w-[1400px] mx-auto lg:py-[100px];
+  @apply pb-10 lg:w-full max-w-[1400px] mx-auto lg:pb-[100px] pt-[40px];
 }
 
 .product-detail {
@@ -49,7 +49,7 @@
 }
 
 .product-delivery-info {
-  @apply flex flex-row w-full gap-5 pb-8;
+  @apply flex flex-row w-full lg:w-[70%] justify-between pb-8 text-left;
 }
 
 .product-delivery-info-box {
@@ -57,7 +57,7 @@
 }
 
 .product-delivery-info-box img {
-  @apply mr-4;
+  @apply mr-2 lg:mr-4;
 }
 
 .product-delivery-info-text {
