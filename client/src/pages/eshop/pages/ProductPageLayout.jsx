@@ -69,18 +69,21 @@ export default function ProductPageLayout() {
             {/* Product Detail */}
             <section className="product-container">
                 <div className='product-detail'>
-                    <div className='product-img'>
+                    <div className='product-img hidden lg:block'>
                         <img src={product.image_url} alt="Product Image" />
                     </div>
                     <div className="product-description">
                         <h3>{product.title}</h3>
+                        <div className='product-img block lg:hidden pb-10 pt-4'>
+                            <img src={product.image_url} alt="Product Image" />
+                        </div>
                         <h4>$ {product.price}</h4>
                         <ProductCounter min={1} max={product.stock} />
                         <div className='product-info-text'>
                             <p>{product.ingredients}</p>
                             <p>{product.weight}</p>
                             <p>Origin: {product.origin}</p>
-                            <p>{product.taste_profile}</p>
+                            <p>Taste profile: {product.taste_profile}</p>
                         </div>
                         <div className='product-delivery-info'>
                             <div className='product-delivery-info-box'>

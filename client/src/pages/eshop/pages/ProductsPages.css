@@ -41,7 +41,7 @@
 }
 
 .product-img img {
-  @apply w-[200px] lg:w-[270px] mx-auto
+  @apply w-[180px] lg:w-[270px] mx-auto
 }
 
 .product-info-text {
