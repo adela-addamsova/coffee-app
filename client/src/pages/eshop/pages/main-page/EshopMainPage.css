@@ -92,3 +92,7 @@
 .selection-new-products {
     @apply flex flex-col justify-between md:flex-row gap-15 lg:gap-0
 }
+
+.latest-products {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6;
+}
