@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { getAllReservations, createReservationIfAvailable, getLatestProducts, getAllProducts,
-  getProductsByCategory, getProductById } = require('./coffee-app-db');
+  getProductsByCategory, getProductById, insertNewsletterSubscriber, isEmailSubscribed } = require('./coffee-app-db');
 const { reservationSchema } = require('../shared/ReservationFormValidationSchema');
+const { newsletterSchema } = require('../shared/NewsletterValidationSchema');
 
 dotenv.config();
 
@@ -120,6 +121,34 @@ app.get('/api/products/:category/:id', (req, res) => {
   } catch (err) {
     console.error(`GET /api/products/${category}/${id} error:`, err);
     res.status(500).json({ error: 'Failed to fetch product' });
+  }
+});
+
+/**
+ * POST /api/subscribe
+ * Validates input with Zod and inserts a subscriber.
+ */
+app.post('/api/subscribe', (req, res) => {
+  const parseResult = newsletterSchema.safeParse(req.body);
+
+  if (!parseResult.success) {
+    return res.status(400).json({ error: parseResult.error.errors[0].message });
+  }
+
+  const { email } = parseResult.data;
+  const ip_address = req.ip;
+
+  try {
+    if (isEmailSubscribed(email)) {
+      return res.status(409).json({ error: 'This email is already subscribed' });
+    }
+
+    const result = insertNewsletterSubscriber(email, ip_address);
+    return res.status(201).json({ message: 'Subscription successful', id: result.lastInsertRowid });
+
+  } catch (err) {
+    console.error('Insert error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
