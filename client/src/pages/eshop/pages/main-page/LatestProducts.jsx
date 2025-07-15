@@ -12,10 +12,11 @@ export default function LandingPage() {
     }, []);
 
     return (
-        <section className="latest-products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <section className="latest-products">
             {products.map((product) => (
                 <ProductMiniature
                     key={product.id}
+                    id={product.id}
                     title={product.title}
                     category={product.category}
                     price={product.price}
