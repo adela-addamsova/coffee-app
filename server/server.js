@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { getAllReservations, createReservationIfAvailable, getLatestProducts, getAllProducts,
-  getProductsByCategory, getProductById  } = require('./coffee-app-db');
+  getProductsByCategory, getProductById } = require('./coffee-app-db');
 const { reservationSchema } = require('../shared/ReservationFormValidationSchema');
 
 dotenv.config();
@@ -64,7 +64,7 @@ app.post('/api/reserve', (req, res) => {
  */
 app.get('/api/products/latest', (req, res) => {
   try {
-    const products = getLatestProducts(4); 
+    const products = getLatestProducts(4);
     res.json(products);
   } catch (err) {
     console.error('GET /api/products/latest error:', err);
@@ -103,7 +103,7 @@ app.get('/api/products/:category', (req, res) => {
 });
 
 /**
- * GET /api/products/:id
+ * GET /api/products/:category/:id
  * Returns product with specific id
  */
 app.get('/api/products/:category/:id', (req, res) => {
@@ -122,7 +122,5 @@ app.get('/api/products/:category/:id', (req, res) => {
     res.status(500).json({ error: 'Failed to fetch product' });
   }
 });
-
-
 
 app.listen(process.env.PORT);
