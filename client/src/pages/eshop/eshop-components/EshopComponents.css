@@ -14,7 +14,7 @@
 }
 
 .inline-menu-item .arrow img {
-    @apply w-[20px] mr-4 lg:mr-10 inline
+    @apply w-[20px] mr-4 lg:mr-8 inline
 }
 
 .inline-menu-section .shopping-cart-icon {
@@ -89,7 +89,7 @@ span {
 }
 
 .newsletter-content input {
-    @apply flex-1 px-4 py-2 border border-black focus:outline-none focus:ring-2 focus:ring-black;
+    @apply flex-1 px-4 py-2 border border-black;
 }
 
 .newsletter-content form button {
@@ -108,7 +108,23 @@ span {
 }
 
 .product-info {
-    @apply flex flex-col bg-light-brown px-10 py-5 shadow-md gap-1;
+    @apply flex flex-row justify-between bg-light-brown px-10 py-5 shadow-md;
+}
+
+.product-miniature-info {
+    @apply flex flex-col gap-2;
+}
+
+.product-info-decs {
+    @apply flex flex-col justify-between w-[70%];
+}
+
+.product-info-button {
+    @apply w-[30%] flex flex-col text-center justify-center items-center hover:border transition;
+}
+
+.product-info-button img {
+    @apply w-[40px];
 }
 
 .product-image img {
