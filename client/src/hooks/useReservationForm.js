@@ -110,7 +110,7 @@ export function useReservationForm() {
 
         try {
             setLoading(true);
-            const response = await fetch(`${API_URL}/reserve`, {
+            const response = await fetch(`${API_URL}/reservations/reserve`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(sanitized),
