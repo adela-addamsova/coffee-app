@@ -22,7 +22,7 @@ export default function ProductMiniature({ id, title, price, image_url, category
                 </div>
                 <div className="product-info-button">
                     <img src={ShoppingCart} alt="Shopping Cart" />
-                    <h6 className='font-montserrat text-[10px] mt-2 font-semibold'>ADD TO CART</h6>
+                    {/* <h6 className='font-montserrat text-[10px] mt-2 font-semibold'>ADD TO CART</h6> */}
                 </div>
             </div>
         </Link>
