@@ -86,11 +86,11 @@
   New Products Section
 --------------------*/
 .selection {
-    @apply w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px]
+    @apply w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px];
 }
 
 .selection-new-products {
-    @apply flex flex-col justify-between md:flex-row gap-15 lg:gap-0
+    @apply flex flex-col justify-between md:flex-row gap-15 lg:gap-0;
 }
 
 .latest-products {
