@@ -1,12 +1,12 @@
 /*--------------------
   Hero Section
 --------------------*/
-.homepage-hero.hero-section, .home-hero .hero-img, .home-hero .hero-img-overlay {
+.homepage-hero .hero-section, .home-hero .hero-img, .home-hero .hero-img-overlay {
   @apply h-[100vh] lg:h-[110vh] 2xl:h-[90vh];
 }
 
 .landing-page-info .info-boxes {
-    @apply relative top-[0] lg:top-[-60px] 2xl:top-[-80px];
+    @apply relative top-[0] lg:mt-[-60px];
 }
 
 /*--------------------
@@ -72,7 +72,7 @@
 }
 
 .slide1-text h2 {
-    @apply m-0 text-[56px] lg:text-[36px] xl:text-[44px];
+    @apply m-0 text-[32px] lg:text-[36px] xl:text-[44px];
 }
 
 .slide1-img {
@@ -118,7 +118,7 @@
   Menu Section
 --------------------*/
 .menu-section {
-    @apply max-w-[1025px] w-[95%] mx-auto py-[60px] flex flex-row items-stretch max-h-full md:py-[100px] md:max-h-[720px];
+    @apply max-w-[1025px] w-[95%] mx-auto py-[60px] flex flex-row items-stretch max-h-fit md:py-[100px] md:max-h-[720px];
 }
 
 .menu-text-content {
