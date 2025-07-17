@@ -68,7 +68,8 @@
     @apply flex flex-col items-center md:items-start;
 }
 
-.footer-text a, .footer-text p {
+.footer-text a,
+.footer-text p {
     @apply text-white leading-[24px] mb-[16px];
 }
 
@@ -110,7 +111,7 @@
   Hero Section
 --------------------*/
 .hero-section {
-    @apply w-screen;
+    @apply relative w-screen overflow-y-hidden;
 }
 
 .hero-img {
@@ -122,10 +123,11 @@
 }
 
 .hero-text-overlay {
-    @apply absolute left-[5%] flex flex-col justify-center text-left gap-[64px] top-[20%] md:top-[32%];
+    @apply absolute left-[5%] flex flex-col justify-center text-left gap-[20px] lg:gap-[64px] top-[24%] md:top-[32%];
 }
 
-.hero-heading, .hero-subheading {
+.hero-heading,
+.hero-subheading {
     @apply text-white m-0;
 }
 
@@ -152,6 +154,7 @@
     @apply font-slab font-normal text-[20px] mb-3;
 }
 
-.info-box p, .info-box a {
+.info-box p,
+.info-box a {
     @apply text-[16px] font-thin text-white mb-2;
 }
