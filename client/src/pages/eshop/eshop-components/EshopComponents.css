@@ -18,7 +18,7 @@
 }
 
 .inline-menu-section .shopping-cart-icon {
-    @apply w-[32px];
+    @apply w-[40px];
 }
 
 .inline-menu-item p,
@@ -93,7 +93,7 @@ span {
 }
 
 .newsletter-content form button {
-    @apply px-4 py-2 bg-black text-white flex items-center justify-center;
+    @apply px-4 py-2 bg-black text-white flex items-center justify-center cursor-pointer;
 }
 
 .newsletter-content-text {
@@ -136,7 +136,7 @@ span {
 }
 
 .product-info-button img {
-    @apply w-[32px];
+    @apply w-[40px];
 }
 
 .product-image img {
