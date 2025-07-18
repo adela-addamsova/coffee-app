@@ -1,0 +1,98 @@
+/*--------------------
+  Global
+--------------------*/
+.eshop-heading {
+    @apply text-left text-black text-[28px] md:text-[56px] font-medium;
+}
+
+/*--------------------
+  Hero Section
+--------------------*/
+.eshop-hero-section .hero-section,
+.eshop-hero-section .hero-img,
+.eshop-hero-section .hero-img-overlay {
+    @apply flex items-center w-full justify-center text-center h-[100vh] 2xl:h-[70vh];
+}
+
+.eshop-hero-section .hero-heading,
+.eshop-hero-section .hero-subheading {
+    @apply w-full lg:w-[60%]
+}
+
+.eshop-hero-section .hero-heading,
+.eshop-hero-section .hero-subheading {
+    @apply w-full lg:w-[60%]
+}
+
+.eshop-hero-section .hero-text-overlay {
+    @apply gap-[20px] 2xl:top-[25%]
+}
+
+.eshop-hero-section .hero-img-overlay {
+    @apply bg-[black]/40;
+}
+
+/*--------------------
+  Product Categories
+--------------------*/
+.categories {
+    @apply w-[95%] max-w-[1400px] mt-[40px] mb-[100px] lg:mb-[160px] mx-auto md:my-[100px] lg:w-full;
+}
+
+.categories .eshop-heading {
+    @apply mb-6;
+}
+
+.product-categories-section {
+    @apply grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-[1400px] mx-auto;
+}
+
+.product-category {
+    @apply text-center;
+}
+
+.product-category .img-box {
+    @apply relative overflow-hidden rounded-lg shadow-md;
+}
+
+.product-category .category-img {
+    @apply w-full h-auto object-cover rounded-lg shadow-md transition;
+}
+
+.product-category .img-overlay {
+    @apply absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300;
+}
+
+.product-category .category-name {
+    @apply text-[20px] font-semibold mt-2;
+}
+
+/*--------------------
+  E-shop Story Section
+--------------------*/
+.eshop-story-section {
+    @apply max-w-[1400px] mx-auto flex flex-col gap-15 lg:flex-row justify-between mb-[100px] lg:mb-[160px];
+}
+
+.eshop-story-text-content {
+    @apply flex flex-col w-[95%] justify-around mx-auto gap-10 lg:w-[60%] lg:pr-[60px] lg:gap-0 xl:w-[50%] lg:mx-0;
+}
+
+.eshop-story-text-content p {
+    @apply text-[16px] font-light lg:text-[20px];
+}
+
+/*--------------------
+  New Products Section
+--------------------*/
+.selection {
+    @apply w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px];
+}
+
+.selection-new-products {
+    @apply flex flex-col justify-between md:flex-row gap-15 lg:gap-0;
+}
+
+.latest-products {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6;
+}

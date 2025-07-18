@@ -1,0 +1,169 @@
+/*--------------------
+  Inline Menu
+--------------------*/
+.inline-menu-section {
+    @apply w-[95%] bg-white flex flex-col-reverse sm:flex-row relative gap-10 mt-5 items-end justify-between md:py-10 mx-auto xl:w-[1280px];
+}
+
+.inline-menu-items {
+    @apply flex flex-row flex-wrap gap-4 lg:gap-8 w-full lg:w-auto;
+}
+
+.inline-menu-item {
+    @apply flex flex-row relative;
+}
+
+.inline-menu-item .arrow img {
+    @apply w-[20px] mr-4 lg:mr-8 inline
+}
+
+.inline-menu-section .shopping-cart-icon {
+    @apply w-[40px];
+}
+
+.inline-menu-item p,
+span {
+    @apply font-slab font-[16px]
+}
+
+.inline-menu-section .dropdown-menu {
+    @apply absolute top-full left-[20px] bg-white shadow-lg rounded-lg mt-2 z-10 transition-all duration-300 ease-in-out;
+}
+
+.inline-menu-section .dropdown-menu-list {
+    @apply py-2 min-w-[160px] flex flex-col gap-2;
+}
+
+.inline-menu-section .dropdown-menu-list .dropdown-link {
+    @apply block py-2 px-4 hover:bg-gray-100 whitespace-nowrap w-full;
+}
+
+/*--------------------
+  E-shop Info Boxes
+--------------------*/
+.eshop-info-boxes-section {
+    @apply w-full bg-light-brown flex justify-center items-center p-15 lg:p-18 mb-[100px] lg:mb-[160px];
+}
+
+.eshop-info-boxes {
+    @apply w-full max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0;
+}
+
+.eshop-info-box {
+    @apply flex flex-row gap-4 items-center justify-between;
+}
+
+.eshop-info-box-img {
+    @apply w-[56px] h-[56px];
+}
+
+.eshop-info-box-text {
+    @apply flex flex-col;
+}
+
+.eshop-info-box-text .title {
+    @apply font-slab text-[20px] font-medium;
+}
+
+.eshop-info-box-text .text {
+    @apply font-slab text-[16px] font-light;
+}
+
+/*--------------------
+  Newsletter Section
+--------------------*/
+.newsletter-section {
+    @apply bg-light-brown flex items-center justify-center py-12 px-4;
+}
+
+.newsletter-content {
+    @apply flex flex-col max-w-[1280px] mx-auto
+}
+
+.newsletter-content h2 {
+    @apply text-[32px] font-medium mb-4;
+}
+
+.newsletter-content form {
+    @apply max-w-md flex flex-row;
+}
+
+.newsletter-content input {
+    @apply flex-1 px-4 py-2 border border-black focus:outline-none focus:ring-2 focus:ring-black focus:border-white rounded-none;
+}
+
+.newsletter-content form button {
+    @apply px-4 py-2 bg-black text-white flex items-center justify-center cursor-pointer;
+}
+
+.newsletter-content-text {
+    @apply text-gray-600 mt-4 text-[12px];
+}
+
+.newsletter-error {
+    @apply text-[#d85353] mt-2;
+}
+
+.newsletter-success {
+    @apply text-green-600 mt-2;
+}
+
+/*--------------------
+  Product Miniature
+--------------------*/
+.eshop-product-miniature {
+    @apply w-full mx-auto flex flex-col justify-end gap-2 mt-10 hover:shadow-lg transition;
+}
+
+.product-info {
+    @apply flex flex-row justify-between bg-light-brown px-10 py-5 shadow-md;
+}
+
+.product-miniature-info {
+    @apply flex flex-col gap-2;
+}
+
+.product-miniature-info h3 {
+    @apply text-nowrap;
+}
+
+.product-info-decs {
+    @apply flex flex-col justify-between w-[70%];
+}
+
+.product-info-button {
+    @apply w-[30%] flex flex-col text-center justify-center items-center hover:bg-white/10 hover:backdrop-blur-md hover:border border-white/30 rounded-xl hover:shadow-lg transition-all duration-200;
+}
+
+.product-info-button img {
+    @apply w-[40px];
+}
+
+.product-image img {
+    @apply w-[45%] mx-auto;
+}
+
+/*--------------------
+  Product Counter
+--------------------*/
+.product-counter {
+    @apply flex items-center border border-black overflow-hidden w-fit
+}
+
+.product-counter button {
+    @apply px-4 py-1 bg-white text-lg hover:bg-gray-100 disabled:opacity-50 cursor-pointer;
+}
+
+.product-counter input {
+    @apply text-center border-x border-black h-full px-2 py-1 font-montserrat;
+}
+
+.product-counter input[type="number"]::-webkit-inner-spin-button,
+.product-counter input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.product-counter input[type="number"] {
+    -moz-appearance: textfield;
+}

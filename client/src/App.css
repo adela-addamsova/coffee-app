@@ -3,8 +3,11 @@
 @import "tailwindcss";
 
 @import "./components/Components.css";
-@import "./home-page/Homepage.css";
-@import "./reservation-page/ReservationPage.css";
+@import "./pages/home-page/Homepage.css";
+@import "./pages/reservation-page/ReservationPage.css";
+@import "./pages/eshop/pages/main-page/EshopMainPage.css";
+@import "./pages/eshop/eshop-components/EshopComponents.css";
+@import "./pages/eshop/pages/ProductsPages.css";
 
 @theme {
   --font-slab: "Montagu Slab", serif;
@@ -16,6 +19,8 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1600px;
+
+  --color-light-brown: rgba(121, 88, 61, 0.25);
 }
 
 body,
