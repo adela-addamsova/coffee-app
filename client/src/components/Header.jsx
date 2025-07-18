@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { navItems } from '../config/NavItems';
 import NavLink from './NavLink';
-import logoWhite from '../assets/components/coffee-beans-white.png';
-import logoBlack from '../assets/components/coffee-beans-black.png';
+import logoWhite from '../assets/components/coffee-beans-white.svg';
+import logoBlack from '../assets/components/coffee-beans-black.svg';
 
 /**
  * Header component

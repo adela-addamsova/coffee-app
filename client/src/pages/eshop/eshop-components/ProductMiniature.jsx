@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import ShoppingCart from '../../../assets/e-shop/shopping-cart.png';
+import ShoppingCart from '../../../assets/e-shop/shopping-cart.svg';
 
 
 export default function ProductMiniature({ id, title, price, image_url, category }) {

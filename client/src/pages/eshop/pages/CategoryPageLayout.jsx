@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ProductMiniature from '../eshop-components/ProductMiniature';
 import HeroSection from '../../../components/HeroSection';
-import HeroImg from '/category-hero.png';
+import HeroImg from '../../../assets/e-shop/category-hero.jpg';
 import InlineMenu from '../eshop-components/InlineMenu'
 
 const categoryLabels = {
