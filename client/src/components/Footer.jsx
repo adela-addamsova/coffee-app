@@ -1,5 +1,5 @@
 import SocialIcons from './SocialIcons';
-import navItems from '../config/NavItems';
+import { navItems } from '../config/NavItems';
 import NavLink from './NavLink';
 import { contactInfo, addressInfo } from '../config/CoffeeHouseData';
 
