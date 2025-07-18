@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import ShoppingCart from '../../../assets/e-shop/shopping-cart.png';
+import ShoppingCart from '../../../assets/e-shop/shopping-cart.svg';
 import MenuArrowGray from '../../../assets/e-shop/eshop-components/menu-arrow-gray.svg';
 import { eshopNavItems, navItems } from '../../../config/NavItems';
 

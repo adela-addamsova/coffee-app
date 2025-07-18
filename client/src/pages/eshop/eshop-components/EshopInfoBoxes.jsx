@@ -1,7 +1,7 @@
 import React from 'react';
-import Freshness from '../../../assets/e-shop/eshop-components/freshness.png';
-import Story from '../../../assets/e-shop/eshop-components/story.png';
-import Shipping from '../../../assets/e-shop/eshop-components/shipping.png';
+import Freshness from '../../../assets/e-shop/eshop-components/freshness.svg';
+import Story from '../../../assets/e-shop/eshop-components/story.svg';
+import Shipping from '../../../assets/e-shop/eshop-components/shipping.svg';
 
 const categories = [
     {
