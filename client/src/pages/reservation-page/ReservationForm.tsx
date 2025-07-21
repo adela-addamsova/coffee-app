@@ -1,10 +1,17 @@
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { ChangeEvent, JSX } from 'react';
 import { useReservationForm } from '../../hooks/useReservationForm';
 
-
-export default function ReservationForm() {
-    // Imported hooks and functions
+/**
+ * ReservationForm
+ *
+ * Form for creating a reservation, including name, email, date, time, and number of guests
+ * Uses `useReservationForm` hook for state, validation, and submission
+ *
+ * @returns {JSX.Element}
+ */
+export default function ReservationForm(): JSX.Element {
     const {
         selectedDate, setSelectedDate,
         availableTimes, selectedTime, setSelectedTime,
@@ -28,6 +35,7 @@ export default function ReservationForm() {
                     />
                     {errors.name && <div className="field-error-message">{errors.name}</div>}
                 </div>
+
                 {/* Email */}
                 <div className='form-group'>
                     <label htmlFor="email">Your E-mail</label>
@@ -39,30 +47,40 @@ export default function ReservationForm() {
                     />
                     {errors.email && <div className="field-error-message">{errors.email}</div>}
                 </div>
+
                 {/* Calendar */}
                 <Calendar
                     locale="en-US"
                     value={selectedDate}
-                    onChange={(date) => {
-                        setSelectedDate(date);
-                        setSelectedTime(null);
-                        setRemainingSeats(null);
-                        fetchReservations(date);
-                        setErrors((prev) => ({ ...prev, date: null }));
+                    onChange={(value, event) => {
+                        if (value instanceof Date) {
+                            setSelectedDate(value);
+                            setSelectedTime(null);
+                            setRemainingSeats(null);
+                            fetchReservations(value);
+                            setErrors((prev) => ({ ...prev, date: undefined }));
+                        }
                     }}
                     minDate={new Date()}
+                    selectRange={false}
                 />
+
                 {errors.date && <div className="field-error-message w-[80%]">{errors.date}</div>}
 
+                {/* Time and guests */}
                 {availableTimes.length > 0 && (
                     <div className='form-group row-group'>
                         {/* Time select */}
                         <div className="input-column">
                             <select
                                 value={selectedTime || ''}
-                                onChange={(e) => {
+                                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                     setSelectedTime(e.target.value);
-                                    setErrors((prev) => ({ ...prev, time: null, datetime: null }));
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        time: undefined,
+                                        datetime: undefined
+                                    }));
                                 }}
                                 className='time-select'
                             >
