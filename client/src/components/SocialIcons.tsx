@@ -1,11 +1,15 @@
+import React, { JSX } from 'react';
 import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 /**
- * SocialIcons
- * Renders a set of social media icons (Facebook, Instagram, YouTube)
- * Each icon opens link in a new tab
+ * SocialIcons component
+ *
+ * Renders a set of social media icons (Facebook, Instagram, YouTube).
+ * Each icon links to the respective social media page and opens in a new tab.
+ *
+ * @returns {JSX.Element} The social icons container element
  */
-const SocialIcons = () => {
+const SocialIcons = (): JSX.Element => {
   return (
     <div className="social-icons">
       <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">

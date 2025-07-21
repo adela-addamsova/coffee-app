@@ -1,4 +1,25 @@
-import { format, setHours, setMinutes, getDay, isToday, isBefore, addHours } from 'date-fns';
+import {
+  format,
+  setHours,
+  setMinutes,
+  getDay,
+  isToday,
+  isBefore,
+  addHours,
+} from 'date-fns';
+
+// Reservation type
+type Reservation = {
+  datetime: string;
+  guests: number;
+};
+
+// Time slot type
+type TimeSlot = {
+  label: string;
+  iso: string;
+  remaining: number;
+};
 
 /**
  * Returns opening hours based on the day of the week.
@@ -8,7 +29,7 @@ import { format, setHours, setMinutes, getDay, isToday, isBefore, addHours } fro
  *   - Weekdays: 6:00–17:00
  *   - Weekends: 7:00–17:00
  */
-export const getOpeningHours = (date) => {
+export const getOpeningHours = (date: Date): { start: number; end: number } => {
   const day = getDay(date);
   return day === 0 || day === 6 ? { start: 7, end: 17 } : { start: 6, end: 17 };
 };
@@ -21,7 +42,10 @@ export const getOpeningHours = (date) => {
  * @param {Array} reservations - All reservations for the selected date
  * @returns {Array} Reservations that fall into the 2-hour window
  */
-export const getOverlappingReservations = (slotTime, reservations) => {
+export const getOverlappingReservations = (
+  slotTime: Date,
+  reservations: Reservation[]
+): Reservation[] => {
   return reservations.filter((r) => {
     const rTime = new Date(r.datetime);
     const rHour = format(rTime, 'yyyy-MM-dd HH:00');
@@ -43,10 +67,14 @@ export const getOverlappingReservations = (slotTime, reservations) => {
  *   - `iso`: ISO string for internal comparison/submission
  *   - `remaining`: number of remaining seats
  */
-export const generateTimeSlots = (date, reservations, maxCapacity = 10) => {
+export const generateTimeSlots = (
+  date: Date,
+  reservations: Reservation[],
+  maxCapacity: number = 10
+): TimeSlot[] => {
   const { start, end } = getOpeningHours(date);
   const now = new Date();
-  const slots = [];
+  const slots: TimeSlot[] = [];
 
   for (let hour = start; hour <= end - 2; hour++) {
     const slotTime = setMinutes(setHours(date, hour), 0);
