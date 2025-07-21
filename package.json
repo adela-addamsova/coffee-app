@@ -1,5 +1,35 @@
 {
   "dependencies": {
     "zod": "^3.25.76"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "eslint": "^9.31.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.7",
+    "jsonlint": "^1.6.3",
+    "markdownlint-cli": "^0.45.0",
+    "prettier": "^3.6.2"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "lint:md": "markdownlint *.md"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.md": [
+      "markdownlint --fix"
+    ],
+    "*.json": [
+      "jsonlint"
+    ]
   }
 }
