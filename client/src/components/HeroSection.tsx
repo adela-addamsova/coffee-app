@@ -1,5 +1,5 @@
-import react, { JSX } from 'react';
-import MainButton from './MainButton';
+import React, { JSX } from "react";
+import MainButton from "./MainButton";
 
 interface HeroSectionProps {
   imgSrc: string;
@@ -37,14 +37,14 @@ function HeroSection({
   subheading,
   buttonText,
   buttonHref,
-  buttonColor = 'white',
+  buttonColor = "white",
   height,
-  className = '',
+  className = "",
   showText = true,
 }: HeroSectionProps): JSX.Element {
   return (
     <section className={`hero-section ${className}`} style={{ height }}>
-      <img className="hero-img" src={imgSrc} alt={heading || 'Hero image'} />
+      <img className="hero-img" src={imgSrc} alt={heading || "Hero image"} />
       <div className="hero-img-overlay"></div>
 
       {showText && (
@@ -52,12 +52,16 @@ function HeroSection({
           {heading && <h1 className="hero-heading">{heading}</h1>}
           {subheading && <p className="hero-subheading">{subheading}</p>}
           {buttonText && (
-            <MainButton text={buttonText} href={buttonHref} color={buttonColor} />
+            <MainButton
+              text={buttonText}
+              href={buttonHref}
+              color={buttonColor}
+            />
           )}
         </div>
       )}
     </section>
   );
-};
+}
 
 export default HeroSection;

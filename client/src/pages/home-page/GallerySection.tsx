@@ -1,18 +1,18 @@
-import React, { JSX, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import img1 from '../../assets/main-page/interior-1.png';
-import img2 from '../../assets/main-page/interior-2.png';
-import img3 from '../../assets/main-page/interior-3.png';
-import galleryGrid1 from '../../assets/main-page/gallery-grid-1.png';
-import galleryGrid2 from '../../assets/main-page/gallery-grid-2.png';
-import galleryGrid3 from '../../assets/main-page/gallery-grid-3.png';
-import galleryGrid4 from '../../assets/main-page/gallery-grid-4.png';
-import galleryGrid5 from '../../assets/main-page/gallery-grid-5.png';
-import { Navigation } from 'swiper/modules';
-import Lightbox, { Slide } from 'yet-another-react-lightbox';
-import 'yet-another-react-lightbox/styles.css';
+import React, { JSX, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import img1 from "@assets/main-page/interior-1.png";
+import img2 from "@assets/main-page/interior-2.png";
+import img3 from "@assets/main-page/interior-3.png";
+import galleryGrid1 from "@assets/main-page/gallery-grid-1.png";
+import galleryGrid2 from "@assets/main-page/gallery-grid-2.png";
+import galleryGrid3 from "@assets/main-page/gallery-grid-3.png";
+import galleryGrid4 from "@assets/main-page/gallery-grid-4.png";
+import galleryGrid5 from "@assets/main-page/gallery-grid-5.png";
+import { Navigation } from "swiper/modules";
+import Lightbox, { Slide } from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 /**
  * FullWidthSwiper component
@@ -77,7 +77,7 @@ const FullWidthSwiper = (): JSX.Element => {
                   src={img}
                   alt={`Interior ${i + 1}`}
                   onClick={() => handleImageClick(i)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
               ))}
             </div>
@@ -92,7 +92,7 @@ const FullWidthSwiper = (): JSX.Element => {
                     src={img}
                     alt={`Grid ${i + 1}`}
                     onClick={() => handleImageClick(i + 3)}
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                   />
                 </div>
               ))}
@@ -103,13 +103,13 @@ const FullWidthSwiper = (): JSX.Element => {
                   src={galleryGrid3}
                   alt="Grid 3"
                   onClick={() => handleImageClick(5)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
                 <img
                   src={galleryGrid4}
                   alt="Grid 4"
                   onClick={() => handleImageClick(6)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
               </div>
               <div className="gallery-image-box">
@@ -117,7 +117,7 @@ const FullWidthSwiper = (): JSX.Element => {
                   src={galleryGrid5}
                   alt="Grid 5"
                   onClick={() => handleImageClick(7)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
               </div>
             </div>
@@ -128,17 +128,27 @@ const FullWidthSwiper = (): JSX.Element => {
       {/* Mobile Swiper */}
       <div className="mobile-gallery-swiper">
         <p>
-          We create a cozy place with delicious coffee where you can work,
-          read, meet a friend or just enjoy a moment...
+          We create a cozy place with delicious coffee where you can work, read,
+          meet a friend or just enjoy a moment...
         </p>
-        <Swiper spaceBetween={10} slidesPerView={1} modules={[Navigation]} navigation>
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={1}
+          modules={[Navigation]}
+          navigation
+        >
           {allImages.map((img, i) => (
             <SwiperSlide key={i}>
               <img
                 src={img.src}
                 alt={`Mobile Gallery ${i}`}
                 onClick={() => handleImageClick(i)}
-                style={{ width: '100%', height: 'auto', objectFit: 'cover', cursor: 'pointer' }}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "cover",
+                  cursor: "pointer",
+                }}
               />
             </SwiperSlide>
           ))}
@@ -146,7 +156,12 @@ const FullWidthSwiper = (): JSX.Element => {
       </div>
 
       {/* Lightbox */}
-      <Lightbox open={open} close={() => setOpen(false)} slides={allImages} index={currentIndex} />
+      <Lightbox
+        open={open}
+        close={() => setOpen(false)}
+        slides={allImages}
+        index={currentIndex}
+      />
     </div>
   );
 };

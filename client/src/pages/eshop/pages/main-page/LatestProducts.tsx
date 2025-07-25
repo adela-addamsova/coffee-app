@@ -1,5 +1,5 @@
 import { JSX, useEffect, useState } from "react";
-import ProductMiniature from "../../eshop-components/ProductMiniature";
+import ProductMiniature from "@eshop-components/ProductMiniature";
 
 interface Product {
   id: string | number;

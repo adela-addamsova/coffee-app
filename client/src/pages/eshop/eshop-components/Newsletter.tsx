@@ -1,11 +1,11 @@
-import React, { JSX } from 'react';
-import { useState, FormEvent } from 'react';
-import ArrowIcon from '../../../assets/e-shop/eshop-components/newsletter-arrow.svg';
-import { newsletterSchema } from '../../../../../shared/NewsletterValidationSchema';
+import React, { JSX } from "react";
+import { useState, FormEvent } from "react";
+import ArrowIcon from "@assets/e-shop/eshop-components/newsletter-arrow.svg";
+import { newsletterSchema } from "@shared/NewsletterValidationSchema";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
-type Status = 'validationError' | 'success' | 'exists' | 'error' | null;
+type Status = "validationError" | "success" | "exists" | "error" | null;
 
 /**
  * NewsletterSection component
@@ -18,41 +18,41 @@ type Status = 'validationError' | 'success' | 'exists' | 'error' | null;
  */
 
 export default function NewsletterSection(): JSX.Element {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
   const [status, setStatus] = useState<Status>(null);
-  const [validationError, setValidationError] = useState<string>('');
+  const [validationError, setValidationError] = useState<string>("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setStatus(null);
-    setValidationError('');
+    setValidationError("");
 
     const result = newsletterSchema.safeParse({ email });
     if (!result.success) {
-      setStatus('validationError');
+      setStatus("validationError");
       setValidationError(result.error.errors[0].message);
       return;
     }
 
     try {
       const response = await fetch(`${API_URL}/subscribe`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
 
       if (response.ok) {
-        setStatus('success');
-        setEmail('');
+        setStatus("success");
+        setEmail("");
       } else if (response.status === 409) {
-        setStatus('exists');
+        setStatus("exists");
       } else {
-        setStatus('error');
+        setStatus("error");
       }
     } catch {
-      setStatus('error');
+      setStatus("error");
     }
   };
 
@@ -74,19 +74,21 @@ export default function NewsletterSection(): JSX.Element {
           </button>
         </form>
 
-        {status === 'validationError' && (
+        {status === "validationError" && (
           <p id="email-error" className="newsletter-error">
             {validationError}
           </p>
         )}
-        {status === 'success' && (
+        {status === "success" && (
           <p className="newsletter-success">Thank you for subscribing!</p>
         )}
-        {status === 'exists' && (
+        {status === "exists" && (
           <p className="newsletter-error">You are already subscribed.</p>
         )}
-        {status === 'error' && (
-          <p className="newsletter-error">Something went wrong. Please try again.</p>
+        {status === "error" && (
+          <p className="newsletter-error">
+            Something went wrong. Please try again.
+          </p>
         )}
 
         <p className="newsletter-content-text">

@@ -1,9 +1,9 @@
-import React, { JSX } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import ShoppingCart from '../../../assets/e-shop/shopping-cart.svg';
-import MenuArrowGray from '../../../assets/e-shop/eshop-components/menu-arrow-gray.svg';
-import { eshopNavItems, navItems } from '../../../config/NavItems';
+import React, { JSX } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import ShoppingCart from "@assets/e-shop/shopping-cart.svg";
+import MenuArrowGray from "@assets/e-shop/eshop-components/menu-arrow-gray.svg";
+import { eshopNavItems, navItems } from "@config/NavItems";
 
 type NavItem = {
   label: string;
@@ -20,10 +20,10 @@ type ProductResponse = {
  * Renders a breadcrumb-style inline navigation menu for the e-shop section
  * Displays links to the main e-shop page, product categories, and individual product names,
  * based on the current URL path and route parameters
- * 
+ *
  * Includes a dropdown menu for product categories and a shopping cart icon
  * Fetches product details dynamically to display the current product's title
- * 
+ *
  * @returns {JSX.Element | null} The inline menu element or null if not on the e-shop path
  */
 
@@ -34,21 +34,29 @@ export default function InlineMenu(): JSX.Element | null {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [productName, setProductName] = useState<string | null>(null);
 
-  const homeNavItem = navItems.find((item): item is NavItem => !!item.to && item.label === 'E-shop');
-  const allProductsNavItem = eshopNavItems.find((item): item is NavItem => !!item.to && item.label === 'All Products');
-  const navLight = eshopNavItems.find((item): item is NavItem => !!item.to && item.label === 'Light Roasted');
-  const navDark = eshopNavItems.find((item): item is NavItem => !!item.to && item.label === 'Dark Roasted');
-  const navDecaf = eshopNavItems.find((item): item is NavItem => !!item.to && item.label === 'Decaf');
+  const homeNavItem = navItems.find(
+    (item): item is NavItem => !!item.to && item.label === "E-shop",
+  );
+  const allProductsNavItem = eshopNavItems.find(
+    (item): item is NavItem => !!item.to && item.label === "All Products",
+  );
+  const navLight = eshopNavItems.find(
+    (item): item is NavItem => !!item.to && item.label === "Light Roasted",
+  );
+  const navDark = eshopNavItems.find(
+    (item): item is NavItem => !!item.to && item.label === "Dark Roasted",
+  );
+  const navDecaf = eshopNavItems.find(
+    (item): item is NavItem => !!item.to && item.label === "Decaf",
+  );
 
   const currentCategoryItem = [navLight, navDark, navDecaf]
     .filter((item): item is NavItem => !!item)
     .find((item) => location.pathname.startsWith(item.to));
 
-  if (!homeNavItem || !path.startsWith(homeNavItem.to)) return null;
-
-  const segments = path.split('/').filter(Boolean);
-  const isCategoryPage = segments.includes('products') && segments.length === 3;
-  const isProductPage = segments.includes('products') && segments.length === 4;
+  const segments = path.split("/").filter(Boolean);
+  const isCategoryPage = segments.includes("products") && segments.length === 3;
+  const isProductPage = segments.includes("products") && segments.length === 4;
   const id = isProductPage ? segments[3] : null;
 
   useEffect(() => {
@@ -63,10 +71,12 @@ export default function InlineMenu(): JSX.Element | null {
   }, [id, category]);
 
   const scrollToTop = (instant = false): void => {
-    window.scrollTo({ top: 0, behavior: instant ? 'auto' : 'smooth' });
+    window.scrollTo({ top: 0, behavior: instant ? "auto" : "smooth" });
   };
 
   const closeDropdown = (): void => setDropdownOpen(false);
+
+  if (!homeNavItem || !path.startsWith(homeNavItem.to)) return null;
 
   return (
     <div className="inline-menu-section">
@@ -74,7 +84,11 @@ export default function InlineMenu(): JSX.Element | null {
         {/* E-shop Home */}
         {homeNavItem && (
           <div className="inline-menu-item">
-            <Link to={homeNavItem.to} onClick={() => scrollToTop(true)} className="text-gray-400">
+            <Link
+              to={homeNavItem.to}
+              onClick={() => scrollToTop(true)}
+              className="text-gray-400"
+            >
               {homeNavItem.label}
             </Link>
           </div>
@@ -92,12 +106,14 @@ export default function InlineMenu(): JSX.Element | null {
 
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
-            className={`relative ${isCategoryPage || isProductPage ? 'text-gray-400' : ''}`}
+            className={`relative ${isCategoryPage || isProductPage ? "text-gray-400" : ""}`}
           >
             Products
           </button>
 
-          <div className={`dropdown-menu ${dropdownOpen ? 'visible opacity-100' : 'invisible opacity-0'}`}>
+          <div
+            className={`dropdown-menu ${dropdownOpen ? "visible opacity-100" : "invisible opacity-0"}`}
+          >
             <ul className="dropdown-menu-list">
               {[navLight, navDark, navDecaf, allProductsNavItem].map(
                 (navItem) =>
@@ -114,7 +130,7 @@ export default function InlineMenu(): JSX.Element | null {
                         {navItem.label}
                       </Link>
                     </li>
-                  )
+                  ),
               )}
             </ul>
           </div>
@@ -138,7 +154,11 @@ export default function InlineMenu(): JSX.Element | null {
                 <span className="arrow">
                   <img src={MenuArrowGray} alt="Arrow" />
                 </span>
-                <Link to={currentCategoryItem.to} onClick={() => scrollToTop(true)} className="text-gray-400">
+                <Link
+                  to={currentCategoryItem.to}
+                  onClick={() => scrollToTop(true)}
+                  className="text-gray-400"
+                >
                   {currentCategoryItem.label}
                 </Link>
               </div>
