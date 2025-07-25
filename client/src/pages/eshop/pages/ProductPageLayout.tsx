@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { JSX, useEffect, useState } from "react";
-import InlineMenu from "../eshop-components/InlineMenu";
-import HeroSection from "../../../components/HeroSection";
-import HeroImg from "../../../assets/e-shop/category-hero.jpg";
-import MainButton from "../../../components/MainButton";
-import Newsletter from "../eshop-components/Newsletter";
-import ProductCounter from "../eshop-components/ProductCounter";
-import DeliveryIcon from "../../../assets/e-shop/eshop-components/delivery.svg";
-import StockIcon from "../../../assets/e-shop/eshop-components/stock.svg";
+import InlineMenu from "@eshop-components/InlineMenu";
+import HeroSection from "@components/HeroSection";
+import HeroImg from "@assets/e-shop/category-hero.jpg";
+import MainButton from "@components/MainButton";
+import Newsletter from "@eshop-components/Newsletter";
+import ProductCounter from "@eshop-components/ProductCounter";
+import DeliveryIcon from "@assets/e-shop/eshop-components/delivery.svg";
+import StockIcon from "@assets/e-shop/eshop-components/stock.svg";
 
 interface Product {
   id: string;

@@ -1,7 +1,10 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { format } from 'date-fns';
-import { reservationSchema, MAX_CAPACITY } from '../../../shared/ReservationFormValidationSchema';
-import { generateTimeSlots } from '../utils/reservationFormLogic';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { format } from "date-fns";
+import {
+  reservationSchema,
+  MAX_CAPACITY,
+} from "@shared/ReservationFormValidationSchema";
+import { generateTimeSlots } from "@/utils/reservationFormLogic";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
@@ -73,7 +76,9 @@ export function useReservationForm(): {
   loading: boolean;
   remainingSeats: number | null;
   setRemainingSeats: React.Dispatch<React.SetStateAction<number | null>>;
-  handleInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleInputChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => void;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
   fetchReservations: (date: Date) => Promise<void>;
   MAX_CAPACITY: number;
@@ -81,20 +86,26 @@ export function useReservationForm(): {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [availableTimes, setAvailableTimes] = useState<TimeSlot[]>([]);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [form, setForm] = useState<FormState>({ name: '', email: '', guests: 1 });
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    guests: 1,
+  });
   const [errors, setErrors] = useState<Errors>({});
   const [remainingSeats, setRemainingSeats] = useState<number | null>(null);
-  const [message, setMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
-      [name]: name === 'guests' ? Number(value) : value
+      [name]: name === "guests" ? Number(value) : value,
     }));
-    setErrors(prev => ({ ...prev, [name]: undefined }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
   const fetchReservations = async (date: Date) => {
@@ -103,10 +114,12 @@ export function useReservationForm(): {
       const data: ApiReservation[] = await res.json();
 
       const filtered = data.filter(
-        (r) => format(new Date(r.datetime), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
+        (r) =>
+          format(new Date(r.datetime), "yyyy-MM-dd") ===
+          format(date, "yyyy-MM-dd"),
       );
 
-      const normalized = filtered.map(r => ({
+      const normalized = filtered.map((r) => ({
         ...r,
         guests: r.guests ?? 0,
       }));
@@ -114,7 +127,7 @@ export function useReservationForm(): {
       const slots = generateTimeSlots(date, normalized);
       setAvailableTimes(slots);
     } catch (err) {
-      console.error('Error fetching reservations:', err);
+      console.error("Error fetching reservations:", err);
     }
   };
 
@@ -126,7 +139,7 @@ export function useReservationForm(): {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage('');
+    setErrorMessage("");
     setErrors({});
 
     const payload = {
@@ -146,8 +159,8 @@ export function useReservationForm(): {
         email: formatted.email?._errors?.[0],
         guests: formatted.guests?._errors?.[0],
       };
-      if (!selectedDate) newErrors.date = 'Please select a date';
-      if (!selectedTime) newErrors.time = 'Please select a time';
+      if (!selectedDate) newErrors.date = "Please select a date";
+      if (!selectedTime) newErrors.time = "Please select a time";
       setErrors(newErrors);
       return;
     }
@@ -155,26 +168,26 @@ export function useReservationForm(): {
     try {
       setLoading(true);
       const response = await fetch(`${API_URL}/reservations/reserve`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        setMessage('Reservation has been created successfully. Thank you!');
-        setForm({ name: '', email: '', guests: 1 });
+        setMessage("Reservation has been created successfully. Thank you!");
+        setForm({ name: "", email: "", guests: 1 });
         setSelectedDate(null);
         setSelectedTime(null);
         setAvailableTimes([]);
         setRemainingSeats(null);
       } else {
-        setErrorMessage(result.errorMessage || 'Reservation failed.');
+        setErrorMessage(result.errorMessage || "Reservation failed.");
       }
     } catch (err) {
-      console.error('Error submitting reservation:', err);
-      setErrorMessage('Server error.');
+      console.error("Error submitting reservation:", err);
+      setErrorMessage("Server error.");
     } finally {
       setLoading(false);
     }

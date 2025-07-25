@@ -1,6 +1,6 @@
-import React, { JSX } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { handleNavigation, type NavItem } from '../utils/navigationFunctions';
+import React, { JSX } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { handleNavigation, type NavItem } from "@/utils/navigationFunctions";
 
 interface NavLinkProps {
   item: NavItem & { label: string };
@@ -18,11 +18,15 @@ interface NavLinkProps {
  * @param {NavItem & { label: string }} item - Navigation item containing link info
  * @param {string} [className] - Optional CSS class names
  * @param {() => void} [closeMenu] - Optional callback to close mobile navigation menu
- * 
+ *
  * @returns {JSX.Element} The rendered navigation link element
  */
 
-function NavLink({ item, className = '', closeMenu }: NavLinkProps): JSX.Element {
+function NavLink({
+  item,
+  className = "",
+  closeMenu,
+}: NavLinkProps): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,13 +38,13 @@ function NavLink({ item, className = '', closeMenu }: NavLinkProps): JSX.Element
     </Link>
   ) : (
     <a
-      href={`#${item.sectionId || ''}`}
+      href={`#${item.sectionId || ""}`}
       className={className}
       onClick={(e) => handleNavigation(e, item, location, navigate, closeMenu)}
     >
       {item.label}
     </a>
   );
-};
+}
 
 export default NavLink;

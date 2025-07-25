@@ -1,15 +1,15 @@
-import React, { JSX } from 'react';
-import HeroSection from '../../../../components/HeroSection';
-import HeroImg from '../../../../assets/e-shop/eshop-hero.jpg';
-import ProductCategories from './ProductCategories';
-import StorySection from './StorySection';
-import LatestProducts from './LatestProducts';
-import EshopInfoBoxes from '../../eshop-components/EshopInfoBoxes';
-import NewsletterSection from '../../eshop-components/Newsletter';
+import React, { JSX } from "react";
+import HeroSection from "@components/HeroSection";
+import HeroImg from "@assets/e-shop/eshop-hero.jpg";
+import ProductCategories from "./ProductCategories";
+import StorySection from "./StorySection";
+import LatestProducts from "./LatestProducts";
+import EshopInfoBoxes from "@eshop-components/EshopInfoBoxes";
+import NewsletterSection from "@eshop-components/Newsletter";
 
 /**
  * EshopLandingPage
- * 
+ *
  * Main landing page component for the e-shop section
  * Composes the hero banner, product categories, info boxes,
  * latest product selection, story section, and newsletter signup

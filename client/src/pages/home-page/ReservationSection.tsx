@@ -1,7 +1,7 @@
-import React, { JSX } from 'react';
-import phoneBackground from '../../assets/main-page/phone.png';
-import MainButton from '../../components/MainButton';
-import { navItems, NavItem } from '../../config/NavItems';
+import React, { JSX } from "react";
+import phoneBackground from "@assets/main-page/phone.png";
+import MainButton from "@components/MainButton";
+import { navItems, NavItem } from "@config/NavItems";
 
 /**
  * ReservationSection component
@@ -13,7 +13,7 @@ import { navItems, NavItem } from '../../config/NavItems';
 
 const ReservationSection = (): JSX.Element => {
   const reservationPageLink: NavItem | undefined = navItems.find(
-    (item) => item.label === 'Reservation'
+    (item) => item.label === "Reservation",
   );
 
   return (
@@ -23,13 +23,17 @@ const ReservationSection = (): JSX.Element => {
       </div>
       <div className="reservation-content reservation-text">
         <p>
-          Do you want to make sure you’ll have a free seat when you come?
-          You can contact us on our email, social media or make a reservation
-          in our system.
+          Do you want to make sure you’ll have a free seat when you come? You
+          can contact us on our email, social media or make a reservation in our
+          system.
         </p>
 
         {reservationPageLink?.to && (
-          <MainButton text="RESERVATION" to={reservationPageLink.to} color="black" />
+          <MainButton
+            text="RESERVATION"
+            to={reservationPageLink.to}
+            color="black"
+          />
         )}
       </div>
     </section>

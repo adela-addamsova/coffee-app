@@ -1,6 +1,6 @@
-import React, { JSX } from 'react';
-import SocialIcons from './SocialIcons';
-import { coffeeHouseData } from '../config/CoffeeHouseData';
+import React, { JSX } from "react";
+import SocialIcons from "./SocialIcons";
+import { coffeeHouseData } from "@config/CoffeeHouseData";
 
 interface BoxData {
   title: string;
@@ -10,23 +10,25 @@ interface BoxData {
 
 /**
  * boxesData
- * 
+ *
  * An array defining the content and icons of each informational box
  * shown in the InfoBoxes component.
  */
 const boxesData: BoxData[] = [
   {
-    title: 'CONTACT',
+    title: "CONTACT",
     text: (
       <>
         <p>{coffeeHouseData.contact.phone}</p>
-        <a href={`mailto:${coffeeHouseData.contact.email}`}>{coffeeHouseData.contact.email}</a>
+        <a href={`mailto:${coffeeHouseData.contact.email}`}>
+          {coffeeHouseData.contact.email}
+        </a>
       </>
     ),
-    icons: ['social-icons'],
+    icons: ["social-icons"],
   },
   {
-    title: 'OPENING HOURS',
+    title: "OPENING HOURS",
     text: (
       <>
         <p>
@@ -44,7 +46,7 @@ const boxesData: BoxData[] = [
     icons: [],
   },
   {
-    title: 'LOCATION',
+    title: "LOCATION",
     text: (
       <>
         <p>{coffeeHouseData.address.street}</p>
@@ -58,10 +60,10 @@ const boxesData: BoxData[] = [
 
 /**
  * InfoBoxes component
- * 
+ *
  * Renders informational boxes displaying contact details, opening hours, and location
  * Based on the predefined `boxesData` array.
- * 
+ *
  * @returns {JSX.Element} The info boxes section element
  */
 const InfoBoxes = (): JSX.Element => {
