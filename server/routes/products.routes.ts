@@ -1,5 +1,10 @@
-import { Router, Request, Response } from 'express';
-import { getLatestProducts, getAllProducts, getProductsByCategory, getProductById } from '../db/products-db';
+import { Router, Request, Response } from "express";
+import {
+  getLatestProducts,
+  getAllProducts,
+  getProductsByCategory,
+  getProductById,
+} from "@db/products-db";
 
 const router = Router();
 
@@ -11,12 +16,12 @@ const router = Router();
  * @param res - Express Response object
  * @returns JSON array of all products
  */
-router.get('/', (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {
   try {
     const products = getAllProducts();
     res.json(products);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch products' });
+    res.status(500).json({ error: "Failed to fetch products" });
   }
 });
 
@@ -28,12 +33,12 @@ router.get('/', (req: Request, res: Response) => {
  * @param res - Express Response object
  * @returns JSON array of latest products
  */
-router.get('/latest', (req: Request, res: Response) => {
+router.get("/latest", (req: Request, res: Response) => {
   try {
     const products = getLatestProducts(4);
     res.json(products);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch products' });
+    res.status(500).json({ error: "Failed to fetch products" });
   }
 });
 
@@ -45,16 +50,19 @@ router.get('/latest', (req: Request, res: Response) => {
  * @param res - Express Response object
  * @returns JSON array of products in the category
  */
-router.get('/:category', (req: Request<{ category: string }>, res: Response) => {
-  const { category } = req.params;
+router.get(
+  "/:category",
+  (req: Request<{ category: string }>, res: Response) => {
+    const { category } = req.params;
 
-  try {
-    const products = getProductsByCategory(category);
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch category products' });
-  }
-});
+    try {
+      const products = getProductsByCategory(category);
+      res.json(products);
+    } catch (err) {
+      res.status(500).json({ error: "Failed to fetch category products" });
+    }
+  },
+);
 
 /**
  * GET /api/products/:category/:id
@@ -65,7 +73,7 @@ router.get('/:category', (req: Request<{ category: string }>, res: Response) => 
  * @returns JSON object of the product or 404 if not found
  */
 router.get(
-  '/:category/:id',
+  "/:category/:id",
   (req: Request<{ category: string; id: number }>, res: Response) => {
     const { category, id } = req.params;
 
@@ -73,14 +81,14 @@ router.get(
       const product = getProductById(id, category);
 
       if (!product) {
-        return res.status(404).json({ error: 'Product not found' });
+        return res.status(404).json({ error: "Product not found" });
       }
 
       res.json(product);
-    } catch (err) {
-      res.status(500).json({ error: 'Failed to fetch product' });
+    } catch (_err) {
+      res.status(500).json({ error: "Failed to fetch product" });
     }
-  }
+  },
 );
 
 export default router;

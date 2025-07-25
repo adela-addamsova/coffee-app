@@ -1,11 +1,11 @@
-import React, { JSX } from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import ReservationForm from '../reservation-page/ReservationForm';
-import HeroSection from '../../components/HeroSection';
-import HeroImg from '../../assets/reservation-page/reservation-hero.jpg';
-import BeansBackground from '../../assets/reservation-page/beans-bck.png';
-import InfoBoxes from '../../components/InfoBoxes';
+import React, { JSX } from "react";
+import Header from "@components/Header";
+import Footer from "@components/Footer";
+import ReservationForm from "./ReservationForm";
+import HeroSection from "@components/HeroSection";
+import HeroImg from "@assets/reservation-page/reservation-hero.jpg";
+import BeansBackground from "@assets/reservation-page/beans-bck.png";
+import InfoBoxes from "@components/InfoBoxes";
 
 /**
  * ReservationPage
@@ -22,10 +22,7 @@ const ReservationPage = (): JSX.Element => {
     <>
       <Header />
       <div className="reservation-page-hero">
-        <HeroSection
-          imgSrc={HeroImg}
-          heading="Reservation"
-        />
+        <HeroSection imgSrc={HeroImg} heading="Reservation" />
       </div>
       <div className="reservation-page-container">
         <InfoBoxes />

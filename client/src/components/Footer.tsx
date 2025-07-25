@@ -1,8 +1,8 @@
-import React, { JSX } from 'react';
-import SocialIcons from './SocialIcons';
-import { navItems, NavItem } from '../config/NavItems';
-import NavLink from './NavLink';
-import { coffeeHouseData } from '../config/CoffeeHouseData';
+import React, { JSX } from "react";
+import SocialIcons from "./SocialIcons";
+import { navItems, NavItem } from "@config/NavItems";
+import NavLink from "./NavLink";
+import { coffeeHouseData } from "@config/CoffeeHouseData";
 
 /**
  * Footer component
@@ -16,21 +16,23 @@ import { coffeeHouseData } from '../config/CoffeeHouseData';
  * @returns {JSX.Element} The footer section element
  */
 const Footer = (): JSX.Element => {
-  const footerItems: NavItem[] = navItems.filter(
-    (item): item is NavItem => ['E-shop', 'Reservation', 'Menu'].includes(item.label)
+  const footerItems: NavItem[] = navItems.filter((item): item is NavItem =>
+    ["E-shop", "Reservation", "Menu"].includes(item.label),
   );
 
   return (
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-text">
-          {footerItems.map(item => (
+          {footerItems.map((item) => (
             <NavLink key={item.label} item={item} className="footer-link" />
           ))}
         </div>
         <div className="footer-text">
           <p>{coffeeHouseData.contact.phone}</p>
-          <a href={`mailto:${coffeeHouseData.contact.email}`}>{coffeeHouseData.contact.email}</a>
+          <a href={`mailto:${coffeeHouseData.contact.email}`}>
+            {coffeeHouseData.contact.email}
+          </a>
           <div className="social-icon">
             <SocialIcons />
           </div>

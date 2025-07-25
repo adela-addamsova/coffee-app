@@ -1,12 +1,14 @@
 import React, { JSX, useEffect, useRef } from "react";
-import { navItems, NavItem } from "../../config/NavItems";
-import coffeePlant1 from "../../assets/main-page/coffee-plant-1.jpg";
-import chemex from "../../assets/main-page/chemex.png";
-import v60 from "../../assets/main-page/v60.png";
-import coffeePackage from "../../assets/main-page/coffee-package.png";
-import MainButton from '../../components/MainButton';
+import { navItems, NavItem } from "@config/NavItems";
+import coffeePlant1 from "@assets/main-page/coffee-plant-1.jpg";
+import chemex from "@assets/main-page/chemex.png";
+import v60 from "@assets/main-page/v60.png";
+import coffeePackage from "@assets/main-page/coffee-package.png";
+import MainButton from "@components/MainButton";
 
-const eshopPageLink: NavItem | undefined = navItems.find(item => item.label === 'E-shop');
+const eshopPageLink: NavItem | undefined = navItems.find(
+  (item) => item.label === "E-shop",
+);
 
 /**
  * StoryScroll
@@ -22,7 +24,7 @@ const StoryScroll = (): JSX.Element => {
   const trackRef = useRef<HTMLDivElement | null>(null);
 
   const slides = 3;
-  const slideHeightVh = 70; 
+  const slideHeightVh = 70;
   const extraScrollVh = 30; // Additional scroll space to allow for finishing the last slide
 
   useEffect(() => {
@@ -74,17 +76,19 @@ const StoryScroll = (): JSX.Element => {
     >
       <div className="sticky-container">
         <div className="slides-track" ref={trackRef}>
-
           {/* Slide 1 */}
           <div className="slide slide-1">
             <div className="slide1-text">
               <h2>Our story</h2>
               <p>
-                Morning Mist Coffee began as a journey shared by three friends with a deep love for coffee.
-                After traveling through South America, exploring local farms and learning the art of roasting firsthand,
-                we became inspired to bring that passion home. What started as a small roasting project soon grew into
-                a full coffee house, where we could share the rich flavors and traditions we had discovered. Today,
-                we continue to craft every roast with the same enthusiasm, bringing high-quality coffee to early risers
+                Morning Mist Coffee began as a journey shared by three friends
+                with a deep love for coffee. After traveling through South
+                America, exploring local farms and learning the art of roasting
+                firsthand, we became inspired to bring that passion home. What
+                started as a small roasting project soon grew into a full coffee
+                house, where we could share the rich flavors and traditions we
+                had discovered. Today, we continue to craft every roast with the
+                same enthusiasm, bringing high-quality coffee to early risers
                 and dedicated coffee lovers alike.
               </p>
             </div>
@@ -97,10 +101,13 @@ const StoryScroll = (): JSX.Element => {
           <div className="slide slide-2">
             <div className="slide2-text" data-aos="fade-right">
               <p>
-                Morning Mist Coffee was founded with a passion for exceptional coffee and expert roasting.
-                From our small-batch roastery, we carefully select and roast beans to highlight their natural flavors,
-                ensuring a rich and aromatic experience in every cup. Our coffee house was created as a welcoming space
-                for early risers, serving freshly brewed blends with the first light of morning.
+                Morning Mist Coffee was founded with a passion for exceptional
+                coffee and expert roasting. From our small-batch roastery, we
+                carefully select and roast beans to highlight their natural
+                flavors, ensuring a rich and aromatic experience in every cup.
+                Our coffee house was created as a welcoming space for early
+                risers, serving freshly brewed blends with the first light of
+                morning.
               </p>
             </div>
             <div className="slide2-img">
@@ -113,19 +120,24 @@ const StoryScroll = (): JSX.Element => {
           <div className="slide slide-3">
             <div className="slide3-text">
               <p>
-                Beyond our café, we offer our signature roasted beans through our online store, allowing coffee lovers
-                to enjoy premium-quality coffee at home. With a selection of carefully crafted roasts and nationwide delivery,
-                Morning Mist Coffee brings the art of coffee roasting straight to your doorstep.
+                Beyond our café, we offer our signature roasted beans through
+                our online store, allowing coffee lovers to enjoy
+                premium-quality coffee at home. With a selection of carefully
+                crafted roasts and nationwide delivery, Morning Mist Coffee
+                brings the art of coffee roasting straight to your doorstep.
               </p>
               {eshopPageLink?.to && (
-                <MainButton text="GO TO ESHOP" to={eshopPageLink.to} color="white" />
+                <MainButton
+                  text="GO TO ESHOP"
+                  to={eshopPageLink.to}
+                  color="white"
+                />
               )}
             </div>
             <div className="slide3-img">
               <img src={coffeePackage} alt="package" />
             </div>
           </div>
-
         </div>
       </div>
     </section>

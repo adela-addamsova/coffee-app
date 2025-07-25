@@ -1,13 +1,13 @@
-import React, { JSX } from 'react';
-import { Link } from 'react-router-dom';
-import ShoppingCart from '../../../assets/e-shop/shopping-cart.svg';
+import React, { JSX } from "react";
+import { Link } from "react-router-dom";
+import ShoppingCart from "@assets/e-shop/shopping-cart.svg";
 
 type ProductMiniatureProps = {
   id: string | number;
   title: string;
   price: number;
   image_url: string;
-  category: 'light' | 'dark' | 'decaf';
+  category: "light" | "dark" | "decaf";
 };
 
 /**
@@ -32,13 +32,16 @@ export default function ProductMiniature({
   category,
 }: ProductMiniatureProps): JSX.Element {
   const categoryLabels: Record<string, string> = {
-    light: 'Light roasted',
-    dark: 'Dark roasted',
-    decaf: 'Decaf',
+    light: "Light roasted",
+    dark: "Dark roasted",
+    decaf: "Decaf",
   };
 
   return (
-    <Link to={`/e-shop/products/${category}/${id}`} className="eshop-product-miniature">
+    <Link
+      to={`/e-shop/products/${category}/${id}`}
+      className="eshop-product-miniature"
+    >
       <div className="product-image">
         <img src={image_url} alt={title} />
       </div>
