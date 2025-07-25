@@ -4,13 +4,23 @@
     "module": "esnext",
     "target": "es6",
     "moduleResolution": "node",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["react", "react-dom"],
+    "types": [
+      "react",
+      "react-dom"
+    ]
   },
-   "include": ["src", "vite-env.d.ts", "../shared"],
+  "include": [
+    "src",
+    "vite-env.d.ts",
+    "../shared"
+  ],
   "exclude": [
     "node_modules"
   ]
