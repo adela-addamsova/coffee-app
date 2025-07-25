@@ -8,7 +8,19 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@db/*": [
+        "db/*"
+      ],
+      "@routes/*": [
+        "routes/*"
+      ],
+      "@shared/*": [
+        "../shared/*"
+      ]
+    }
   },
   "include": [
     "**/*.ts",
