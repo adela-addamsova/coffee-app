@@ -1,4 +1,3 @@
-// eslint.config.js
 import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -37,12 +36,7 @@ const baseRules = {
   "import/no-unused-modules": ["warn", { unusedExports: true }],
 };
 
-// 📦 Export final config
 export default [
-  {
-    ignores: ["dist", "node_modules", "commitlint.config.js"],
-  },
-
   // Client config
   {
     files: ["client/**/*.{js,jsx,ts,tsx}"],
