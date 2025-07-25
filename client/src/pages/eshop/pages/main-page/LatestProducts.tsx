@@ -1,29 +1,29 @@
-import React, { JSX, useEffect, useState } from 'react';
-import ProductMiniature from '../../eshop-components/ProductMiniature';
+import { JSX, useEffect, useState } from "react";
+import ProductMiniature from "../../eshop-components/ProductMiniature";
 
 interface Product {
   id: string | number;
   title: string;
-  category: 'light' | 'dark' | 'decaf';
+  category: "light" | "dark" | "decaf";
   price: number;
   image_url: string;
 }
 
 /**
- * LandingPage
- * 
+ * LatestProducts
+ *
  * Fetches and displays the latest products as ProductMiniature components.
- * 
+ *
  * @returns {JSX.Element} The rendered section containing the latest products.
  */
-export default function LandingPage(): JSX.Element {
+export default function LatestProducts(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/products/latest`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data: Product[]) => setProducts(data))
-      .catch(err => console.error('Error fetching latest products:', err));
+      .catch((err) => console.error("Error fetching latest products:", err));
   }, []);
 
   return (

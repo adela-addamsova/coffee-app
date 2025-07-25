@@ -1,13 +1,13 @@
-import { useParams } from 'react-router-dom';
-import { JSX, useEffect, useState } from 'react';
-import InlineMenu from '../eshop-components/InlineMenu';
-import HeroSection from '../../../components/HeroSection';
-import HeroImg from '../../../assets/e-shop/category-hero.jpg';
-import MainButton from '../../../components/MainButton';
-import Newsletter from '../eshop-components/Newsletter';
-import ProductCounter from '../eshop-components/ProductCounter';
-import DeliveryIcon from '../../../assets/e-shop/eshop-components/delivery.svg';
-import StockIcon from '../../../assets/e-shop/eshop-components/stock.svg';
+import { useParams } from "react-router-dom";
+import { JSX, useEffect, useState } from "react";
+import InlineMenu from "../eshop-components/InlineMenu";
+import HeroSection from "../../../components/HeroSection";
+import HeroImg from "../../../assets/e-shop/category-hero.jpg";
+import MainButton from "../../../components/MainButton";
+import Newsletter from "../eshop-components/Newsletter";
+import ProductCounter from "../eshop-components/ProductCounter";
+import DeliveryIcon from "../../../assets/e-shop/eshop-components/delivery.svg";
+import StockIcon from "../../../assets/e-shop/eshop-components/stock.svg";
 
 interface Product {
   id: string;
@@ -24,21 +24,7 @@ interface Product {
 /**
  * ProductPageLayout component
  *
- * Displays detailed information about a single product within a category.
- * 
- * Responsibilities:
- * - Fetches product data based on URL parameters (category and product ID).
- * - Handles loading and error states for fetching product data.
- * - Renders a hero image for the product page.
- * - Displays an inline navigation menu for the e-shop.
- * - Shows product details including image, title, price, stock availability,
- *   ingredients, weight, origin, and taste profile.
- * - Includes product quantity selector and an "Add to Cart" button.
- * - Shows delivery and stock info with icons.
- * - Incorporates a newsletter subscription section below product details.
- *
- * If the product is not found or the URL parameters are missing, it displays an error message.
- * While data is loading, it shows a loading message.
+ * Displays detailed information about a single product within a category
  *
  * @returns {JSX.Element} The product detail page layout
  */
@@ -49,7 +35,7 @@ export default function ProductPageLayout(): JSX.Element {
 
   useEffect(() => {
     if (!category || !id) {
-      setError('Product not found');
+      setError("Product not found");
       setProduct(null);
       return;
     }
@@ -57,9 +43,9 @@ export default function ProductPageLayout(): JSX.Element {
     const url = `${import.meta.env.VITE_API_URL}/products/${category}/${id}`;
 
     fetch(url)
-      .then(res => {
+      .then((res) => {
         if (!res.ok) {
-          throw new Error('Product not found');
+          throw new Error("Product not found");
         }
         return res.json();
       })
@@ -67,9 +53,9 @@ export default function ProductPageLayout(): JSX.Element {
         setProduct(data);
         setError(null);
       })
-      .catch(err => {
-        console.error('Error fetching product:', err);
-        setError('Product not found');
+      .catch((err) => {
+        console.error("Error fetching product:", err);
+        setError("Product not found");
         setProduct(null);
       });
   }, [category, id]);
@@ -94,9 +80,7 @@ export default function ProductPageLayout(): JSX.Element {
     <div>
       {/* Hero section */}
       <div className="product-page-hero">
-        <HeroSection
-          imgSrc={HeroImg}
-        />
+        <HeroSection imgSrc={HeroImg} />
       </div>
 
       {/* Inline Menu */}
