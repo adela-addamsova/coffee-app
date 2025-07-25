@@ -1,6 +1,9 @@
-import { Router, Request, Response } from 'express';
-import { insertNewsletterSubscriber, isEmailSubscribed } from '../db/newsletter-db';
-import { newsletterSchema } from '../../shared/NewsletterValidationSchema';
+import { Router, Request, Response } from "express";
+import {
+  insertNewsletterSubscriber,
+  isEmailSubscribed,
+} from "@db/newsletter-db";
+import { newsletterSchema } from "@shared/NewsletterValidationSchema";
 
 const router = Router();
 
@@ -12,7 +15,7 @@ const router = Router();
  * @param res - Express Response object used to send the result
  * @returns JSON response with success message or error
  */
-router.post('/', (req: Request, res: Response) => {
+router.post("/", (req: Request, res: Response) => {
   const parseResult = newsletterSchema.safeParse(req.body);
 
   if (!parseResult.success) {
@@ -24,15 +27,18 @@ router.post('/', (req: Request, res: Response) => {
 
   try {
     if (isEmailSubscribed(email)) {
-      return res.status(409).json({ error: 'This email is already subscribed' });
+      return res
+        .status(409)
+        .json({ error: "This email is already subscribed" });
     }
 
     const result = insertNewsletterSubscriber(email, ip_address);
-    return res.status(201).json({ message: 'Subscription successful', id: result.lastInsertRowid });
-
+    return res
+      .status(201)
+      .json({ message: "Subscription successful", id: result.lastInsertRowid });
   } catch (err) {
-    console.error('Insert error:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Insert error:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

@@ -1,10 +1,10 @@
-import { useState, useEffect, JSX } from 'react';
-import { Link } from 'react-router-dom';
-import { navItems } from '../config/NavItems';
-import NavLink from './NavLink';
-import logoWhite from '../assets/components/coffee-beans-white.svg';
-import logoBlack from '../assets/components/coffee-beans-black.svg';
-import { scrollToTop } from '../utils/navigationFunctions';
+import { useState, useEffect, JSX } from "react";
+import { Link } from "react-router-dom";
+import { navItems } from "@config/NavItems";
+import NavLink from "./NavLink";
+import logoWhite from "@assets/components/coffee-beans-white.svg";
+import logoBlack from "@assets/components/coffee-beans-black.svg";
+import { scrollToTop } from "@/utils/navigationFunctions";
 
 /**
  * Header component
@@ -27,8 +27,8 @@ const Header = (): JSX.Element => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Map navigation items
@@ -43,7 +43,7 @@ const Header = (): JSX.Element => {
     ));
 
   return (
-    <header className={`page-header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className={`page-header ${isScrolled ? "scrolled" : ""}`}>
       {/* Logo with link */}
       <div className="nav-logo">
         <Link to="/" onClick={scrollToTop}>
@@ -52,7 +52,7 @@ const Header = (): JSX.Element => {
       </div>
 
       {/* Desktop nav */}
-      <nav className="nav-desktop">{renderNavItems('nav-link')}</nav>
+      <nav className="nav-desktop">{renderNavItems("nav-link")}</nav>
 
       {/* Burger for mobile */}
       <div
@@ -62,7 +62,7 @@ const Header = (): JSX.Element => {
         tabIndex={0}
         aria-label="Open menu"
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             setShowMenu(true);
           }
         }}
@@ -75,11 +75,17 @@ const Header = (): JSX.Element => {
         <div className="mobile-nav">
           <div className="mobile-nav-head">
             <img src={logoBlack} alt="Logo" className="nav-logo" />
-            <button onClick={() => setShowMenu(false)} className="x-icon" aria-label="Close menu">
+            <button
+              onClick={() => setShowMenu(false)}
+              className="x-icon"
+              aria-label="Close menu"
+            >
               &times;
             </button>
           </div>
-          <div className="mobile-nav-body">{renderNavItems('nav-link-mobile')}</div>
+          <div className="mobile-nav-body">
+            {renderNavItems("nav-link-mobile")}
+          </div>
         </div>
       )}
     </header>

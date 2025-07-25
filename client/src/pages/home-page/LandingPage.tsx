@@ -1,15 +1,15 @@
-import React, { JSX, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Header from '../../components/Header';
-import HeroSection from '../../components/HeroSection';
-import HeroImg from '../../assets/main-page/hero-1.jpg';
-import InfoBoxes from '../../components/InfoBoxes';
-import HeroTextSection from './HeroTextSection';
-import ScrollStory from './StoryScroll';
-import Menu from './MenuSection';
-import GallerySection from './GallerySection';
-import ReservationSection from './ReservationSection';
-import Footer from '../../components/Footer';
+import React, { JSX, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Header from "@components/Header";
+import HeroSection from "@components/HeroSection";
+import HeroImg from "@assets/main-page/hero-1.jpg";
+import InfoBoxes from "@components/InfoBoxes";
+import HeroTextSection from "./HeroTextSection";
+import ScrollStory from "./StoryScroll";
+import Menu from "./MenuSection";
+import GallerySection from "./GallerySection";
+import ReservationSection from "./ReservationSection";
+import Footer from "@components/Footer";
 
 /**
  * LandingPage component
