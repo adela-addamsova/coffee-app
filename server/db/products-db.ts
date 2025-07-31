@@ -1,93 +1,127 @@
-import db from './coffee-app-db';
+import type { Database as DBType } from "better-sqlite3";
 
 /**
- * Full product entry from the database
+ * Full product record from the database
  */
 export interface Product {
   id: number;
   title: string;
-  image_url: string;
+  image_url?: string;
   category: string;
-  price: number;
-  ingredients: string;
-  weight: string;
-  origin: string;
-  taste_profile: string;
-  full_description: string;
-  stock: number;
-  created_at?: string | null;
+  price?: number;
+  ingredients?: string;
+  weight?: string;
+  origin?: string;
+  taste_profile?: string;
+  full_description?: string;
+  stock?: number;
+  deleted_at?: string | null;
+  created_at?: string;
 }
 
 /**
- * Simplified version of a product used for listings or previews
+ * Lightweight product preview for listings
  */
-export type ProductPreview = Pick<Product, 'id' | 'title' | 'category' | 'price' | 'image_url'>;
+export type ProductPreview = Pick<
+  Product,
+  "id" | "title" | "category" | "price" | "image_url"
+>;
 
 /**
- * Retrieves the latest available products, sorted by creation date
- * 
+ * Retrieves the most recently added products (in stock and not deleted).
+ *
  * @param limit - Maximum number of products to return
- * @returns An array of product previews
+ * @param dbInstance - The SQLite database instance
+ * @returns An array of the latest product previews
  */
-function getLatestProducts(limit = 4): ProductPreview[] {
-  return db.prepare(`
+function getLatestProducts(
+  limit: number,
+  dbInstance: DBType,
+): ProductPreview[] {
+  return dbInstance
+    .prepare(
+      `
     SELECT id, title, category, price, image_url
     FROM products
     WHERE deleted_at IS NULL
     AND stock > 0
-    ORDER BY datetime(created_at) DESC
+    ORDER BY datetime(created_at) DESC, id DESC
     LIMIT ?;
-  `).all(limit) as ProductPreview[];
+  `,
+    )
+    .all(limit) as ProductPreview[];
 }
 
 /**
- * Retrieves all available products from the database
- * 
- * @returns An array of product previews
+ * Retrieves all products that are in stock and not soft-deleted.
+ *
+ * @param dbInstance - The SQLite database instance
+ * @returns An array of all product previews
  */
-function getAllProducts(): ProductPreview[] {
-  return db.prepare(`
+function getAllProducts(dbInstance: DBType): ProductPreview[] {
+  return dbInstance
+    .prepare(
+      `
     SELECT id, title, category, price, image_url
     FROM products
     WHERE deleted_at IS NULL
     AND stock > 0
     ORDER BY datetime(created_at) DESC;
-  `).all() as ProductPreview[];
+  `,
+    )
+    .all() as ProductPreview[];
 }
 
 /**
- * Retrieves all available products from a given category
- * 
+ * Retrieves all products of a specific category that are in stock and not soft-deleted.
+ *
  * @param category - The product category to filter by
- * @returns An array of products in the specified category
+ * @param dbInstance - The SQLite database instance
+ * @returns An array of product previews from the given category
  */
-function getProductsByCategory(category: string): ProductPreview[] {
-  return db.prepare(`
+function getProductsByCategory(
+  category: string,
+  dbInstance: DBType,
+): ProductPreview[] {
+  return dbInstance
+    .prepare(
+      `
     SELECT id, title, category, price, image_url
     FROM products
     WHERE deleted_at IS NULL AND stock > 0 AND category = ?
     ORDER BY datetime(created_at) DESC;
-  `).all(category) as ProductPreview[];
+  `,
+    )
+    .all(category) as ProductPreview[];
 }
 
 /**
- * Retrieves a specific product by its ID and category
- * 
- * @param id - The ID of the product
- * @param category - The category the product belongs to
- * @returns The product object if found, otherwise undefined
+ * Retrieves a single product by ID and category if it's in stock and not soft-deleted.
+ *
+ * @param id - The product ID
+ * @param category - The product category
+ * @param dbInstance - The SQLite database instance
+ * @returns The full product record, or undefined if not found
  */
-function getProductById(id: number, category: string): Product | undefined {
-  return db.prepare(`
+function getProductById(
+  id: number,
+  category: string,
+  dbInstance: DBType,
+): Product | undefined {
+  return dbInstance
+    .prepare(
+      `
     SELECT *
     FROM products
     WHERE deleted_at IS NULL AND stock > 0 AND id = ? AND category = ?;
-  `).get(id, category) as Product | undefined;
+  `,
+    )
+    .get(id, category) as Product | undefined;
 }
 
 export {
   getLatestProducts,
   getAllProducts,
   getProductsByCategory,
-  getProductById
+  getProductById,
 };
