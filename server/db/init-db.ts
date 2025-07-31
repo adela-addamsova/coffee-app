@@ -1,7 +1,9 @@
-import db from './coffee-app-db';
+import type { Database as DBType } from "better-sqlite3";
 
-export default function initializeDatabase() {
-    db.prepare(`
+export function initializeReservations(dbInstance: DBType): void {
+  dbInstance
+    .prepare(
+      `
     CREATE TABLE IF NOT EXISTS reservations (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -11,9 +13,15 @@ export default function initializeDatabase() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       deleted_at DATETIME
     )
-  `).run();
+  `,
+    )
+    .run();
+}
 
-    db.prepare(`
+export function initializeProducts(dbInstance: DBType): void {
+  dbInstance
+    .prepare(
+      `
     CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
@@ -30,10 +38,15 @@ export default function initializeDatabase() {
         updated_at DATETIME,
         deleted_at DATETIME
     )
-    `).run();
+    `,
+    )
+    .run();
+}
 
-
-    db.prepare(`
+export function initializeSubscribers(dbInstance: DBType): void {
+  dbInstance
+    .prepare(
+      `
     CREATE TABLE IF NOT EXISTS newsletter_subscribers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT NOT NULL UNIQUE,
@@ -42,5 +55,13 @@ export default function initializeDatabase() {
       deleted_at DATETIME,
       ip_address TEXT
     )
-  `).run();
+  `,
+    )
+    .run();
+}
+
+export default function initializeDatabase(dbInstance: DBType): void {
+  initializeReservations(dbInstance);
+  initializeProducts(dbInstance);
+  initializeSubscribers(dbInstance);
 }

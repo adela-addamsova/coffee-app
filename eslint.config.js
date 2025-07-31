@@ -46,7 +46,10 @@ export default [
         ...baseLanguageOptions.parserOptions,
         project: "./client/tsconfig.json",
       },
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
     },
     plugins: {
       ...basePlugins,
@@ -72,7 +75,10 @@ export default [
         ...baseLanguageOptions.parserOptions,
         project: "./server/tsconfig.json",
       },
-      globals: globals.node,
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
     },
     plugins: {
       ...basePlugins,
