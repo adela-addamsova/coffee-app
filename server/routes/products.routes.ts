@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import type { Database as DBType } from "better-sqlite3";
 import {
   getLatestProducts,
   getAllProducts,
@@ -6,89 +7,83 @@ import {
   getProductById,
 } from "@db/products-db";
 
-const router = Router();
-
 /**
- * GET /api/products
- * Returns all products from the database
- *
- * @param req - Express Request object
- * @param res - Express Response object
- * @returns JSON array of all products
+ * Creates and returns a router that handles product-related API endpoints
+ * @param dbInstance - An instance of the SQLite database
+ * @returns Express Router with product endpoints
  */
-router.get("/", (req: Request, res: Response) => {
-  try {
-    const products = getAllProducts();
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch products" });
-  }
-});
+export default function productRouter(dbInstance: DBType) {
+  const router = Router();
 
-/**
- * GET /api/products/latest
- * Returns the latest 4 products from the database
- *
- * @param req - Express Request object
- * @param res - Express Response object
- * @returns JSON array of latest products
- */
-router.get("/latest", (req: Request, res: Response) => {
-  try {
-    const products = getLatestProducts(4);
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch products" });
-  }
-});
-
-/**
- * GET /api/products/:category
- * Returns products for a specific category
- *
- * @param req - Express Request object with `category` param
- * @param res - Express Response object
- * @returns JSON array of products in the category
- */
-router.get(
-  "/:category",
-  (req: Request<{ category: string }>, res: Response) => {
-    const { category } = req.params;
-
+  /**
+   * GET /api/products
+   * Returns all products from the database
+   * Response: Array of all products
+   */
+  router.get("/", (req: Request, res: Response) => {
     try {
-      const products = getProductsByCategory(category);
+      const products = getAllProducts(dbInstance);
       res.json(products);
-    } catch (err) {
-      res.status(500).json({ error: "Failed to fetch category products" });
-    }
-  },
-);
-
-/**
- * GET /api/products/:category/:id
- * Returns product with a specific id from a category
- *
- * @param req - Express Request object with `category` and `id` params
- * @param res - Express Response object
- * @returns JSON object of the product or 404 if not found
- */
-router.get(
-  "/:category/:id",
-  (req: Request<{ category: string; id: number }>, res: Response) => {
-    const { category, id } = req.params;
-
-    try {
-      const product = getProductById(id, category);
-
-      if (!product) {
-        return res.status(404).json({ error: "Product not found" });
-      }
-
-      res.json(product);
     } catch (_err) {
-      res.status(500).json({ error: "Failed to fetch product" });
+      res.status(500).json({ error: "Failed to fetch products" });
     }
-  },
-);
+  });
 
-export default router;
+  /**
+   * GET /api/products/latest
+   * Returns the latest 4 products
+   * Useful for homepage previews or "New arrivals" sections
+   * Response: Array of latest 4 products
+   */
+  router.get("/latest", (req: Request, res: Response) => {
+    try {
+      const products = getLatestProducts(4, dbInstance);
+      res.json(products);
+    } catch (_err) {
+      res.status(500).json({ error: "Failed to fetch products" });
+    }
+  });
+
+  /**
+   * GET /api/products/:category
+   * Returns all products belonging to a specific category
+   * @param category - Category name (e.g., "coffee", "tea")
+   * Response: Array of products in the given category
+   */
+  router.get(
+    "/:category",
+    (req: Request<{ category: string }>, res: Response) => {
+      try {
+        const products = getProductsByCategory(req.params.category, dbInstance);
+        res.json(products);
+      } catch (_err) {
+        res.status(500).json({ error: "Failed to fetch category products" });
+      }
+    },
+  );
+
+  /**
+   * GET /api/products/:category/:id
+   * Returns a specific product by ID and category
+   * @param category - Category name
+   * @param id - Product ID
+   * Response: Single product object, or 404 if not found
+   */
+  router.get(
+    "/:category/:id",
+    (req: Request<{ category: string; id: string }>, res: Response) => {
+      try {
+        const { category, id } = req.params;
+        const product = getProductById(Number(id), category, dbInstance);
+        if (!product) {
+          return res.status(404).json({ error: "Product not found" });
+        }
+        res.json(product);
+      } catch (_err) {
+        res.status(500).json({ error: "Failed to fetch product" });
+      }
+    },
+  );
+
+  return router;
+}
