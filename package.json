@@ -8,6 +8,8 @@
     "@commitlint/config-conventional": "^19.8.1",
     "@types/jest": "^30.0.0",
     "@types/supertest": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
     "babel-jest": "^30.0.5",
     "eslint": "^9.31.0",
     "eslint-plugin-import": "^2.32.0",
