@@ -49,10 +49,12 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.jest,
+        ...globals.node,
       },
     },
     plugins: {
       ...basePlugins,
+      "vitest": require("eslint-plugin-vitest"),
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
     },
