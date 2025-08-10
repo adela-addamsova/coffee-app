@@ -54,7 +54,6 @@ export default function ProductPageLayout(): JSX.Element {
         setError(null);
       })
       .catch((err) => {
-        console.error("Error fetching product:", err);
         setError("Product not found");
         setProduct(null);
       });
@@ -77,7 +76,7 @@ export default function ProductPageLayout(): JSX.Element {
   }
 
   return (
-    <div>
+    <div data-testid="product-page">
       {/* Hero section */}
       <div className="product-page-hero">
         <HeroSection imgSrc={HeroImg} />

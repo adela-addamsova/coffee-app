@@ -1,14 +1,13 @@
 import React, { JSX } from "react";
 import MainButton from "./MainButton";
 
-interface HeroSectionProps {
+export interface HeroSectionProps {
   imgSrc: string;
   heading?: string;
   subheading?: string;
   buttonText?: string;
   buttonHref?: string;
   buttonColor?: string;
-  height?: string | number;
   className?: string;
   showText?: boolean;
 }
@@ -38,12 +37,11 @@ function HeroSection({
   buttonText,
   buttonHref,
   buttonColor = "white",
-  height,
   className = "",
   showText = true,
 }: HeroSectionProps): JSX.Element {
   return (
-    <section className={`hero-section ${className}`} style={{ height }}>
+    <section className={`hero-section ${className}`} data-testid="hero-section">
       <img className="hero-img" src={imgSrc} alt={heading || "Hero image"} />
       <div className="hero-img-overlay"></div>
 

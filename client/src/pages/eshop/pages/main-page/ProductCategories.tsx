@@ -15,7 +15,7 @@ const navLight = eshopNavItems.find((item) => item.label === "Light Roasted");
 const navDark = eshopNavItems.find((item) => item.label === "Dark Roasted");
 const navDecaf = eshopNavItems.find((item) => item.label === "Decaf");
 
-const categories: Category[] = [
+export const categories: Category[] = [
   {
     name: "LIGHT ROASTED",
     image: LightRoasted,
@@ -42,7 +42,10 @@ const categories: Category[] = [
  */
 export default function ProductCategories(): JSX.Element {
   return (
-    <div className="product-categories-section">
+    <div
+      className="product-categories-section"
+      data-testid="product-categories"
+    >
       {categories.map((item) => (
         <Link
           key={item.name}

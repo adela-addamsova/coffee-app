@@ -2,8 +2,10 @@ import React, { JSX } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { handleNavigation, type NavItem } from "@/utils/navigationFunctions";
 
-interface NavLinkProps {
-  item: NavItem & { label: string };
+export type NavLinkItem = NavItem & { label: string };
+
+export interface NavLinkProps {
+  item: NavLinkItem;
   className?: string;
   closeMenu?: () => void;
 }

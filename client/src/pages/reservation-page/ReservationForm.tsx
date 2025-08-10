@@ -34,7 +34,12 @@ export default function ReservationForm(): JSX.Element {
 
   return (
     <div className="reservation-form-container">
-      <form className="reservation-form" onSubmit={handleSubmit} noValidate>
+      <form
+        className="reservation-form"
+        data-testid="reservation-form"
+        onSubmit={handleSubmit}
+        noValidate
+      >
         {/* Fullname */}
         <div className="form-group">
           <label htmlFor="name">Your Name</label>
@@ -90,6 +95,7 @@ export default function ReservationForm(): JSX.Element {
             {/* Time select */}
             <div className="input-column">
               <select
+                aria-label="Select time"
                 value={selectedTime || ""}
                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                   setSelectedTime(e.target.value);
@@ -121,6 +127,7 @@ export default function ReservationForm(): JSX.Element {
               <div className="input-column">
                 <label htmlFor="guests">Number of guests</label>
                 <input
+                  id="guests"
                   name="guests"
                   type="number"
                   min={1}
@@ -146,14 +153,18 @@ export default function ReservationForm(): JSX.Element {
         {/* Success message */}
         {message && (
           <div className="form-group">
-            <div className="message">{message}</div>
+            <div className="message" data-testid="reservation-success">
+              {message}
+            </div>
           </div>
         )}
 
         {/* Error message */}
         {errorMessage && (
           <div className="form-group">
-            <div className="error-message">{errorMessage}</div>
+            <div className="error-message" data-testid="reservation-error">
+              {errorMessage}
+            </div>
           </div>
         )}
       </form>
