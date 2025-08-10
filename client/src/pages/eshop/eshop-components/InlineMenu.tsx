@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ShoppingCart from "@assets/e-shop/shopping-cart.svg";

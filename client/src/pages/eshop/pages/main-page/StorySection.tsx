@@ -16,10 +16,10 @@ export default function StorySection(): JSX.Element {
   const linkTarget = `/#${storyLink?.sectionId ?? ""}`;
 
   return (
-    <section className="eshop-story-section">
+    <section className="eshop-story-section" data-testid="eshop-story-section">
       <div className="eshop-story-text-content">
         <h2 className="eshop-heading">Our story</h2>
-        <p>
+        <p data-testid="story-text">
           Our coffee roastery has existed since 2005. Since then, we have come a
           long way in improving our roasting processes and today we offer you
           not only selected coffee, but also the opportunity to cooperate. For

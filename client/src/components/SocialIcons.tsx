@@ -1,5 +1,5 @@
-import React, { JSX } from 'react';
-import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
+import React, { JSX } from "react";
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 
 /**
  * SocialIcons component
@@ -11,7 +11,7 @@ import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
  */
 const SocialIcons = (): JSX.Element => {
   return (
-    <div className="social-icons">
+    <div className="social-icons" data-testid="social-icons">
       <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
         <FaFacebookF />
       </a>

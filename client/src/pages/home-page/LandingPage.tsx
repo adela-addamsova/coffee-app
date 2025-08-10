@@ -35,9 +35,9 @@ const LandingPage = (): JSX.Element => {
   }, [location.state?.scrollToId]);
 
   return (
-    <>
+    <div data-testid="landing-page">
       <Header />
-      <div className="homepage-hero">
+      <div className="homepage-hero" data-testid="homepage-hero">
         <HeroSection
           imgSrc={HeroImg}
           heading="Morning Mist Coffee"
@@ -57,7 +57,7 @@ const LandingPage = (): JSX.Element => {
       <GallerySection />
       <ReservationSection />
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import Header from "@components/Header";
 import Footer from "@components/Footer";
 import ReservationForm from "./ReservationForm";
@@ -19,12 +19,18 @@ import InfoBoxes from "@components/InfoBoxes";
 
 const ReservationPage = (): JSX.Element => {
   return (
-    <>
+    <div data-testid="reservation-page">
       <Header />
-      <div className="reservation-page-hero">
+      <div
+        className="reservation-page-hero"
+        data-testid="reservation-page-hero"
+      >
         <HeroSection imgSrc={HeroImg} heading="Reservation" />
       </div>
-      <div className="reservation-page-container">
+      <div
+        className="reservation-page-container"
+        data-testid="reservation-page-container"
+      >
         <InfoBoxes />
         <div className="main-content-reservation">
           <div className="reservation-form-box">
@@ -36,7 +42,7 @@ const ReservationPage = (): JSX.Element => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

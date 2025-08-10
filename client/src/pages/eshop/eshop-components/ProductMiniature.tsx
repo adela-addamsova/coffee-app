@@ -1,8 +1,8 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { Link } from "react-router-dom";
 import ShoppingCart from "@assets/e-shop/shopping-cart.svg";
 
-type ProductMiniatureProps = {
+export type ProductMiniatureProps = {
   id: string | number;
   title: string;
   price: number;

@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import HeroSection from "@components/HeroSection";
 import HeroImg from "@assets/e-shop/eshop-hero.jpg";
 import ProductCategories from "./ProductCategories";
@@ -16,7 +16,7 @@ import NewsletterSection from "@eshop-components/Newsletter";
  */
 const EshopLandingPage = (): JSX.Element => {
   return (
-    <>
+    <div data-testid="eshop-landing-page">
       <div className="eshop-hero-section">
         <HeroSection
           imgSrc={HeroImg}
@@ -38,7 +38,7 @@ const EshopLandingPage = (): JSX.Element => {
       </div>
       <StorySection />
       <NewsletterSection />
-    </>
+    </div>
   );
 };
 

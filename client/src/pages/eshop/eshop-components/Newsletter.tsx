@@ -57,10 +57,10 @@ export default function NewsletterSection(): JSX.Element {
   };
 
   return (
-    <section className="newsletter-section">
+    <section className="newsletter-section" data-testid="newsletter-section">
       <div className="newsletter-content">
         <h2>Stay in the picture. Sign up for the newsletter.</h2>
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit} noValidate aria-label="newsletter form">
           <input
             type="email"
             placeholder="Enter your email"

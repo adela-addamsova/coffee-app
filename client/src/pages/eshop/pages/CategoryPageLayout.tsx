@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ProductMiniature from "@eshop-components/ProductMiniature";
@@ -69,7 +69,6 @@ export default function CategoryPageLayout(): JSX.Element {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error loading products:", err);
         setError("Failed to load products");
         setLoading(false);
       });
@@ -85,7 +84,7 @@ export default function CategoryPageLayout(): JSX.Element {
   }
 
   return (
-    <div>
+    <div data-testid="category-page">
       {/* Hero section */}
       <div className="category-page-hero">
         <HeroSection imgSrc={HeroImg} heading={heading} />

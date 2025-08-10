@@ -39,11 +39,15 @@ const Header = (): JSX.Element => {
         item={item}
         className={className}
         closeMenu={() => setShowMenu(false)}
+        data-testid="nav-link"
       />
     ));
 
   return (
-    <header className={`page-header ${isScrolled ? "scrolled" : ""}`}>
+    <header
+      className={`page-header ${isScrolled ? "scrolled" : ""}`}
+      data-testid="header"
+    >
       {/* Logo with link */}
       <div className="nav-logo">
         <Link to="/" onClick={scrollToTop}>
@@ -61,6 +65,7 @@ const Header = (): JSX.Element => {
         role="button"
         tabIndex={0}
         aria-label="Open menu"
+        data-testid="mobile-menu"
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             setShowMenu(true);
@@ -72,7 +77,7 @@ const Header = (): JSX.Element => {
 
       {/* Mobile nav */}
       {showMenu && (
-        <div className="mobile-nav">
+        <div className="mobile-nav" data-testid="mobile-nav">
           <div className="mobile-nav-head">
             <img src={logoBlack} alt="Logo" className="nav-logo" />
             <button

@@ -1,15 +1,15 @@
-import React from "react";
+import React, { JSX } from "react";
 import Freshness from "@assets/e-shop/eshop-components/freshness.svg";
 import Story from "@assets/e-shop/eshop-components/story.svg";
 import Shipping from "@assets/e-shop/eshop-components/shipping.svg";
 
-interface Category {
+export interface Category {
   title: string;
   text: string;
   image: string;
 }
 
-const categories: Category[] = [
+export const categories: Category[] = [
   {
     title: "FRESHNESS GUARANTEE",
     text: "We roast our coffee to ensure\nmaximum flavor.",
@@ -38,9 +38,9 @@ const categories: Category[] = [
  * @returns {JSX.Element} The e-shop info boxes section element
  */
 
-export default function EshopInfoBoxes() {
+export default function EshopInfoBoxes(): JSX.Element {
   return (
-    <div className="eshop-info-boxes-section">
+    <div className="eshop-info-boxes-section" data-testid="eshop-info-boxes">
       <div className="eshop-info-boxes">
         {categories.map(({ title, text, image }) => (
           <div key={title} className="eshop-info-box">

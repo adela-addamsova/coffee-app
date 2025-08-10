@@ -25,7 +25,7 @@ const StoryScroll = (): JSX.Element => {
 
   const slides = 3;
   const slideHeightVh = 70;
-  const extraScrollVh = 30; // Additional scroll space to allow for finishing the last slide
+  const extraScrollVh = 30;
 
   useEffect(() => {
     const onScroll = () => {
@@ -69,15 +69,20 @@ const StoryScroll = (): JSX.Element => {
     <section
       className="scroll-section"
       id="story-section"
+      data-testid="story-scroll-section"
       ref={sectionRef}
       style={{
         height: `calc(${slides} * ${slideHeightVh}vh + ${extraScrollVh}vh)`,
       }}
     >
       <div className="sticky-container">
-        <div className="slides-track" ref={trackRef}>
+        <div
+          className="slides-track"
+          ref={trackRef}
+          data-testid="story-scroll-track"
+        >
           {/* Slide 1 */}
-          <div className="slide slide-1">
+          <div className="slide slide-1" data-testid="slide-1">
             <div className="slide1-text">
               <h2>Our story</h2>
               <p>
@@ -98,8 +103,8 @@ const StoryScroll = (): JSX.Element => {
           </div>
 
           {/* Slide 2 */}
-          <div className="slide slide-2">
-            <div className="slide2-text" data-aos="fade-right">
+          <div className="slide slide-2" data-testid="slide-2">
+            <div className="slide2-text">
               <p>
                 Morning Mist Coffee was founded with a passion for exceptional
                 coffee and expert roasting. From our small-batch roastery, we
@@ -117,7 +122,7 @@ const StoryScroll = (): JSX.Element => {
           </div>
 
           {/* Slide 3 */}
-          <div className="slide slide-3">
+          <div className="slide slide-3" data-testid="slide-3">
             <div className="slide3-text">
               <p>
                 Beyond our café, we offer our signature roasted beans through
