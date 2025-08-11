@@ -6,6 +6,7 @@ import unusedImports from "eslint-plugin-unused-imports";
 import importPlugin from "eslint-plugin-import";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
+import vitest from "eslint-plugin-vitest";
 
 // Base rules and plugins
 const baseLanguageOptions = {
@@ -54,7 +55,7 @@ export default [
     },
     plugins: {
       ...basePlugins,
-      "vitest": require("eslint-plugin-vitest"),
+      vitest,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
     },
