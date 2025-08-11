@@ -13,7 +13,11 @@
     "skipLibCheck": true,
     "types": [
       "react",
-      "react-dom"
+      "react-dom",
+      "vitest/globals",
+      "@testing-library/jest-dom",
+      "vitest",
+      "msw"
     ],
     "baseUrl": ".",
     "paths": {

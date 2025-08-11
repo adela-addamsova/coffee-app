@@ -53,7 +53,11 @@ const FullWidthSwiper = (): JSX.Element => {
   };
 
   return (
-    <div id="gallery-section" className="gallery-section">
+    <div
+      id="gallery-section"
+      className="gallery-section"
+      data-testid="gallery-section"
+    >
       {/* Desktop Swiper */}
       <Swiper
         modules={[Navigation]}
@@ -61,10 +65,11 @@ const FullWidthSwiper = (): JSX.Element => {
         slidesPerView={1}
         navigation
         className="desktop-gallery-swiper"
+        data-testid="desktop-swiper"
       >
         <SwiperSlide>
           <div className="slide-content-1">
-            <div className="gallery-text">
+            <div className="gallery-text" data-testid="gallery-text">
               <p>
                 We create a cozy place with delicious coffee where you can work,
                 read, meet a friend or just enjoy a moment...
@@ -75,7 +80,7 @@ const FullWidthSwiper = (): JSX.Element => {
                 <img
                   key={i}
                   src={img}
-                  alt={`Interior ${i + 1}`}
+                  alt={`Interior-slide-1 img-${i + 1}`}
                   onClick={() => handleImageClick(i)}
                   style={{ cursor: "pointer" }}
                 />
@@ -90,7 +95,7 @@ const FullWidthSwiper = (): JSX.Element => {
                 <div className="gallery-image-box" key={i}>
                   <img
                     src={img}
-                    alt={`Grid ${i + 1}`}
+                    alt={`Interior-slide-2 img-${i + 1}`}
                     onClick={() => handleImageClick(i + 3)}
                     style={{ cursor: "pointer" }}
                   />
@@ -126,7 +131,7 @@ const FullWidthSwiper = (): JSX.Element => {
       </Swiper>
 
       {/* Mobile Swiper */}
-      <div className="mobile-gallery-swiper">
+      <div className="mobile-gallery-swiper" data-testid="mobile-swiper">
         <p>
           We create a cozy place with delicious coffee where you can work, read,
           meet a friend or just enjoy a moment...

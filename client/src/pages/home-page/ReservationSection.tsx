@@ -17,11 +17,18 @@ const ReservationSection = (): JSX.Element => {
   );
 
   return (
-    <section className="reservation-section" id="reservation-section">
+    <section
+      className="reservation-section"
+      id="reservation-section"
+      data-testid="reservation-section"
+    >
       <div className="reservation-content reservation-image">
-        <img src={phoneBackground} alt="Beans Background" />
+        <img src={phoneBackground} alt="Reservation Phone" />
       </div>
-      <div className="reservation-content reservation-text">
+      <div
+        className="reservation-content reservation-text"
+        data-testid="reservation-text"
+      >
         <p>
           Do you want to make sure you’ll have a free seat when you come? You
           can contact us on our email, social media or make a reservation in our

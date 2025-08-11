@@ -6,6 +6,7 @@ import unusedImports from "eslint-plugin-unused-imports";
 import importPlugin from "eslint-plugin-import";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
+import vitest from "eslint-plugin-vitest";
 
 // Base rules and plugins
 const baseLanguageOptions = {
@@ -49,10 +50,12 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.jest,
+        ...globals.node,
       },
     },
     plugins: {
       ...basePlugins,
+      vitest,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
     },

@@ -6,8 +6,6 @@ import {
 } from "@shared/ReservationFormValidationSchema";
 import { generateTimeSlots } from "@/utils/reservationFormLogic";
 
-const API_URL = import.meta.env.VITE_API_URL as string;
-
 interface ApiReservation {
   datetime: string;
   guests?: number;
@@ -83,6 +81,7 @@ export function useReservationForm(): {
   fetchReservations: (date: Date) => Promise<void>;
   MAX_CAPACITY: number;
 } {
+  const API_URL = import.meta.env.VITE_API_URL as string;
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [availableTimes, setAvailableTimes] = useState<TimeSlot[]>([]);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
@@ -126,8 +125,8 @@ export function useReservationForm(): {
 
       const slots = generateTimeSlots(date, normalized);
       setAvailableTimes(slots);
-    } catch (err) {
-      console.error("Error fetching reservations:", err);
+    } catch (_err) {
+      // eslint-disable no-empty
     }
   };
 
@@ -185,8 +184,7 @@ export function useReservationForm(): {
       } else {
         setErrorMessage(result.errorMessage || "Reservation failed.");
       }
-    } catch (err) {
-      console.error("Error submitting reservation:", err);
+    } catch (_err) {
       setErrorMessage("Server error.");
     } finally {
       setLoading(false);
