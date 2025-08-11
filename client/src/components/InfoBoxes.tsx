@@ -68,7 +68,7 @@ const boxesData: BoxData[] = [
  */
 const InfoBoxes = (): JSX.Element => {
   return (
-    <div className="info-boxes" id="info-boxes">
+    <div className="info-boxes" id="info-boxes" data-testid="info-boxes">
       {boxesData.map((col) => (
         <div className="column info-box" key={col.title}>
           <h4>{col.title}</h4>

@@ -13,10 +13,14 @@ import CoffeeSack from "@assets/main-page/coffee-sack.png";
 
 const HeroTextSection = (): JSX.Element => {
   return (
-    <section className="hero-text-section" id="hero-text-section">
+    <section
+      className="hero-text-section"
+      id="hero-text-section"
+      data-testid="hero-text-section"
+    >
       <div className="hero-text-content">
         <h2>We pick the best coffee beans</h2>
-        <p>
+        <p data-testid="hero-text-description">
           At Morning Mist Coffee, we take pride in sourcing premium-quality
           beans from carefully selected regions. Our light roast features
           handpicked beans from South America, known for their bright acidity

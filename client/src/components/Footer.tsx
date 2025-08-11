@@ -21,7 +21,7 @@ const Footer = (): JSX.Element => {
   );
 
   return (
-    <footer className="footer">
+    <footer className="footer" data-testid="footer">
       <div className="footer-content">
         <div className="footer-text">
           {footerItems.map((item) => (
