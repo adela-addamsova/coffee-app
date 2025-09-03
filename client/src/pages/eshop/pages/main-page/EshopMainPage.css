@@ -2,7 +2,7 @@
   Global
 --------------------*/
 .eshop-heading {
-    @apply text-left text-black text-[28px] md:text-[56px] font-medium;
+    @apply text-left text-black text-[36px] md:text-[56px] font-medium;
 }
 
 /*--------------------
@@ -11,21 +11,21 @@
 .eshop-hero-section .hero-section,
 .eshop-hero-section .hero-img,
 .eshop-hero-section .hero-img-overlay {
-    @apply flex items-center w-full justify-center text-center h-[100vh] 2xl:h-[70vh];
+    @apply flex items-center w-full justify-center text-center h-[100vh] 2xl:h-[80vh];
 }
 
 .eshop-hero-section .hero-heading,
 .eshop-hero-section .hero-subheading {
-    @apply w-full lg:w-[60%]
+    @apply !w-[90%] lg:w-[60%];
 }
 
 .eshop-hero-section .hero-heading,
 .eshop-hero-section .hero-subheading {
-    @apply w-full lg:w-[60%]
+    @apply w-full lg:w-[60%];
 }
 
 .eshop-hero-section .hero-text-overlay {
-    @apply gap-[20px] 2xl:top-[25%]
+    @apply gap-[20px] 2xl:top-[25%];
 }
 
 .eshop-hero-section .hero-img-overlay {
@@ -36,7 +36,7 @@
   Product Categories
 --------------------*/
 .categories {
-    @apply w-[95%] max-w-[1400px] mt-[40px] mb-[100px] lg:mb-[160px] mx-auto md:my-[100px] lg:w-full;
+    @apply w-[95%] max-w-[1400px] mt-[40px] mb-[100px] lg:mb-[160px] mx-auto md:my-[100px];
 }
 
 .categories .eshop-heading {
@@ -71,11 +71,15 @@
   E-shop Story Section
 --------------------*/
 .eshop-story-section {
-    @apply max-w-[1400px] mx-auto flex flex-col gap-15 lg:flex-row justify-between mb-[100px] lg:mb-[160px];
+    @apply w-[95%] max-w-[1400px] mx-auto flex flex-col gap-15 md:flex-row justify-between mb-[100px] lg:mb-[160px];
 }
 
 .eshop-story-text-content {
     @apply flex flex-col w-[95%] justify-around mx-auto gap-10 lg:w-[60%] lg:pr-[60px] lg:gap-0 xl:w-[50%] lg:mx-0;
+}
+
+.eshop-story-image-content img {
+    @apply w-full h-full object-cover;
 }
 
 .eshop-story-text-content p {
@@ -86,7 +90,7 @@
   New Products Section
 --------------------*/
 .selection {
-    @apply w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px];
+    @apply w-[80%] sm:w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px];
 }
 
 .selection-new-products {
@@ -94,5 +98,5 @@
 }
 
 .latest-products {
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6;
+    @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6;
 }
