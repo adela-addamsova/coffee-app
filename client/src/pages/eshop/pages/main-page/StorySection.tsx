@@ -28,7 +28,7 @@ export default function StorySection(): JSX.Element {
         </p>
         <MainButton text="EXPLORE MORE" to={linkTarget} color="black" />
       </div>
-      <div className="hero-image-content">
+      <div className="eshop-story-image-content">
         <img src={StoryImg} alt="Story Img" />
       </div>
     </section>
