@@ -9,8 +9,12 @@
     @apply flex flex-col-reverse md:flex-col;
 }
 
+.reservation-page-hero .hero-text-overlay {
+    @apply top-[45%];
+}
+
 .reservation-page-container .info-boxes {
-    @apply relative top-[0] w-[95%] lg:top-[-20px] 2xl:top-[-92px];
+    @apply relative top-[0] w-[95%] md:top-[-20px] 2xl:top-[-92px];
 }
 
 /*--------------------
@@ -20,12 +24,20 @@
     @apply flex flex-row w-full m-auto overflow-x-hidden;
 }
 
+.reservation-form-container {
+    @apply m-auto w-[95%] md:w-[80vw];
+}
+
+.react-calendar {
+    @apply !w-[90%] lg:!w-[80%] 2xl:!w-[70%] 3xl:!w-[50%];
+}
+
 .reservation-form-box {
     @apply w-full flex items-center justify-center pt-[40px] lg:px-[20px] lg:w-1/2 lg:pt-0;
 }
 
 .reservation-form-box form {
-    @apply max-w-[95%] m-auto items-center lg:pl-[60px] lg:max-w-[85%] lg:items-end;
+    @apply m-auto items-center lg:pl-[60px] lg:items-end;
 }
 
 .reservation-img {
@@ -44,7 +56,7 @@
 }
 
 .reservation-form .form-group {
-    @apply w-[90%] flex flex-col mb-3 lg:w-[80%];
+    @apply w-[90%] flex flex-col mb-3 lg:w-[80%] 2xl:w-[70%] 3xl:w-[50%];
 }
 
 .reservation-form .form-group input {
@@ -93,7 +105,7 @@
 
 /* Calendar */
 .react-calendar {
-    @apply shadow-lg mx-0 my-5 p-6 !font-slab border !border-none lg:!w-[80%];
+    @apply shadow-lg mx-0 my-5 p-6 !font-slab border !border-none;
 }
 
 .react-calendar__navigation button:disabled, .react-calendar__tile {
