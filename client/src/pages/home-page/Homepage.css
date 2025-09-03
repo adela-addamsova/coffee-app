@@ -13,15 +13,15 @@
   Hero Text Section
 --------------------*/
 .hero-text-section {
-    @apply max-w-[1200px] mx-auto flex flex-col pt-0 pb-9 gap-5 lg:flex-row lg:px-[100px] lg:pb-20 lg:p-0 xl:px-4 lg:scroll-mt-[100px];
+    @apply max-w-[1200px] mx-auto flex flex-col pt-0 pb-9 gap-5 md:flex-row md:px-[100px] md:py-20 xl:px-4 lg:scroll-mt-[100px];
 }
 
 .hero-text-content {
-    @apply flex flex-col w-[95%] justify-around mx-auto px-0 gap-3 lg:w-[60%] lg:px-[60px] lg:gap-0 xl:w-[60%] xl:px-[100px];
+    @apply flex flex-col w-[90%] justify-around mx-auto px-0 gap-3 lg:w-[60%] lg:px-[60px] lg:gap-0 xl:w-[60%] xl:px-[100px];
 }
 
 .hero-text-content h2 {
-    @apply text-[56px];
+    @apply text-[40px] lg:text-[52px] xl:text-[56px];
 }
 
 .hero-text-content p {
@@ -33,7 +33,7 @@
 }
 
 .hero-image-content img {
-    @apply w-[95%] h-[95%] object-cover lg:w-full;
+    @apply w-[90%] h-[90%] object-cover md:w-full;
 }
 
 /*--------------------
