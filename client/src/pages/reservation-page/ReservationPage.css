@@ -6,7 +6,7 @@
 }
 
 .reservation-page-container {
-    @apply flex flex-col-reverse md:flex-col;
+    @apply flex flex-col-reverse lg:flex-col;
 }
 
 .reservation-page-hero .hero-text-overlay {
