@@ -123,7 +123,7 @@
 }
 
 .hero-text-overlay {
-    @apply absolute left-[5%] flex flex-col justify-center text-left gap-[20px] lg:gap-[64px] top-[24%] md:top-[32%];
+    @apply absolute left-[5%] flex flex-col justify-center text-left gap-[20px] xs:gap-[40px] sm:gap-[64px] top-[24%] md:top-[32%];
 }
 
 .hero-heading,
