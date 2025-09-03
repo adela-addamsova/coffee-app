@@ -42,7 +42,7 @@ span {
   E-shop Info Boxes
 --------------------*/
 .eshop-info-boxes-section {
-    @apply w-full bg-light-brown flex justify-center items-center p-15 lg:p-18 mb-[100px] lg:mb-[160px];
+    @apply w-full bg-light-brown flex justify-center items-center p-10 xl:p-15 lg:p-18 mb-[100px] lg:mb-[160px];
 }
 
 .eshop-info-boxes {
@@ -116,23 +116,23 @@ span {
 }
 
 .product-info {
-    @apply flex flex-row justify-between bg-light-brown px-10 py-5 shadow-md;
+    @apply flex flex-col justify-between bg-light-brown p-4 lg:px-10 shadow-md;
 }
 
-.product-miniature-info {
+.product-miniature-info-title {
     @apply flex flex-col gap-2;
 }
 
-.product-miniature-info h3 {
-    @apply text-nowrap;
+.product-miniature-info-title h3 {
+    @apply text-nowrap font-semibold pb-2;
 }
 
-.product-info-decs {
-    @apply flex flex-col justify-between w-[70%];
+.product-miniature-info-inner {
+    @apply flex justify-between;
 }
 
 .product-info-button {
-    @apply w-[30%] flex flex-col text-center justify-center items-center hover:bg-white/10 hover:backdrop-blur-md hover:border border-white/30 rounded-xl hover:shadow-lg transition-all duration-200;
+    @apply w-fit flex flex-col text-center justify-start items-end hover:bg-white/10 hover:backdrop-blur-md hover:border border-white/30 rounded-xl hover:shadow-lg transition-all duration-200;
 }
 
 .product-info-button img {
