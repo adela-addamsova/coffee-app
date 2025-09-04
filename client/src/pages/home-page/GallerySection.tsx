@@ -77,13 +77,15 @@ const FullWidthSwiper = (): JSX.Element => {
             </div>
             <div className="gallery-images">
               {[img1, img2, img3].map((img, i) => (
-                <img
-                  key={i}
-                  src={img}
-                  alt={`Interior-slide-1 img-${i + 1}`}
-                  onClick={() => handleImageClick(i)}
-                  style={{ cursor: "pointer" }}
-                />
+                <div key={i} className="gallery-image-div">
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`Interior-slide-1 img-${i + 1}`}
+                    onClick={() => handleImageClick(i)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -104,18 +106,22 @@ const FullWidthSwiper = (): JSX.Element => {
             </div>
             <div className="gallery-row">
               <div className="gallery-image-box">
-                <img
-                  src={galleryGrid3}
-                  alt="Grid 3"
-                  onClick={() => handleImageClick(5)}
-                  style={{ cursor: "pointer" }}
-                />
-                <img
-                  src={galleryGrid4}
-                  alt="Grid 4"
-                  onClick={() => handleImageClick(6)}
-                  style={{ cursor: "pointer" }}
-                />
+                <div className="gallery-image-box-inner">
+                  <img
+                    src={galleryGrid3}
+                    alt="Grid 3"
+                    onClick={() => handleImageClick(5)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+                <div className="gallery-image-box-inner">
+                  <img
+                    src={galleryGrid4}
+                    alt="Grid 4"
+                    onClick={() => handleImageClick(6)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
               </div>
               <div className="gallery-image-box">
                 <img

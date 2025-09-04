@@ -19,6 +19,7 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1600px;
+  --breakpoint-3xl: 2000px;
 
   --color-light-brown: rgba(121, 88, 61, 0.25);
 }
