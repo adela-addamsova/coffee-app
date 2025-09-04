@@ -25,7 +25,7 @@
 }
 
 .eshop-hero-section .hero-text-overlay {
-    @apply gap-[20px] 2xl:top-[25%];
+    @apply gap-[20px] 2xl:top-[32%];
 }
 
 .eshop-hero-section .hero-img-overlay {
