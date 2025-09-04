@@ -46,16 +46,21 @@ export default function ProductMiniature({
         <img src={image_url} alt={title} />
       </div>
       <div className="product-info">
-        <div className="product-miniature-info">
-          <h3 className="product-miniature-title font-semibold">{title}</h3>
-          <p className="product-miniature-description font-light">
-            {categoryLabels[category] || category}
-          </p>
-          <p className="product-miniature-price">${price.toFixed(2)}</p>
+        <div className="product-miniature-info-title">
+          <h3 className="product-miniature-title">{title}</h3>
         </div>
-        <div className="product-info-button">
-          <img src={ShoppingCart} alt="Shopping Cart" />
-          {/* <h6 className='font-montserrat text-[10px] mt-2 font-semibold'>ADD TO CART</h6> */}
+        <div className="product-miniature-info-inner">
+          <div className="flex flex-col gap-2">
+            <p className="product-miniature-description font-light text-nowrap">
+              {categoryLabels[category] || category}
+            </p>
+            <p className="product-miniature-price">${price.toFixed(2)}</p>
+          </div>
+
+          <div className="product-info-button">
+            <img src={ShoppingCart} alt="Shopping Cart" />
+            {/* <h6 className='font-montserrat text-[10px] mt-2 font-semibold'>ADD TO CART</h6> */}
+          </div>
         </div>
       </div>
     </Link>
