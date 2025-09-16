@@ -1,8 +1,9 @@
-import { useState, ChangeEvent, JSX } from 'react';
+import { useState, ChangeEvent, JSX, useEffect } from "react";
 
 type QuantitySelectorProps = {
   min?: number;
   max?: number;
+  value?: number;
   onChange?: (value: number) => void;
 };
 
@@ -21,9 +22,14 @@ type QuantitySelectorProps = {
 export default function QuantitySelector({
   min = 1,
   max = 10,
+  value,
   onChange,
 }: QuantitySelectorProps): JSX.Element {
-  const [count, setCount] = useState<number>(min);
+  const [count, setCount] = useState<number>(value ?? min);
+
+  useEffect(() => {
+    if (value !== undefined) setCount(value);
+  }, [value]);
 
   const handleChange = (newCount: number) => {
     if (newCount >= min && newCount <= max) {
@@ -33,10 +39,8 @@ export default function QuantitySelector({
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (!isNaN(value)) {
-      handleChange(value);
-    }
+    const v = Number(e.target.value);
+    if (!isNaN(v)) handleChange(v);
   };
 
   return (
