@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ProductMiniature from "@eshop-components/ProductMiniature";
 import HeroSection from "@components/HeroSection";
 import HeroImg from "@assets/e-shop/category-hero.jpg";
-import InlineMenu from "@eshop-components/InlineMenu";
+import InlineMenu from "@/pages/eshop/eshop-components/InlineMenu";
 
 const categoryLabels: Record<string, string> = {
   light: "Light Roasted Coffee",
