@@ -6,6 +6,7 @@ import logoWhite from "@assets/components/coffee-beans-white.svg";
 import logoBlack from "@assets/components/coffee-beans-black.svg";
 import ShoppingCart from "@assets/e-shop/cart/shopping-cart-white.svg";
 import { scrollToTop } from "@/utils/navigationFunctions";
+import { useCart } from "@eshop/pages/cart/CartContext";
 
 /**
  * Header component
@@ -22,6 +23,7 @@ import { scrollToTop } from "@/utils/navigationFunctions";
 const Header = (): JSX.Element => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const { setIsCartOpen } = useCart();
 
   // Change header style on scroll
   useEffect(() => {
@@ -32,7 +34,6 @@ const Header = (): JSX.Element => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Map navigation items
   const renderNavItems = (className: string) =>
     navItems.map((item) => (
       <NavLink
@@ -63,9 +64,13 @@ const Header = (): JSX.Element => {
       {/* Desktop nav */}
       <nav className="nav-desktop">
         {renderNavItems("nav-link")}
-        <Link to={shoppingCartLink?.to || "/e-shop/cart"} onClick={scrollToTop}>
+        <button
+          onClick={() => setIsCartOpen(true)}
+          className="cursor-pointer"
+          aria-label="Open cart"
+        >
           <img src={ShoppingCart} alt="Shopping Cart" className="w-7" />
-        </Link>
+        </button>
       </nav>
 
       {/* Burger for mobile */}
@@ -82,6 +87,16 @@ const Header = (): JSX.Element => {
           }
         }}
       >
+        <Link
+          to={shoppingCartLink?.to || "/e-shop/cart"}
+          onClick={(e) => {
+            e.stopPropagation();
+            scrollToTop();
+          }}
+          className="burger-cart"
+        >
+          <img src={ShoppingCart} alt="Shopping Cart" className="w-7" />
+        </Link>
         <span className="burger-icon">&#9776;</span>
       </div>
 
