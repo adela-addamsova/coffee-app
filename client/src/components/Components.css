@@ -89,7 +89,7 @@
 }
 
 .main-button.white {
-    @apply text-white border-white;
+    @apply text-white border-white bg-black;
 }
 
 /*--------------------
