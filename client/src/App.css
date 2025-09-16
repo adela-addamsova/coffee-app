@@ -8,6 +8,7 @@
 @import "./pages/eshop/pages/main-page/EshopMainPage.css";
 @import "./pages/eshop/eshop-components/EshopComponents.css";
 @import "./pages/eshop/pages/ProductsPages.css";
+@import "./pages/eshop/pages/cart/CartPage.css";
 
 @theme {
   --font-slab: "Montagu Slab", serif;
@@ -49,6 +50,7 @@ button {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
   @apply font-montserrat;
 }

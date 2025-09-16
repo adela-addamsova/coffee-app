@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import "@/App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -8,6 +8,8 @@ import EshopLayout from "@/pages/eshop/pages/EshopLayout";
 import EshopLandingPage from "@/pages/eshop/pages/main-page/EshopLandingPage";
 import CategoryPageLayout from "@/pages/eshop/pages/CategoryPageLayout";
 import ProductPageLayout from "@/pages/eshop/pages/ProductPageLayout";
+import CartLayout from "@/pages/eshop/pages/cart/CartLayout";
+import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
 
 /**
  * App
@@ -20,25 +22,28 @@ import ProductPageLayout from "@/pages/eshop/pages/ProductPageLayout";
  */
 export default function App(): JSX.Element {
   return (
-    <Router>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/reservation" element={<ReservationPage />} />
-        <Route path="/e-shop" element={<EshopLayout />}>
-          <Route index element={<EshopLandingPage />} />
-          <Route path="products" element={<CategoryPageLayout />} />
-          <Route path="products/:category" element={<CategoryPageLayout />} />
+    <CartProvider>
+      <Router>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/reservation" element={<ReservationPage />} />
+          <Route path="/e-shop" element={<EshopLayout />}>
+            <Route index element={<EshopLandingPage />} />
+            <Route path="products" element={<CategoryPageLayout />} />
+            <Route path="products/:category" element={<CategoryPageLayout />} />
+            <Route
+              path="products/:category/:id"
+              element={<ProductPageLayout />}
+            />
+            <Route path="cart" element={<CartLayout />} />
+          </Route>
           <Route
-            path="products/:category/:id"
-            element={<ProductPageLayout />}
+            path="*"
+            // element={<PageNotFound />}
           />
-        </Route>
-        <Route
-          path="*"
-          // element={<PageNotFound />}
-        />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
