@@ -1,7 +1,7 @@
 import { vi } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import InlineMenu from "@eshop-components/InlineMenu";
+import InlineMenu from "@/pages/eshop/eshop-components/InlineMenu";
 
 global.fetch = vi.fn(() =>
   Promise.resolve({
