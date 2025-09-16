@@ -17,6 +17,8 @@ type CartContextType = {
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   categoryLabels: Record<CartItem["category"], string>;
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -33,6 +35,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const rawData = localStorage.getItem("cart");
@@ -81,6 +84,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       }
       return [...prev, item];
     });
+    setIsCartOpen(true);
   };
 
   const removeFromCart = (id: number) => {
@@ -101,6 +105,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         removeFromCart,
         updateQuantity,
         categoryLabels: CATEGORY_LABELS,
+        isCartOpen,
+        setIsCartOpen,
       }}
     >
       {children}
