@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import MainButton from "@components/MainButton";
 import { navItems } from "@config/NavItems";
 import StoryImg from "@assets/e-shop/story-img.png";

@@ -1,7 +1,7 @@
 import { JSX } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ShoppingCart from "@assets/e-shop/shopping-cart.svg";
+// import ShoppingCart from "@assets/e-shop/cart/shopping-cart.svg";
 import MenuArrowGray from "@assets/e-shop/eshop-components/menu-arrow-gray.svg";
 import { eshopNavItems, navItems } from "@config/NavItems";
 
@@ -49,6 +49,9 @@ export default function InlineMenu(): JSX.Element | null {
   const navDecaf = eshopNavItems.find(
     (item): item is NavItem => !!item.to && item.label === "Decaf",
   );
+  // const shoppingCart = eshopNavItems.find(
+  //   (item): item is NavItem => !!item.to && item.label === "Shopping Cart",
+  // );
 
   const currentCategoryItem = [navLight, navDark, navDecaf]
     .filter((item): item is NavItem => !!item)
@@ -172,10 +175,16 @@ export default function InlineMenu(): JSX.Element | null {
           </>
         )}
       </div>
-
-      <div className="shopping-cart-icon">
-        <img src={ShoppingCart} alt="Shopping Cart" />
-      </div>
+      {/* {shoppingCart && (
+        <div className="shopping-cart-icon">
+          <Link
+            to={shoppingCart.to}
+            onClick={() => scrollToTop(true)}
+          >
+            <img src={ShoppingCart} alt="Shopping Cart" />
+          </Link>
+        </div>
+      )} */}
     </div>
   );
 }
