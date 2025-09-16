@@ -10,6 +10,7 @@ import CategoryPageLayout from "@/pages/eshop/pages/CategoryPageLayout";
 import ProductPageLayout from "@/pages/eshop/pages/ProductPageLayout";
 import CartLayout from "@/pages/eshop/pages/cart/CartLayout";
 import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
+import CartSidePanel from "@/pages/eshop/pages/cart/CartSidePanel";
 
 /**
  * App
@@ -25,6 +26,7 @@ export default function App(): JSX.Element {
     <CartProvider>
       <Router>
         <ScrollToTop />
+        <CartSidePanel />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/reservation" element={<ReservationPage />} />
