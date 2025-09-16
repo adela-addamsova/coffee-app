@@ -1,6 +1,7 @@
-import { JSX } from "react";
+import React, { JSX } from "react";
 import { Link } from "react-router-dom";
-import ShoppingCart from "@assets/e-shop/shopping-cart.svg";
+import ShoppingCart from "@assets/e-shop/cart/shopping-cart.svg";
+import { useCart } from "@eshop/pages/cart/CartContext";
 
 export type ProductMiniatureProps = {
   id: string | number;
@@ -8,6 +9,8 @@ export type ProductMiniatureProps = {
   price: number;
   image_url: string;
   category: "light" | "dark" | "decaf";
+  weight: string;
+  stock: number;
 };
 
 /**
@@ -30,11 +33,31 @@ export default function ProductMiniature({
   price,
   image_url,
   category,
+  weight,
+  stock,
 }: ProductMiniatureProps): JSX.Element {
   const categoryLabels: Record<string, string> = {
     light: "Light roasted",
     dark: "Dark roasted",
     decaf: "Decaf",
+  };
+
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const item = {
+      id: Number(id),
+      title,
+      price,
+      quantity: 1,
+      image_url,
+      category,
+      weight: weight,
+      stock: stock,
+    };
+    addToCart(item);
   };
 
   return (
@@ -57,7 +80,7 @@ export default function ProductMiniature({
             <p className="product-miniature-price">${price.toFixed(2)}</p>
           </div>
 
-          <div className="product-info-button">
+          <div className="product-info-button" onClick={handleAddToCart}>
             <img src={ShoppingCart} alt="Shopping Cart" />
             {/* <h6 className='font-montserrat text-[10px] mt-2 font-semibold'>ADD TO CART</h6> */}
           </div>
