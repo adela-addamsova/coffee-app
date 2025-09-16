@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { JSX, useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import InlineMenu from "@/pages/eshop/eshop-components/InlineMenu";
 import HeroSection from "@components/HeroSection";
 import HeroImg from "@assets/e-shop/category-hero.jpg";
@@ -8,6 +8,7 @@ import Newsletter from "@eshop-components/Newsletter";
 import ProductCounter from "@eshop-components/ProductCounter";
 import DeliveryIcon from "@assets/e-shop/eshop-components/delivery.svg";
 import StockIcon from "@assets/e-shop/eshop-components/stock.svg";
+import { useCart } from "@eshop/pages/cart/CartContext";
 
 interface Product {
   id: string;
@@ -32,6 +33,26 @@ export default function ProductPageLayout(): JSX.Element {
   const { category, id } = useParams<{ category?: string; id?: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!product || !category || !id) return;
+
+    const item = {
+      id: Number(id),
+      title: product.title,
+      price: product.price,
+      quantity: 1,
+      image_url: product.image_url,
+      category: category as "light" | "dark" | "decaf",
+      weight: product.weight || "",
+      stock: product.stock,
+    };
+
+    addToCart(item);
+  };
 
   useEffect(() => {
     if (!category || !id) {
@@ -124,7 +145,11 @@ export default function ProductPageLayout(): JSX.Element {
                 </div>
               </div>
             </div>
-            <MainButton text="ADD TO CART" color="black" />
+            <MainButton
+              text="ADD TO CART"
+              color="black"
+              onClick={handleAddToCart}
+            />
           </div>
         </div>
         {/* <div className='full-description'>
