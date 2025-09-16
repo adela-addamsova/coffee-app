@@ -41,7 +41,7 @@ function getLatestProducts(
   return dbInstance
     .prepare(
       `
-    SELECT id, title, category, price, image_url
+    SELECT id, title, category, price, image_url, weight, stock
     FROM products
     WHERE deleted_at IS NULL
     AND stock > 0
@@ -62,7 +62,7 @@ function getAllProducts(dbInstance: DBType): ProductPreview[] {
   return dbInstance
     .prepare(
       `
-    SELECT id, title, category, price, image_url
+    SELECT id, title, category, price, image_url, weight, stock
     FROM products
     WHERE deleted_at IS NULL
     AND stock > 0
@@ -86,7 +86,7 @@ function getProductsByCategory(
   return dbInstance
     .prepare(
       `
-    SELECT id, title, category, price, image_url
+    SELECT id, title, category, price, image_url, weight, stock
     FROM products
     WHERE deleted_at IS NULL AND stock > 0 AND category = ?
     ORDER BY datetime(created_at) DESC;
