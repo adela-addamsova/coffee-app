@@ -85,7 +85,7 @@
   Main Button
 --------------------*/
 .main-button {
-    @apply px-[25px] py-[14px] no-underline text-[18px] whitespace-nowrap w-fit font-montserrat border text-center;
+    @apply px-[25px] py-[14px] no-underline text-[18px] whitespace-nowrap w-fit font-montserrat border text-center cursor-pointer;
 }
 
 .main-button.black {
