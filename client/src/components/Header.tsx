@@ -1,9 +1,10 @@
 import { useState, useEffect, JSX } from "react";
 import { Link } from "react-router-dom";
-import { navItems } from "@config/NavItems";
+import { navItems, eshopNavItems } from "@config/NavItems";
 import NavLink from "./NavLink";
 import logoWhite from "@assets/components/coffee-beans-white.svg";
 import logoBlack from "@assets/components/coffee-beans-black.svg";
+import ShoppingCart from "@assets/e-shop/cart/shopping-cart-white.svg";
 import { scrollToTop } from "@/utils/navigationFunctions";
 
 /**
@@ -43,6 +44,10 @@ const Header = (): JSX.Element => {
       />
     ));
 
+  const shoppingCartLink = eshopNavItems.find(
+    (item) => !!item.to && item.label === "Shopping Cart",
+  );
+
   return (
     <header
       className={`page-header ${isScrolled ? "scrolled" : ""}`}
@@ -56,7 +61,12 @@ const Header = (): JSX.Element => {
       </div>
 
       {/* Desktop nav */}
-      <nav className="nav-desktop">{renderNavItems("nav-link")}</nav>
+      <nav className="nav-desktop">
+        {renderNavItems("nav-link")}
+        <Link to={shoppingCartLink?.to || "/e-shop/cart"} onClick={scrollToTop}>
+          <img src={ShoppingCart} alt="Shopping Cart" className="w-7" />
+        </Link>
+      </nav>
 
       {/* Burger for mobile */}
       <div
