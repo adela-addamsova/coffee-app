@@ -7,6 +7,8 @@ interface Product {
   category: "light" | "dark" | "decaf";
   price: number;
   image_url: string;
+  weight: string;
+  stock: number;
 }
 
 /**
@@ -73,6 +75,8 @@ export default function LatestProducts(): JSX.Element {
           category={product.category}
           price={product.price}
           image_url={product.image_url}
+          weight={product.weight}
+          stock={product.stock}
         />
       ))}
     </section>
