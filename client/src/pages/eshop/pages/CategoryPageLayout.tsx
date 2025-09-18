@@ -18,6 +18,8 @@ type Product = {
   price: number;
   image_url: string;
   category: "light" | "dark" | "decaf";
+  weight: string;
+  stock: number;
 };
 
 /**
