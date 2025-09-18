@@ -18,4 +18,6 @@ export const eshopNavItems: NavItem[] = [
   { label: "Dark Roasted", to: "/e-shop/products/dark" },
   { label: "Decaf", to: "/e-shop/products/decaf" },
   { label: "Shopping Cart", to: "/e-shop/cart" },
+  { label: "Shopping Cart Delivery", to: "/e-shop/cart/delivery" },
+  { label: "Shopping Cart Payment", to: "/e-shop/cart/payment" },
 ];
