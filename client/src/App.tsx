@@ -8,9 +8,11 @@ import EshopLayout from "@/pages/eshop/pages/EshopLayout";
 import EshopLandingPage from "@/pages/eshop/pages/main-page/EshopLandingPage";
 import CategoryPageLayout from "@/pages/eshop/pages/CategoryPageLayout";
 import ProductPageLayout from "@/pages/eshop/pages/ProductPageLayout";
-import CartLayout from "@/pages/eshop/pages/cart/CartLayout";
 import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
 import CartSidePanel from "@/pages/eshop/pages/cart/CartSidePanel";
+import CartStepOne from "@/pages/eshop/pages/cart/CartStepOne";
+import CartStepTwo from "@/pages/eshop/pages/cart/CartStepTwo";
+import CartStepThree from "@/pages/eshop/pages/cart/CartStepThree";
 
 /**
  * App
@@ -38,7 +40,9 @@ export default function App(): JSX.Element {
               path="products/:category/:id"
               element={<ProductPageLayout />}
             />
-            <Route path="cart" element={<CartLayout />} />
+            <Route path="cart" element={<CartStepOne />} />
+            <Route path="cart/delivery" element={<CartStepTwo />} />
+            <Route path="cart/payment" element={<CartStepThree />} />
           </Route>
           <Route
             path="*"
