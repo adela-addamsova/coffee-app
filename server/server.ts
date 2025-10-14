@@ -5,6 +5,7 @@ import db from "@db/coffee-app-db";
 import reservationRouter from "@routes/reservations.routes";
 import productRoutes from "@routes/products.routes";
 import newsletterRouter from "@routes/subscribtion.routes";
+import ordersRouter from "@routes/orders.routes";
 import initializeDatabase from "@db/init-db";
 
 initializeDatabase(db);
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api/reservations", reservationRouter(db));
 app.use("/api/products", productRoutes(db));
 app.use("/api/subscribe", newsletterRouter(db));
+app.use("/api/orders", ordersRouter(db));
 
 function startServer() {
   const PORT = process.env.PORT || 3000;
