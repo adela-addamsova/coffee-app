@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import SocialIcons from "./SocialIcons";
 import { navItems, NavItem } from "@config/NavItems";
 import NavLink from "./NavLink";

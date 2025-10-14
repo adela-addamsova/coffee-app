@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { handleNavigation, type NavItem } from "@/utils/navigationFunctions";
 
