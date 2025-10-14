@@ -33,6 +33,8 @@ export default function ProductPageLayout(): JSX.Element {
   const { category, id } = useParams<{ category?: string; id?: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
+
   const { addToCart } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -44,7 +46,7 @@ export default function ProductPageLayout(): JSX.Element {
       id: Number(id),
       title: product.title,
       price: product.price,
-      quantity: 1,
+      quantity,
       image_url: product.image_url,
       category: category as "light" | "dark" | "decaf",
       weight: product.weight || "",
@@ -118,7 +120,12 @@ export default function ProductPageLayout(): JSX.Element {
               <img src={product.image_url} alt="Product Image" />
             </div>
             <h4>$ {product.price}</h4>
-            <ProductCounter min={1} max={product.stock} />
+            <ProductCounter
+              min={1}
+              max={product.stock}
+              value={quantity}
+              onChange={setQuantity}
+            />
             <div className="product-info-text">
               <p>{product.ingredients}</p>
               <p>{product.weight}</p>
