@@ -95,8 +95,8 @@
     @apply w-full font-slab p-3 shadow-lg bg-[#94d85345] mb-10;
 }
 
-.reservation-form .field-error-message {
-    @apply text-[#d85353] font-slab text-wrap;
+.field-error-message {
+    @apply text-[#d85353] font-slab text-wrap text-sm;
 }
 
 .reservation-form .error-message {
