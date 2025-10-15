@@ -3,8 +3,9 @@
     "target": "es2016",
     "module": "esnext",
     "outDir": "dist",
-    "rootDir": ".",
-    "baseUrl": ".",
+    "moduleResolution": "node",
+    "rootDir": "../",
+    "baseUrl": "../",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -17,6 +18,6 @@
       "@shared/*": ["shared/*"]
     }
   },
-  "include": ["server/**/*.ts", "shared/**/*.ts"],
-  "exclude": ["node_modules", "client", "tests"]
+  "include": ["./**/*.ts", "../shared/**/*.ts"],
+  "exclude": ["node_modules", "../node_modules", "client", "tests"]
 }
