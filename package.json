@@ -33,7 +33,8 @@
   "scripts": {
     "prepare": "husky",
     "lint:md": "markdownlint *.md",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc -p server"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

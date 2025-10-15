@@ -20,7 +20,7 @@ const config: Config = {
         "^@server/(.*)$": "<rootDir>/server/$1",
         "^@db/(.*)$": "<rootDir>/server/db/$1",
         "^@routes/(.*)$": "<rootDir>/server/routes/$1",
-        "^@shared/(.*)$": "<rootDir>/shared/$1",
+        "^shared/(.*)$": "<rootDir>/shared/$1",
       },
       transform: {
         "^.+\\.(ts|tsx)$": ["ts-jest", { tsconfig: "./server/tsconfig.json" }],
