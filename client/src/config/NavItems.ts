@@ -20,4 +20,5 @@ export const eshopNavItems: NavItem[] = [
   { label: "Shopping Cart", to: "/e-shop/cart" },
   { label: "Shopping Cart Delivery", to: "/e-shop/cart/delivery" },
   { label: "Shopping Cart Payment", to: "/e-shop/cart/payment" },
+  { label: "Order Success", to: "/e-shop/cart/order-success" },
 ];
