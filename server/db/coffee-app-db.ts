@@ -1,6 +1,18 @@
-import Database from 'better-sqlite3';
-import path from 'path';
+import dotenv from "dotenv";
+dotenv.config();
+import { Pool, QueryResult, QueryResultRow } from "pg";
 
-const db = new Database(path.join(__dirname, 'coffee-app.db'), { timeout: 5000 });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
 
-export default db;
+export async function query<T extends QueryResultRow = Record<string, unknown>>(
+  text: string,
+  params?: unknown[],
+): Promise<T[]> {
+  const res: QueryResult<T> = await pool.query(text, params);
+  return res.rows;
+}
+
+export default pool;

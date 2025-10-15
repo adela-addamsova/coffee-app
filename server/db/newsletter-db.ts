@@ -1,4 +1,4 @@
-import type { Database as DBType } from "better-sqlite3";
+import { query } from "./coffee-app-db";
 
 /**
  * Interface representing a newsletter subscriber
@@ -23,17 +23,16 @@ type NewsletterSubscriberCheck = Pick<NewsletterSubscriber, "id">;
  * @param email - The subscriber's email
  * @returns True if the email exists and is not deleted, false otherwise
  */
-function isEmailSubscribed(email: string, dbInstance: DBType): boolean {
-  const result = dbInstance
-    .prepare(
-      `
-        SELECT id FROM newsletter_subscribers
-        WHERE email = ? AND deleted_at IS NULL
+export async function isEmailSubscribed(email: string): Promise<boolean> {
+  const result = await query<NewsletterSubscriberCheck>(
+    `
+      SELECT id FROM newsletter_subscribers
+      WHERE email = $1 AND deleted_at IS NULL
     `,
-    )
-    .get(email) as NewsletterSubscriberCheck | undefined;
+    [email],
+  );
 
-  return !!result;
+  return result.length > 0;
 }
 
 /**
@@ -41,21 +40,20 @@ function isEmailSubscribed(email: string, dbInstance: DBType): boolean {
  *
  * @param email - The subscriber's email address
  * @param ip_address - The IP address of the subscriber
- * @returns The result of the insertion operation
+ * @returns The inserted subscriber row
  */
-function insertNewsletterSubscriber(
+export async function insertNewsletterSubscriber(
   email: string,
-  ip_address: string | undefined,
-  dbInstance: DBType,
-) {
-  return dbInstance
-    .prepare(
-      `
-        INSERT INTO newsletter_subscribers (email, ip_address)
-        VALUES (?, ?)
+  ip_address?: string,
+): Promise<NewsletterSubscriber> {
+  const result = await query<NewsletterSubscriber>(
+    `
+      INSERT INTO newsletter_subscribers (email, ip_address)
+      VALUES ($1, $2)
+      RETURNING *
     `,
-    )
-    .run(email, ip_address);
-}
+    [email, ip_address || null],
+  );
 
-export { insertNewsletterSubscriber, isEmailSubscribed };
+  return result[0];
+}
