@@ -15,9 +15,9 @@
       "@server/*": ["server/*"],
       "@db/*": ["server/db/*"],
       "@routes/*": ["server/routes/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["../shared/*"]
     }
   },
-  "include": ["./**/*.ts", "../shared/**/*.ts"],
+  "include": ["./**/*.ts", "../shared/*"],
   "exclude": ["node_modules", "../node_modules", "client", "tests"]
 }

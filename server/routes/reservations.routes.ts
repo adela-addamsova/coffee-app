@@ -3,7 +3,7 @@ import {
   getAllReservations,
   createReservationIfAvailable,
 } from "@db/reservations-db";
-import { reservationSchema } from "@shared/ReservationFormValidationSchema";
+import { reservationSchema } from "shared/ReservationFormValidationSchema";
 import { z } from "zod";
 
 /**

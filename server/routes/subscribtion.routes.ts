@@ -3,7 +3,7 @@ import {
   insertNewsletterSubscriber,
   isEmailSubscribed,
 } from "@db/newsletter-db";
-import { newsletterSchema } from "@shared/NewsletterValidationSchema";
+import { newsletterSchema } from "shared/NewsletterValidationSchema";
 
 export default function newsletterRouter() {
   const router = Router();
