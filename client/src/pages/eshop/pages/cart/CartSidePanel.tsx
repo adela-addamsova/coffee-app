@@ -4,8 +4,23 @@ import { eshopNavItems } from "@config/NavItems";
 import deleteIcon from "@assets/e-shop/cart/delete.svg";
 
 export default function CartSidePanel() {
-  const { cart, categoryLabels, isCartOpen, setIsCartOpen, removeFromCart } =
-    useCart();
+  const {
+    cart,
+    categoryLabels,
+    isCartOpen,
+    setIsCartOpen,
+    removeFromCart,
+    remainingTime,
+  } = useCart();
+
+  const safeTime = remainingTime ?? 0;
+  const minutes = Math.floor(safeTime / 1000 / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = Math.floor((safeTime / 1000) % 60)
+    .toString()
+    .padStart(2, "0");
+
   const eshopUrl = eshopNavItems.find(
     (item) => item.label === "Shopping Cart",
   )?.to;
@@ -61,6 +76,14 @@ export default function CartSidePanel() {
             ))
           )}
         </div>
+
+        {cart.length > 0 && (
+          <div className="cart-side-panel-timer">
+            <p>
+              Products will be stay your cart for {minutes}:{seconds}
+            </p>
+          </div>
+        )}
 
         <div className="cart-side-panel-btn">
           <MainButton
