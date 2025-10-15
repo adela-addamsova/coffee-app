@@ -26,11 +26,15 @@
 }
 
 .burger {
-    @apply block min-[1024px]:hidden;
+    @apply flex flex-row gap-4 min-[1024px]:hidden;
 }
 
 .burger-icon {
     @apply text-[32px] cursor-pointer pl-3 text-white;
+}
+
+.burger-cart {
+    @apply flex pb-1;
 }
 
 .mobile-nav {
@@ -81,7 +85,7 @@
   Main Button
 --------------------*/
 .main-button {
-    @apply px-[25px] py-[14px] no-underline text-[18px] whitespace-nowrap w-fit font-montserrat border;
+    @apply px-[25px] py-[14px] no-underline text-[18px] whitespace-nowrap w-fit font-montserrat border text-center cursor-pointer;
 }
 
 .main-button.black {
@@ -89,7 +93,7 @@
 }
 
 .main-button.white {
-    @apply text-white border-white;
+    @apply text-white border-white bg-black;
 }
 
 /*--------------------
