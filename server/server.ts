@@ -37,8 +37,7 @@ app.use("/api/subscribe", newsletterRouter());
 app.use("/api/orders", ordersRouter());
 
 function startServer() {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT);
+  const PORT = process.env.PORT || 5000;
 }
 
 if (require.main === module) {
