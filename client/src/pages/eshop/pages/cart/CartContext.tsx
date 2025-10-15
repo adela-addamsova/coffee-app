@@ -123,7 +123,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
    * Add a product to the cart
    * - Updates quantity if item exists
    * - Resets timer whenever a new product is added
-   * - Stores cart and expiry in localStorage
    */
   const addToCart = (item: CartItem) => {
     setCart((prev) => {
@@ -139,16 +138,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       const newExpiry = Date.now() + EXPIRATION_TIME;
       setCartExpiry(newExpiry);
       setRemainingTime(EXPIRATION_TIME);
-      localStorage.setItem("cartExpiry", String(newExpiry));
-      localStorage.setItem(
-        "cart",
-        JSON.stringify({ items: updatedCart, expiry: newExpiry }),
-      );
 
       return updatedCart;
     });
+
     setIsCartOpen(true);
   };
+
+  // Persist cart and expiry to localStorage whenever cart changes
+  useEffect(() => {
+    if (cart.length === 0) {
+      localStorage.removeItem("cart");
+      localStorage.removeItem("cartExpiry");
+    } else {
+      const expiry = cartExpiry ?? Date.now() + EXPIRATION_TIME;
+      localStorage.setItem("cart", JSON.stringify({ items: cart, expiry }));
+      localStorage.setItem("cartExpiry", String(expiry));
+    }
+  }, [cart, cartExpiry]);
 
   /**
    * Remove an item from the cart by ID
