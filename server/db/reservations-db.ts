@@ -1,4 +1,4 @@
-import type { Database as DBType } from "better-sqlite3";
+import { query } from "./coffee-app-db";
 
 const MAX_CAPACITY = 10;
 
@@ -11,7 +11,7 @@ export interface Reservation {
 }
 
 export interface ReservationSummary {
-  totalGuests: number | null;
+  totalguests: number | null;
 }
 
 /**
@@ -41,51 +41,46 @@ function isValidReservationTime(datetimeStr: string): boolean {
 /**
  * Returns all reservations from the DB.
  */
-function getAllReservations(dbInstance: DBType): Reservation[] {
-  return dbInstance
-    .prepare(`SELECT * FROM reservations`)
-    .all() as Reservation[];
+export async function getAllReservations(): Promise<Reservation[]> {
+  return query<Reservation>("SELECT * FROM reservations");
 }
 
 /**
  * Inserts a new reservation if the time and guest count are valid
  * @returns {boolean} True if successful, false if time or capacity is invalid
  */
-function createReservationIfAvailable(
+export async function createReservationIfAvailable(
   name: string,
   email: string,
   datetime: string,
   guests: number,
-  dbInstance: DBType,
-): boolean {
+): Promise<boolean> {
   if (!isValidReservationTime(datetime)) {
     return false;
   }
 
-  const result = dbInstance
-    .prepare(
-      `
-    SELECT SUM(guests) as totalGuests FROM reservations WHERE datetime = ?
-  `,
-    )
-    .get(datetime) as ReservationSummary;
+  const result = await query<ReservationSummary>(
+    `
+    SELECT SUM(guests) AS totalguests
+    FROM reservations
+    WHERE datetime = $1
+    `,
+    [datetime],
+  );
 
-  const currentGuests = result?.totalGuests ?? 0;
+  const currentGuests = result[0]?.totalguests ?? 0;
 
   if (currentGuests + guests > MAX_CAPACITY) {
     return false;
   }
 
-  dbInstance
-    .prepare(
-      `
+  await query(
+    `
     INSERT INTO reservations (name, email, datetime, guests)
-    VALUES (?, ?, ?, ?)
-  `,
-    )
-    .run(name, email, datetime, guests);
+    VALUES ($1, $2, $3, $4)
+    `,
+    [name, email, datetime, guests],
+  );
 
   return true;
 }
-
-export { getAllReservations, createReservationIfAvailable };

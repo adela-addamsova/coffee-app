@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import type { Database as DBType } from "better-sqlite3";
 import { createOrder, OrderData } from "@db/orders-db";
 import { z } from "zod";
 import { orderSchema } from "@shared/OrderValidationSchema";
@@ -7,11 +6,8 @@ import { orderSchema } from "@shared/OrderValidationSchema";
 /**
  * Orders Router
  * Handles creation of new customer orders
- *
- * @param dbInstance - SQLite database instance
- * @returns Configured Express router
  */
-export default function ordersRouter(dbInstance: DBType) {
+export default function ordersRouter() {
   const router = Router();
 
   type OrderBody = z.infer<typeof orderSchema>;
@@ -23,7 +19,7 @@ export default function ordersRouter(dbInstance: DBType) {
    */
   router.post(
     "/order",
-    (
+    async (
       req: Request<Record<string, never>, unknown, OrderBody>,
       res: Response,
     ) => {
@@ -51,7 +47,8 @@ export default function ordersRouter(dbInstance: DBType) {
       };
 
       try {
-        const orderId = createOrder(orderData, dbInstance);
+        // no dbInstance needed, use pool inside createOrder
+        const orderId = await createOrder(orderData);
         res.status(201).json({ success: true, orderId });
       } catch (err) {
         if (err instanceof Error) {
