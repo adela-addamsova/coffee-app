@@ -1,11 +1,17 @@
-import type { Database as DBType } from "better-sqlite3";
+import pool from "./coffee-app-db";
 
+/**
+ * Single item in an order
+ */
 export interface OrderItem {
   product_id: number;
   quantity: number;
   price: number;
 }
 
+/**
+ * Full order data
+ */
 export interface OrderData {
   customer_name: string;
   customer_address: string;
@@ -23,55 +29,67 @@ export interface OrderData {
 /**
  * Creates a new order and its items within a database transaction
  * @param order - Order data
- * @param dbInstance - The SQLite database instance
  * @returns - Generated order ID
  * @throws Error if stock is insufficient or a database operation fails
  */
-export function createOrder(order: OrderData, dbInstance: DBType): number {
-  const insertOrderStmt = dbInstance.prepare(`
-    INSERT INTO orders
-      (customer_name, customer_address, customer_city, customer_postalcode, customer_email, customer_phone, shipment_method, payment_method, total_amount, paid)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
+export async function createOrder(order: OrderData): Promise<number> {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
 
-  const insertItemStmt = dbInstance.prepare(`
-    INSERT INTO order_items (order_id, product_id, quantity, price)
-    VALUES (?, ?, ?, ?)
-  `);
-
-  const updateStockStmt = dbInstance.prepare(`
-    UPDATE products SET stock = stock - ? WHERE id = ? AND stock >= ?
-  `);
-
-  return dbInstance.transaction(() => {
-    const result = insertOrderStmt.run(
-      order.customer_name,
-      order.customer_address,
-      order.customer_city,
-      order.customer_postalcode,
-      order.customer_email,
-      order.customer_phone,
-      order.shipment_method,
-      order.payment_method,
-      order.total_amount,
-      order.paid ? 1 : 0,
+    const orderResult = await client.query<{ id: number }>(
+      `
+      INSERT INTO orders 
+        (customer_name, customer_address, customer_city, customer_postalcode, customer_email, customer_phone, shipment_method, payment_method, total_amount, paid)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING id
+      `,
+      [
+        order.customer_name,
+        order.customer_address,
+        order.customer_city,
+        order.customer_postalcode,
+        order.customer_email,
+        order.customer_phone,
+        order.shipment_method,
+        order.payment_method,
+        order.total_amount,
+        order.paid,
+      ],
     );
 
-    const orderId = result.lastInsertRowid as number;
+    const orderId = orderResult.rows[0].id;
 
     for (const item of order.items) {
-      const updated = updateStockStmt.run(
-        item.quantity,
-        item.product_id,
-        item.quantity,
+      const stockResult = await client.query<{ stock: number }>(
+        `
+        UPDATE products 
+        SET stock = stock - $1 
+        WHERE id = $2 AND stock >= $1
+        RETURNING stock
+        `,
+        [item.quantity, item.product_id],
       );
-      if (updated.changes === 0) {
+
+      if (stockResult.rowCount === 0) {
         throw new Error(`Not enough stock for product ${item.product_id}`);
       }
 
-      insertItemStmt.run(orderId, item.product_id, item.quantity, item.price);
+      await client.query(
+        `
+        INSERT INTO order_items (order_id, product_id, quantity, price)
+        VALUES ($1, $2, $3, $4)
+        `,
+        [orderId, item.product_id, item.quantity, item.price],
+      );
     }
 
+    await client.query("COMMIT");
     return orderId;
-  })();
+  } catch (err) {
+    await client.query("ROLLBACK");
+    throw err;
+  } finally {
+    client.release();
+  }
 }

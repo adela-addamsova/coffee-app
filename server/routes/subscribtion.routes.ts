@@ -4,9 +4,8 @@ import {
   isEmailSubscribed,
 } from "@db/newsletter-db";
 import { newsletterSchema } from "@shared/NewsletterValidationSchema";
-import type { Database as DBType } from "better-sqlite3";
 
-export default function newsletterRouter(dbInstance: DBType) {
+export default function newsletterRouter() {
   const router = Router();
 
   /**
@@ -17,7 +16,7 @@ export default function newsletterRouter(dbInstance: DBType) {
    * @param res - Express Response object used to send the result
    * @returns JSON response with success message or error
    */
-  router.post("/", (req: Request, res: Response) => {
+  router.post("/", async (req: Request, res: Response) => {
     const parseResult = newsletterSchema.safeParse(req.body);
 
     if (!parseResult.success) {
@@ -30,19 +29,18 @@ export default function newsletterRouter(dbInstance: DBType) {
     const ip_address = req.ip;
 
     try {
-      if (isEmailSubscribed(email, dbInstance)) {
+      const alreadySubscribed = await isEmailSubscribed(email);
+      if (alreadySubscribed) {
         return res
           .status(409)
           .json({ error: "This email is already subscribed" });
       }
 
-      const result = insertNewsletterSubscriber(email, ip_address, dbInstance);
-      return res
-        .status(201)
-        .json({
-          message: "Subscription successful",
-          id: result.lastInsertRowid,
-        });
+      const result = await insertNewsletterSubscriber(email, ip_address);
+      return res.status(201).json({
+        message: "Subscription successful",
+        id: result.id,
+      });
     } catch (_err) {
       res.status(500).json({ error: "Internal server error" });
     }

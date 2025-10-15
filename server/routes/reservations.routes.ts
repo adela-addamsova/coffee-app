@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import type { Database as DBType } from "better-sqlite3";
 import {
   getAllReservations,
   createReservationIfAvailable,
@@ -9,10 +8,8 @@ import { z } from "zod";
 
 /**
  * Creates and returns a router that handles reservation-related API endpoints
- * @param dbInstance - An instance of the SQLite database
- * @returns Express Router with product endpoints
  */
-export default function reservationRouter(dbInstance: DBType) {
+export default function reservationRouter() {
   const router = Router();
 
   type ReservationBody = z.infer<typeof reservationSchema>;
@@ -20,14 +17,10 @@ export default function reservationRouter(dbInstance: DBType) {
   /**
    * GET /api/reservations
    * Returns all reservations from the database
-   *
-   * @param req - Express Request object
-   * @param res - Express Response object
-   * @returns JSON array of reservation objects
    */
-  router.get("/", (req: Request, res: Response) => {
+  router.get("/", async (req: Request, res: Response) => {
     try {
-      const reservations = getAllReservations(dbInstance);
+      const reservations = await getAllReservations();
       res.json(reservations);
     } catch (_err) {
       res.status(500).json({ message: "Failed to fetch reservations" });
@@ -37,14 +30,10 @@ export default function reservationRouter(dbInstance: DBType) {
   /**
    * POST /api/reservations/reserve
    * Validates input with Zod and creates a reservation if capacity allows
-   *
-   * @param req - Express Request object containing reservation data in body
-   * @param res - Express Response object
-   * @returns 201 if reservation is successful, 400 if invalid or full, 500 if server error
    */
   router.post(
     "/reserve",
-    (
+    async (
       req: Request<Record<string, never>, unknown, ReservationBody>,
       res: Response,
     ) => {
@@ -61,12 +50,11 @@ export default function reservationRouter(dbInstance: DBType) {
       const { name, email, datetime, guests } = result.data;
 
       try {
-        const success = createReservationIfAvailable(
+        const success = await createReservationIfAvailable(
           name,
           email,
           datetime,
           guests,
-          dbInstance,
         );
         if (!success) {
           return res

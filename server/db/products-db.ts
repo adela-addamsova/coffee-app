@@ -1,4 +1,4 @@
-import type { Database as DBType } from "better-sqlite3";
+import { query } from "./coffee-app-db";
 
 /**
  * Full product record from the database
@@ -31,68 +31,59 @@ export type ProductPreview = Pick<
  * Retrieves the most recently added products (in stock and not deleted).
  *
  * @param limit - Maximum number of products to return
- * @param dbInstance - The SQLite database instance
  * @returns An array of the latest product previews
  */
-function getLatestProducts(
+export async function getLatestProducts(
   limit: number,
-  dbInstance: DBType,
-): ProductPreview[] {
-  return dbInstance
-    .prepare(
-      `
+): Promise<ProductPreview[]> {
+  return query<ProductPreview>(
+    `
     SELECT id, title, category, price, image_url, weight, stock
     FROM products
     WHERE deleted_at IS NULL
-    AND stock > 0
-    ORDER BY datetime(created_at) DESC, id DESC
-    LIMIT ?;
-  `,
-    )
-    .all(limit) as ProductPreview[];
+      AND stock > 0
+    ORDER BY created_at DESC, id DESC
+    LIMIT $1
+    `,
+    [limit],
+  );
 }
 
 /**
  * Retrieves all products that are in stock and not soft-deleted.
  *
- * @param dbInstance - The SQLite database instance
  * @returns An array of all product previews
  */
-function getAllProducts(dbInstance: DBType): ProductPreview[] {
-  return dbInstance
-    .prepare(
-      `
+export async function getAllProducts(): Promise<ProductPreview[]> {
+  return query<ProductPreview>(
+    `
     SELECT id, title, category, price, image_url, weight, stock
     FROM products
     WHERE deleted_at IS NULL
-    AND stock > 0
-    ORDER BY datetime(created_at) DESC;
-  `,
-    )
-    .all() as ProductPreview[];
+      AND stock > 0
+    ORDER BY created_at DESC
+    `,
+  );
 }
 
 /**
  * Retrieves all products of a specific category that are in stock and not soft-deleted.
  *
  * @param category - The product category to filter by
- * @param dbInstance - The SQLite database instance
  * @returns An array of product previews from the given category
  */
-function getProductsByCategory(
+export async function getProductsByCategory(
   category: string,
-  dbInstance: DBType,
-): ProductPreview[] {
-  return dbInstance
-    .prepare(
-      `
+): Promise<ProductPreview[]> {
+  return query<ProductPreview>(
+    `
     SELECT id, title, category, price, image_url, weight, stock
     FROM products
-    WHERE deleted_at IS NULL AND stock > 0 AND category = ?
-    ORDER BY datetime(created_at) DESC;
-  `,
-    )
-    .all(category) as ProductPreview[];
+    WHERE deleted_at IS NULL AND stock > 0 AND category = $1
+    ORDER BY created_at DESC
+    `,
+    [category],
+  );
 }
 
 /**
@@ -100,28 +91,19 @@ function getProductsByCategory(
  *
  * @param id - The product ID
  * @param category - The product category
- * @param dbInstance - The SQLite database instance
  * @returns The full product record, or undefined if not found
  */
-function getProductById(
+export async function getProductById(
   id: number,
   category: string,
-  dbInstance: DBType,
-): Product | undefined {
-  return dbInstance
-    .prepare(
-      `
+): Promise<Product | undefined> {
+  const result = await query<Product>(
+    `
     SELECT *
     FROM products
-    WHERE deleted_at IS NULL AND stock > 0 AND id = ? AND category = ?;
-  `,
-    )
-    .get(id, category) as Product | undefined;
+    WHERE deleted_at IS NULL AND stock > 0 AND id = $1 AND category = $2
+    `,
+    [id, category],
+  );
+  return result[0];
 }
-
-export {
-  getLatestProducts,
-  getAllProducts,
-  getProductsByCategory,
-  getProductById,
-};
