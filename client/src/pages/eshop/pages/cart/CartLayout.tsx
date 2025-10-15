@@ -9,7 +9,7 @@ import payment from "@assets/e-shop/cart/payment-gray.svg";
 import paymentActive from "@assets/e-shop/cart/payment.svg";
 
 type CartLayoutProps = {
-  step: "cart" | "delivery" | "payment";
+  step: "cart" | "delivery" | "payment" | "summary";
   children: ReactNode;
 };
 
@@ -31,26 +31,29 @@ export default function CartLayout({
         </div>
 
         <div className="shopping-cart-container">
-          <div className="cart-menu-container">
-            <div className="cart-menu-line"></div>
-            <div className="cart-menu-line-progress" data-step={step}></div>
+          {step !== "summary" && (
+            <div className="cart-menu-container">
+              <div className="cart-menu-line"></div>
+              <div className="cart-menu-line-progress" data-step={step}></div>
 
-            <div className="cart-menu">
-              {steps.map((s, index) => {
-                const isActive =
-                  ["cart", "delivery", "payment"].indexOf(step) >= index;
-                return (
-                  <div key={s.label} className="icon-item">
-                    <img
-                      src={isActive ? s.activeIcon : s.icon}
-                      alt={s.label}
-                      className={`cart-menu-icon ${isActive ? "active" : ""}`}
-                    />
-                  </div>
-                );
-              })}
+              <div className="cart-menu">
+                {steps.map((s, index) => {
+                  const isActive =
+                    ["cart", "delivery", "payment", "summary"].indexOf(step) >=
+                    index;
+                  return (
+                    <div key={s.label} className="icon-item">
+                      <img
+                        src={isActive ? s.activeIcon : s.icon}
+                        alt={s.label}
+                        className={`cart-menu-icon ${isActive ? "active" : ""}`}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Variable inner content */}
