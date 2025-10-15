@@ -2,37 +2,21 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "esnext",
-    "typeRoots": [
-      "./node_modules/@types",
-      "../node_modules/@types"
-    ],
     "outDir": "dist",
-    "moduleResolution": "node",
-    "rootDir": "..",
+    "rootDir": ".",
+    "baseUrl": ".",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "..",
     "paths": {
-      "@server/*": [
-        "server/*"
-      ],
-      "@db/*": [
-        "server/db/*"
-      ],
-      "@routes/*": [
-        "server/routes/*"
-      ],
-      "@shared/*": [
-        "shared/*"
-      ]
+      "@server/*": ["server/*"],
+      "@db/*": ["server/db/*"],
+      "@routes/*": ["server/routes/*"],
+      "@shared/*": ["shared/*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "../shared/**/*.ts"
-  ],
+  "include": ["server/**/*.ts", "shared/**/*.ts"],
   "exclude": ["node_modules", "client", "tests"]
 }
