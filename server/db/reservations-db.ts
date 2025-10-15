@@ -16,7 +16,6 @@ export interface ReservationSummary {
 
 /**
  * Core hours configuration.
- * Example: 9:00–17:00 on weekdays, 10:00–14:00 on weekends
  */
 function isValidReservationTime(datetimeStr: string): boolean {
   const date = new Date(datetimeStr);

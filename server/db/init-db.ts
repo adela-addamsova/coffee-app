@@ -12,7 +12,7 @@ export function initializeReservations(dbInstance: DBType): void {
       guests INTEGER NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       deleted_at DATETIME
-    )
+    );
   `,
     )
     .run();
@@ -37,7 +37,7 @@ export function initializeProducts(dbInstance: DBType): void {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME,
         deleted_at DATETIME
-    )
+    );
     `,
     )
     .run();
@@ -54,7 +54,50 @@ export function initializeSubscribers(dbInstance: DBType): void {
       updated_at DATETIME,
       deleted_at DATETIME,
       ip_address TEXT
+    );
+  `,
     )
+    .run();
+}
+
+export function initializeOrders(dbInstance: DBType): void {
+  dbInstance
+    .prepare(
+      `
+    CREATE TABLE IF NOT EXISTS orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      customer_name TEXT NOT NULL,
+      customer_address TEXT NOT NULL,
+      customer_city TEXT NOT NULL,
+      customer_postalcode TEXT NOT NULL,
+      customer_email TEXT NOT NULL,
+      customer_phone TEXT NOT NULL,
+      shipment_method TEXT NOT NULL CHECK(shipment_method IN ('standard','express')),
+      payment_method TEXT NOT NULL CHECK(payment_method IN ('card','bank-transfer','cash')),
+      total_amount INT NOT NULL,
+      paid BOOLEAN DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME,
+      deleted_at DATETIME
+    );
+  `,
+    )
+    .run();
+}
+
+export function initializeOrderItems(dbInstance: DBType): void {
+  dbInstance
+    .prepare(
+      `
+    CREATE TABLE IF NOT EXISTS order_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      order_id INTEGER NOT NULL,
+      product_id INTEGER NOT NULL,
+      quantity INTEGER NOT NULL,
+      price INT NOT NULL,
+      FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+      FOREIGN KEY (product_id) REFERENCES products(id)
+    );
   `,
     )
     .run();
@@ -64,4 +107,6 @@ export default function initializeDatabase(dbInstance: DBType): void {
   initializeReservations(dbInstance);
   initializeProducts(dbInstance);
   initializeSubscribers(dbInstance);
+  initializeOrders(dbInstance);
+  initializeOrderItems(dbInstance);
 }

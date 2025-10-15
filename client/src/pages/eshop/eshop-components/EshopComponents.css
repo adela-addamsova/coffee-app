@@ -132,11 +132,11 @@ span {
 }
 
 .product-info-button {
-    @apply w-fit flex flex-col text-center justify-start items-end hover:bg-white/10 hover:backdrop-blur-md hover:border border-white/30 rounded-xl hover:shadow-lg transition-all duration-200;
+    @apply w-fit flex flex-col text-center justify-start items-end;
 }
 
 .product-info-button img {
-    @apply w-[40px];
+    @apply w-[40px] hover:opacity-[60%] transition cursor-pointer;
 }
 
 .product-image img {
@@ -155,7 +155,7 @@ span {
 }
 
 .product-counter input {
-    @apply text-center border-x border-black h-full px-2 py-1 font-montserrat;
+    @apply text-center border-x border-black h-full px-2 py-2 font-montserrat;
 }
 
 .product-counter input[type="number"]::-webkit-inner-spin-button,

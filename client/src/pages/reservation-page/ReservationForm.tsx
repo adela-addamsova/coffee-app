@@ -86,7 +86,9 @@ export default function ReservationForm(): JSX.Element {
         />
 
         {errors.date && (
-          <div className="field-error-message w-[80%]">{errors.date}</div>
+          <div className="form-group">
+            <div className="field-error-message w-[80%]">{errors.date}</div>
+          </div>
         )}
 
         {/* Time and guests */}
