@@ -4,14 +4,14 @@ export const paymentSchema = z.object({
   cardNumber: z
     .string()
     .transform((val) => val.replace(/\s+/g, ""))
-    .refine((val) => /^\d{16}$/.test(val), {
+    .refine((val: string) => /^\d{16}$/.test(val), {
       message: "Card number must be exactly 16 digits",
     }),
   expiry: z
     .string()
     .regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Expiry must be MM/YY")
     .refine(
-      (value) => {
+      (value: string) => {
         const [month, year] = value.split("/").map((v) => parseInt(v, 10));
         if (!month || !year) return false;
 
