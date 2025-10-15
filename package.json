@@ -46,5 +46,10 @@
     "*.json": [
       "jsonlint"
     ]
-  }
+  },
+  "private": true,
+  "workspaces": [
+    "server",
+    "shared"
+  ]
 }
