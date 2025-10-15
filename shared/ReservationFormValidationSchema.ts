@@ -16,7 +16,7 @@ const baseReservationSchema = z.object({
 });
 
 export const reservationSchema = baseReservationSchema.superRefine(
-  (data: z.infer<typeof baseReservationSchema>, ctx) => {
+  (data: z.infer<typeof baseReservationSchema>, ctx: z.RefinementCtx) => {
     const max = data.remainingSeats ?? MAX_CAPACITY;
     if (data.guests > max) {
       ctx.addIssue({

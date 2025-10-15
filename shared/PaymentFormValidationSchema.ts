@@ -3,7 +3,7 @@ import { z } from "zod";
 export const paymentSchema = z.object({
   cardNumber: z
     .string()
-    .transform((val) => val.replace(/\s+/g, ""))
+    .transform((val: string) => val.replace(/\s+/g, ""))
     .refine((val: string) => /^\d{16}$/.test(val), {
       message: "Card number must be exactly 16 digits",
     }),
