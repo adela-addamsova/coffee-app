@@ -1,11 +1,13 @@
 import { useCart } from "@eshop/pages/cart/CartContext";
 import MainButton from "@/components/MainButton";
+import { useNavigate } from "react-router-dom";
 
 type CartSummaryProps = {
   nextStep: string;
   previousStep: string;
   previousStepText: string;
   nextStepText: string;
+  onNext?: () => void;
 };
 
 export default function CartSummary({
@@ -13,15 +15,27 @@ export default function CartSummary({
   previousStep,
   previousStepText,
   nextStepText,
+  onNext,
 }: CartSummaryProps) {
-  const { cart } = useCart();
+  const { cart, shippingFee, paymentFee } = useCart();
 
-  const totalPrice = cart.reduce(
+  const navigate = useNavigate();
+
+  const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
+  const totalPrice = subtotal + shippingFee + paymentFee;
   const DPH_RATE = 0.21;
   const totalPriceWithoutDPH = totalPrice / (1 + DPH_RATE);
+
+  const handleNextClick = () => {
+    if (onNext) {
+      onNext();
+    } else {
+      navigate(nextStep);
+    }
+  };
 
   return (
     <>
@@ -38,7 +52,13 @@ export default function CartSummary({
       </div>
       <div className="total-buttons">
         <MainButton text={previousStepText} to={previousStep} color="black" />
-        <MainButton text={nextStepText} to={nextStep} color="white" />
+        {cart.length > 0 && (
+          <MainButton
+            text={nextStepText}
+            color="white"
+            onClick={handleNextClick}
+          />
+        )}
       </div>
     </>
   );
