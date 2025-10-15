@@ -23,7 +23,7 @@ export default function CartSidePanel() {
         className={`cart-side-panel ${isCartOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="cart-side-panel-header">
-          <h2 className="text-lg font-bold">Shopping Cart</h2>
+          <h3 className="cart-heading">Shopping Cart</h3>
           <button
             onClick={() => setIsCartOpen(false)}
             className="cart-side-panel-close"
