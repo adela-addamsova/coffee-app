@@ -1,9 +1,13 @@
 .cart-page {
-  @apply w-full min-h-screen flex flex-col justify-between;
+  @apply w-full flex flex-col justify-between;
 }
 
 .shopping-cart-page {
-  @apply w-full ;
+  @apply w-full h-full min-h-[63vh] flex flex-col;
+}
+
+.cart-heading {
+  @apply text-[20px] font-semibold;
 }
 
 /*--------------------
@@ -26,7 +30,11 @@
 }
 
 .cart-side-panel-content {
-  @apply p-4 overflow-y-auto h-[calc(100%-150px)];
+  @apply p-4 overflow-y-auto h-[calc(100%-180px)];
+}
+
+.cart-side-panel-item-inner-content {
+  @apply flex gap-8;
 }
 
 .cart-side-panel-item {
@@ -37,12 +45,28 @@
   @apply flex flex-col gap-2;
 }
 
+.cart-side-panel-title {
+  @apply font-semibold;
+}
+
+.cart-side-panel-category {
+  @apply text-sm text-gray-500;
+}
+
+.cart-side-panel-quantity {
+  @apply text-sm;
+}
+
 .cart-side-panel-btn {
   @apply flex justify-center; 
 }
 
 .cart-side-panel-btn .main-button {
   @apply w-[80%];
+}
+
+.cart-side-panel-timer {
+  @apply flex items-center justify-center mb-4
 }
 
 /*--------------------
@@ -73,16 +97,16 @@
   @apply w-1/2;
 }
 
-.cart-menu-line-progress[data-step="payment"] {
+.cart-menu-line-progress[data-step="payment"], .cart-menu-line-progress[data-step="summary"] {
   @apply w-full;
 }
 
 .cart-menu-icon {
-    @apply w-10 border-[#999999] border-[1px] rounded-full p-[5px]
+    @apply w-10 border-[#999999] border-[1px] rounded-full p-[5px];
 }
 
 .cart-menu-icon.active {
-    @apply w-10 border-black border-[1px] rounded-full p-[5px]
+    @apply border-black;
 }
 
 .icon-item {
@@ -93,16 +117,15 @@
   Cart Content
 --------------------*/
 .shopping-cart-content {
-  @apply w-full max-w-[1200px] mx-auto p-5 pb-10;
+  @apply w-full max-w-[1200px] mx-auto py-5 pb-10;
 }
 
 .cart-item {
   @apply w-full flex flex-col md:flex-row gap-6 justify-between items-center border-b border-b-[#d8d8d8] py-10 px-4 last:border-b-0;
 }
 
-
 h2.empty-cart {
-  @apply text-center text-2xl font-semibold mb-18;
+  @apply text-center text-2xl font-semibold mb-10;
 }
 
 img.product-img {
@@ -117,7 +140,7 @@ h4.product-desc {
   Total Price
 --------------------*/
 .total-price {
-  @apply w-[90%] xl:w-full max-w-[1200px] px-3 py-6 md:px-16 md:py-10 border border-[#d8d8d8] mx-auto mb-20 md:mt-20 md:mb-10;
+  @apply w-[90%] xl:w-full max-w-[1200px] px-3 py-6 md:px-16 md:py-10 border border-[#d8d8d8] mx-auto mb-20 md:mt-10 md:mb-10;
 }
 
 .total-price h3 {
@@ -145,9 +168,126 @@ h4.product-desc {
 }
 
 .total-buttons {
-  @apply max-w-[1200px] mx-auto flex flex-row gap-1 md:gap-5 mb-12 justify-end md:justify-end;
+  @apply max-w-[1200px] w-[90%] xl:w-full mx-auto flex flex-row gap-1 md:gap-5 mb-12 justify-end md:justify-end;
 }
 
 .total-buttons .main-button {
-  @apply md:w-[204px];
+  @apply md:w-[204px] w-[60%];
+}
+
+
+/*--------------------
+  Delivery Form
+--------------------*/
+.delivery-address-box {
+  @apply w-[90%] xl:w-full mx-auto;
+}
+
+.delivery-form {
+  @apply flex flex-col md:flex-row w-full justify-between gap-5 my-10 mx-auto;
+}
+
+.delivery-form-inner {
+  @apply w-full md:w-1/2;
+}
+
+.delivery-form-group {
+  @apply flex flex-col mb-5;
+}
+
+.delivery-form-group input, .payment-form-group input {
+    @apply p-2 border border-solid border-black flex;
+}
+
+/*--------------------
+  Shipment Form
+--------------------*/
+.delivery-shipment-box {
+  @apply w-[90%] xl:w-full mx-auto;
+}
+
+.radio-form {
+  @apply flex flex-col w-full justify-between gap-5 my-10;
+}
+
+.radio-form-group {
+  @apply  text-[#a8a8a8] flex cursor-pointer border border-[#d8d8d8];
+}
+
+.radio-form-group:has(input[type="radio"]:checked) {
+  @apply border-black text-black;
+}
+
+.radio-form-group input[type="radio"] {
+  accent-color: black;
+}
+
+.radio-form-group input, .radio-form-group label {
+  @apply !py-5 ml-5;
+}
+
+.radio-form-group label {
+  @apply w-full !text-left cursor-pointer;
+}
+
+/*--------------------
+  Payment Form
+--------------------*/
+.payment-box {
+  @apply w-[90%] xl:w-full mx-auto;
+}
+
+.payment-form {
+  @apply flex flex-col md:flex-row w-[95%] mx-auto gap-10 py-4;
+}
+
+.payment-form-data {
+  @apply flex flex-col justify-around w-full gap-4 lg:gap-0;
+}
+
+.cart-info-50 {
+  @apply flex flex-row gap-3;
+}
+
+.cart-info-50-inner {
+  @apply flex flex-col w-1/2
+}
+
+.payment-form .payment-form-group {
+  @apply text-black border-black
+}
+
+.payment-form .payment-form-group input {
+  @apply w-full !py-3;
+}
+
+.payment-form-img {
+  @apply hidden md:block;
+}
+
+.spinner-box {
+  @apply flex flex-col items-center justify-center h-[400px] gap-4;
+}
+
+.spinner {
+  @apply animate-spin rounded-full h-16 w-16 border-t-4 border-gray-400;
+}
+
+.spinner-text {
+  @apply text-gray-600 text-lg;
+}
+
+/*--------------------
+  Order Success
+--------------------*/
+.thank-you-container{
+  @apply flex flex-col mx-auto lg:my-12 max-w-[1200px] w-[95%] justify-center py-16 text-center items-center gap-8 grow; 
+}
+
+.order-success-title {
+  @apply text-[40px] lg:text-[56px];
+}
+
+.order-success-message {
+  @apply text-[16px] lg:text-[18px] text-[#757575] max-w-[700px];
 }
