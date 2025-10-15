@@ -2,6 +2,10 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "esnext",
+    "typeRoots": [
+      "./node_modules/@types",
+      "../node_modules/@types"
+    ],
     "outDir": "dist",
     "moduleResolution": "node",
     "rootDir": "..",
@@ -29,5 +33,6 @@
   "include": [
     "**/*.ts",
     "../shared/**/*.ts"
-  ]
+  ],
+  "exclude": ["node_modules", "client", "tests"]
 }
