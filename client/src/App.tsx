@@ -13,6 +13,7 @@ import CartSidePanel from "@/pages/eshop/pages/cart/CartSidePanel";
 import CartStepOne from "@/pages/eshop/pages/cart/CartStepOne";
 import CartStepTwo from "@/pages/eshop/pages/cart/CartStepTwo";
 import CartStepThree from "@/pages/eshop/pages/cart/CartStepThree";
+import OrderSuccess from "@/pages/eshop/pages/cart/OrderSuccess";
 
 /**
  * App
@@ -43,6 +44,7 @@ export default function App(): JSX.Element {
             <Route path="cart" element={<CartStepOne />} />
             <Route path="cart/delivery" element={<CartStepTwo />} />
             <Route path="cart/payment" element={<CartStepThree />} />
+            <Route path="cart/order-success" element={<OrderSuccess />} />
           </Route>
           <Route
             path="*"
