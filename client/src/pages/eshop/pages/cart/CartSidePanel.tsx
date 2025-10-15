@@ -53,14 +53,14 @@ export default function CartSidePanel() {
           ) : (
             cart.map((item) => (
               <div key={item.id} className="cart-side-panel-item">
-                <div className="flex gap-8">
+                <div className="cart-side-panel-item-inner-content">
                   <img src={item.image_url} alt={item.title} className="h-20" />
                   <div className="cart-side-panel-item-inner">
-                    <p className="font-semibold">{item.title}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="cart-side-panel-title">{item.title}</p>
+                    <p className="cart-side-panel-category">
                       {categoryLabels[item.category]} {item.weight}
                     </p>
-                    <p className="text-sm">
+                    <p className="cart-side-panel-quantity">
                       {item.quantity} × ${item.price.toFixed(2)}
                     </p>
                   </div>
@@ -80,7 +80,7 @@ export default function CartSidePanel() {
         {cart.length > 0 && (
           <div className="cart-side-panel-timer">
             <p>
-              Products will be stay your cart for {minutes}:{seconds}
+              Products will stay in your cart for {minutes}:{seconds}
             </p>
           </div>
         )}
