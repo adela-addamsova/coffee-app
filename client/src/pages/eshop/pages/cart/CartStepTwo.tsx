@@ -24,6 +24,7 @@ export default function CartStepTwo() {
   const cartUrl = eshopNavItems.find(
     (item) => item.label === "Shopping Cart",
   )?.to;
+
   const paymentUrl = eshopNavItems.find(
     (item) => item.label === "Shopping Cart Payment",
   )?.to;
@@ -31,7 +32,7 @@ export default function CartStepTwo() {
   const [triedSubmit, setTriedSubmit] = useState(false);
 
   /**
-   * Handles typing into delivery form inputs.
+   * Handles typing into delivery form inputs
    * Updates the corresponding field in `deliveryData`
    * and clears any existing error message for that field
    */
@@ -47,7 +48,7 @@ export default function CartStepTwo() {
   };
 
   /**
-   * Triggered when the "Next" button is clicked.
+   * Triggered when the "Next" button is clicked
    * Runs address validation (via Zod schema) and either:
    * - Displays validation errors and scrolls to form, or
    * - Clears errors and navigates to the payment step
