@@ -37,17 +37,20 @@ export default function reservationRouter() {
       req: Request<Record<string, never>, unknown, ReservationBody>,
       res: Response,
     ) => {
+      console.log("Incoming reservation request:", req.body);
+
       const result = reservationSchema.safeParse(req.body);
 
       if (!result.success) {
-        const errors = result.error.format();
+        console.log("Validation failed:", result.error.format());
         return res.status(400).json({
           message: "Validation failed",
-          errors,
+          errors: result.error.format(),
         });
       }
 
       const { name, email, datetime, guests } = result.data;
+      console.log("Validated reservation:", { name, email, datetime, guests });
 
       try {
         const success = await createReservationIfAvailable(
@@ -56,13 +59,19 @@ export default function reservationRouter() {
           datetime,
           guests,
         );
+        console.log("Reservation creation result:", success);
+
         if (!success) {
+          console.log("Reservation rejected: time slot full or unavailable");
           return res
             .status(400)
             .json({ message: "Time slot already booked out" });
         }
+
+        console.log("Reservation successful");
         res.json({ message: "Reservation successful" });
-      } catch (_err) {
+      } catch (err) {
+        console.error("Reservation error:", err);
         res.status(500).json({ message: "Server error" });
       }
     },
