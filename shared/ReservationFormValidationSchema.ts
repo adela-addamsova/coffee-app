@@ -12,11 +12,11 @@ const baseReservationSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   guests: z.number().min(1, "At least one guest required"),
   datetime: z.string().datetime(),
-  remainingSeats: z.number(),
+  remainingSeats: z.number().optional(),
 });
 
 export const reservationSchema = baseReservationSchema.superRefine(
-  (data: z.infer<typeof baseReservationSchema>, ctx: z.RefinementCtx) => {
+  (data, ctx) => {
     const max = data.remainingSeats ?? MAX_CAPACITY;
     if (data.guests > max) {
       ctx.addIssue({
