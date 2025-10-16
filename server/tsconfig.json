@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "esnext",
+    "target": "ES2020",
+    "module": "CommonJS",
     "outDir": "./dist",
     "moduleResolution": "node",
     "rootDir": "../",
@@ -12,12 +12,27 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@server/*": ["server/*"],
-      "@db/*": ["server/db/*"],
-      "@routes/*": ["server/routes/*"],
-      "@shared/*": ["../shared/*"]
+      "@server/*": [
+        "server/*"
+      ],
+      "@db/*": [
+        "server/db/*"
+      ],
+      "@routes/*": [
+        "server/routes/*"
+      ],
+      "@shared/*": [
+        "../shared/*"
+      ]
     }
   },
-  "include": ["./**/*.ts", "../shared/*"],
-  "exclude": ["node_modules", "../node_modules", "client", "tests"]
+  "include": [
+    "../server/**/*.ts",
+    "../shared/**/*.ts"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../client",
+    "../tests"
+  ]
 }

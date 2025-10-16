@@ -2,8 +2,8 @@ import { Router, Request, Response } from "express";
 import {
   insertNewsletterSubscriber,
   isEmailSubscribed,
-} from "@db/newsletter-db";
-import { newsletterSchema } from "shared/NewsletterValidationSchema";
+} from "../db/newsletter-db";
+import { newsletterSchema } from "../../shared/NewsletterValidationSchema";
 
 export default function newsletterRouter() {
   const router = Router();
