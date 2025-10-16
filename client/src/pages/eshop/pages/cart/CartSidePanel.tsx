@@ -61,7 +61,7 @@ export default function CartSidePanel() {
                       {categoryLabels[item.category]} {item.weight}
                     </p>
                     <p className="cart-side-panel-quantity">
-                      {item.quantity} × ${item.price.toFixed(2)}
+                      {item.quantity} × ${item.price}
                     </p>
                   </div>
                 </div>
