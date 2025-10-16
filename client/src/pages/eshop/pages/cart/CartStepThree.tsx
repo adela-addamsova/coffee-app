@@ -84,7 +84,7 @@ export default function CartStepThree(): JSX.Element {
         items: cart.map((item) => ({
           product_id: item.id,
           quantity: item.quantity,
-          price: item.price,
+          price: Number(item.price),
         })),
         total_amount: cart.reduce((sum, i) => sum + i.price * i.quantity, 0),
         paid: paymentMethod === "card",
