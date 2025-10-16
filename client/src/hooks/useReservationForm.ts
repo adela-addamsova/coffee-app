@@ -146,7 +146,6 @@ export function useReservationForm(): {
       email: form.email.trim(),
       guests: Number(form.guests),
       ...(selectedTime ? { datetime: selectedTime } : {}),
-      remainingSeats,
     };
 
     const result = reservationSchema.safeParse(payload);
@@ -182,7 +181,9 @@ export function useReservationForm(): {
         setAvailableTimes([]);
         setRemainingSeats(null);
       } else {
-        setErrorMessage(result.errorMessage || "Reservation failed.");
+        setErrorMessage(
+          result.message || result.errorMessage || "Reservation failed.",
+        );
       }
     } catch (_err) {
       setErrorMessage("Server error.");
