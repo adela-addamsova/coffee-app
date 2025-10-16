@@ -112,17 +112,20 @@
     @apply !bg-white;
 }
 
-.react-calendar__tile--now.react-calendar__month-view__days__day {
-    @apply !bg-[#867a6e8e];
+.react-calendar__tile--now.react-calendar__tile--active, .react-calendar__tile--active {
+  @apply !bg-[#867a6e8e] text-white;
+}
+
+.react-calendar__tile--now.react-calendar__month-view__days__day:not(.react-calendar__tile--active) {
+  @apply !bg-transparent text-[#000000];
+}
+
+.react-calendar__month-view__days__day--weekend {
+    @apply !text-[#494949];
 }
 
 .react-calendar__tile--now.react-calendar__year-view__months__month {
     @apply !bg-[#6e867a00];
-}
-
-.react-calendar__month-view__days__day--weekend,
-.react-calendar__tile--active {
-    @apply !text-[#494949];
 }
 
 .react-calendar__month-view__days__day--neighboringMonth,
