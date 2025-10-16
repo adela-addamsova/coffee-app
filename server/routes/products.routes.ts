@@ -4,7 +4,7 @@ import {
   getAllProducts,
   getProductsByCategory,
   getProductById,
-} from "@db/products-db";
+} from "../db/products-db";
 
 /**
  * Creates and returns a router that handles product-related API endpoints

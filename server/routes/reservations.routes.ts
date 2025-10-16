@@ -2,8 +2,8 @@ import { Router, Request, Response } from "express";
 import {
   getAllReservations,
   createReservationIfAvailable,
-} from "@db/reservations-db";
-import { reservationSchema } from "shared/ReservationFormValidationSchema";
+} from "../db/reservations-db";
+import { reservationSchema } from "../../shared/ReservationFormValidationSchema";
 import { z } from "zod";
 
 /**

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { createOrder, OrderData } from "@db/orders-db";
+import { createOrder, OrderData } from "../db/orders-db";
 import { z } from "zod";
-import { orderSchema } from "shared/OrderValidationSchema";
+import { orderSchema } from "../../shared/OrderValidationSchema";
 
 /**
  * Orders Router
