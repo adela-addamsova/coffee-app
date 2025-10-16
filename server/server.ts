@@ -22,30 +22,31 @@ initDb();
 
 const app = express();
 
-import { CorsOptions } from "cors";
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        process.env.CLIENT_ORIGIN,
+        "http://localhost:5173",
+      ];
 
-const corsOptions: CorsOptions = {
-  origin: (origin: string | undefined, callback) => {
-    const allowedOrigins = [
-      "https://coffee-app-frontend-chi.vercel.app", // production
-    ];
+      const isVercelPreview =
+        typeof origin === "string" &&
+        origin.endsWith(".vercel.app") &&
+        origin.includes("coffee-app-frontend");
 
-    const isVercelPreview =
-      typeof origin === "string" &&
-      origin.endsWith(".vercel.app") &&
-      origin.includes("coffee-app-frontend");
-
-    if (origin && (allowedOrigins.includes(origin) || isVercelPreview)) {
-      callback(null, true);
-    } else {
-      console.warn("Blocked CORS origin:", origin);
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+      if (!origin) {
+        callback(null, true);
+      } else if (allowedOrigins.includes(origin) || isVercelPreview) {
+        callback(null, true);
+      } else {
+        console.warn("Blocked CORS origin:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  }),
+);
 
 app.use((req, res, next) => {
   console.log("Request origin:", req.headers.origin);
