@@ -77,7 +77,7 @@ export default function ProductMiniature({
             <p className="product-miniature-description font-light text-nowrap">
               {categoryLabels[category] || category}
             </p>
-            <p className="product-miniature-price">${price.toFixed(2)}</p>
+            <p className="product-miniature-price">${price}</p>
           </div>
 
           <div className="product-info-button" onClick={handleAddToCart}>
