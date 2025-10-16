@@ -141,11 +141,17 @@ export function useReservationForm(): {
     setErrorMessage("");
     setErrors({});
 
+    const adjustedTime = selectedTime
+      ? new Date(
+          new Date(selectedTime).getTime() + 2 * 60 * 60 * 1000,
+        ).toISOString()
+      : undefined;
+
     const payload = {
       name: form.name.trim(),
       email: form.email.trim(),
       guests: Number(form.guests),
-      ...(selectedTime ? { datetime: selectedTime } : {}),
+      ...(adjustedTime ? { datetime: adjustedTime } : {}),
     };
 
     const result = reservationSchema.safeParse(payload);
