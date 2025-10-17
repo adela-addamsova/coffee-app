@@ -3,22 +3,22 @@ import { z } from "zod";
 export const addressSchema = z.object({
   name: z
     .string()
-    .min(1, "Please enter your full name")
+    .min(1, "errors.name-required")
     .refine((val: string) => val.trim().split(/\s+/).length >= 2, {
-      message: "Please enter your full name",
+      message: "errors.name-required",
     }),
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email("errors.invalid-email"),
   phone: z
     .string()
-    .min(9, "Please enter a valid phone number")
-    .max(9, "Please enter a valid phone number")
-    .regex(/^\d+$/, "Phone number must contain only digits"),
+    .min(9, "errors.invalid-phone")
+    .max(9, "errors.invalid-phone")
+    .regex(/^\d+$/, "errors.invalid-phone"),
   street: z
     .string()
-    .min(1, "Please enter your address")
+    .min(1, "errors.address-required")
     .refine((val: string) => /\D+\s+\d+/.test(val), {
-      message: "Please enter a valid address (e.g., 'Main St 123')",
+      message: "errors.invalid-address",
     }),
-  city: z.string().min(1, "Please enter a city"),
-  zipCode: z.string().min(1, "Please enter a postal code"),
+  city: z.string().min(1, "errors.city-required"),
+  zipCode: z.string().min(1, "errors.zip-required"),
 });

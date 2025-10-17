@@ -6,6 +6,7 @@ import { eshopNavItems } from "@config/NavItems";
 import MockPaymentForm from "./MockCartPayment";
 import { paymentSchema } from "@shared/PaymentFormValidationSchema";
 import { useCart } from "@eshop/pages/cart/CartContext";
+import { useTranslation } from "react-i18next";
 
 export default function CartStepThree(): JSX.Element {
   const API_URL = import.meta.env.VITE_API_URL as string;
@@ -28,13 +29,14 @@ export default function CartStepThree(): JSX.Element {
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingMessage, setProcessingMessage] = useState("");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const deliveryUrl = eshopNavItems.find(
-    (item) => item.label === "Shopping Cart Delivery",
+    (item) => item.label === "data.eshop-nav-items.delivery",
   )?.to;
 
   const finnishUrl = eshopNavItems.find(
-    (item) => item.label === "Order Success",
+    (item) => item.label === "data.eshop-nav-items.success",
   )?.to;
 
   /**
@@ -67,9 +69,9 @@ export default function CartStepThree(): JSX.Element {
           setIsProcessing(false);
           return;
         }
-        setProcessingMessage("Processing your payment...");
+        setProcessingMessage(t("eshop-cart.payment-proccess"));
       } else {
-        setProcessingMessage("Processing your order...");
+        setProcessingMessage(t("eshop-cart.order-proccess"));
       }
 
       const orderPayload = {
@@ -173,8 +175,10 @@ export default function CartStepThree(): JSX.Element {
                   onChange={() => handlePaymentChange("bank-transfer")}
                 />
                 <label htmlFor="bank-transfer">
-                  <span className="font-semibold">Free</span> Direct Bank
-                  Transfer
+                  <span className="font-semibold">
+                    {t("eshop-cart.ship-free")}
+                  </span>{" "}
+                  {t("eshop-cart.payment-transfer")}
                 </label>
               </div>
             </div>
@@ -191,7 +195,10 @@ export default function CartStepThree(): JSX.Element {
                   onChange={() => handlePaymentChange("card")}
                 />
                 <label htmlFor="card">
-                  <span className="font-semibold">Free</span> Card Payment
+                  <span className="font-semibold">
+                    {t("eshop-cart.ship-free")}
+                  </span>{" "}
+                  {t("eshop-cart.payment-card")}
                 </label>
               </div>
               {paymentMethod === "card" && (
@@ -215,7 +222,8 @@ export default function CartStepThree(): JSX.Element {
                 onChange={() => handlePaymentChange("cash")}
               />
               <label htmlFor="cash">
-                <span className="font-semibold">$2.00</span> Cash On Delivery
+                <span className="font-semibold">$2.00</span>{" "}
+                {t("eshop-cart.payment-cash")}
               </label>
             </div>
           </form>
@@ -225,8 +233,8 @@ export default function CartStepThree(): JSX.Element {
       <CartSummary
         previousStep={deliveryUrl!}
         nextStep="#"
-        previousStepText="BACK"
-        nextStepText="SEND ORDER"
+        previousStepText={t("eshop-cart.btn-back")}
+        nextStepText={t("eshop-cart.btn-send")}
         onNext={handleSendOrder}
       />
     </CartLayout>

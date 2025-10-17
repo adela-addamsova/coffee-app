@@ -1,9 +1,10 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { Link } from "react-router-dom";
 import LightRoasted from "@assets/e-shop/light-roasted.png";
 import DarkRoasted from "@assets/e-shop/dark-roasted.png";
 import Decaf from "@assets/e-shop/decaf.png";
 import { eshopNavItems } from "@config/NavItems";
+import { useTranslation } from "react-i18next";
 
 interface Category {
   name: string;
@@ -11,27 +12,15 @@ interface Category {
   link?: string;
 }
 
-const navLight = eshopNavItems.find((item) => item.label === "Light Roasted");
-const navDark = eshopNavItems.find((item) => item.label === "Dark Roasted");
-const navDecaf = eshopNavItems.find((item) => item.label === "Decaf");
-
-export const categories: Category[] = [
-  {
-    name: "LIGHT ROASTED",
-    image: LightRoasted,
-    link: navLight?.to,
-  },
-  {
-    name: "DARK ROASTED",
-    image: DarkRoasted,
-    link: navDark?.to,
-  },
-  {
-    name: "DECAF",
-    image: Decaf,
-    link: navDecaf?.to,
-  },
-];
+const navLight = eshopNavItems.find(
+  (item) => item.label === "data.eshop-nav-items.light",
+);
+const navDark = eshopNavItems.find(
+  (item) => item.label === "data.eshop-nav-items.dark",
+);
+const navDecaf = eshopNavItems.find(
+  (item) => item.label === "data.eshop-nav-items.decaf",
+);
 
 /**
  * ProductCategories
@@ -41,6 +30,25 @@ export const categories: Category[] = [
  * @returns {JSX.Element} The rendered categories section with navigation links.
  */
 export default function ProductCategories(): JSX.Element {
+  const { t } = useTranslation();
+
+  const categories: Category[] = [
+    {
+      name: t("data.eshop-nav-items.light"),
+      image: LightRoasted,
+      link: navLight?.to,
+    },
+    {
+      name: t("data.eshop-nav-items.dark"),
+      image: DarkRoasted,
+      link: navDark?.to,
+    },
+    {
+      name: t("data.eshop-nav-items.decaf"),
+      image: Decaf,
+      link: navDecaf?.to,
+    },
+  ];
   return (
     <div
       className="product-categories-section"
@@ -56,7 +64,9 @@ export default function ProductCategories(): JSX.Element {
             <img src={item.image} alt={item.name} className="category-img" />
             <div className="img-overlay"></div>
           </div>
-          <div className="category-name">{item.name}</div>
+          <div className="category-name">
+            <h4>{item.name}</h4>
+          </div>
         </Link>
       ))}
     </div>

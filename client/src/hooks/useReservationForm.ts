@@ -5,6 +5,7 @@ import {
   MAX_CAPACITY,
 } from "@shared/ReservationFormValidationSchema";
 import { generateTimeSlots } from "@/utils/reservationFormLogic";
+import { useTranslation } from "react-i18next";
 
 interface ApiReservation {
   datetime: string;
@@ -82,6 +83,7 @@ export function useReservationForm(): {
   MAX_CAPACITY: number;
 } {
   const API_URL = import.meta.env.VITE_API_URL as string;
+  const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [availableTimes, setAvailableTimes] = useState<TimeSlot[]>([]);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
@@ -159,12 +161,20 @@ export function useReservationForm(): {
     if (!result.success) {
       const formatted = result.error.format();
       const newErrors: Errors = {
-        name: formatted.name?._errors?.[0],
-        email: formatted.email?._errors?.[0],
-        guests: formatted.guests?._errors?.[0],
+        name: formatted.name?._errors?.[0]
+          ? t(formatted.name._errors[0])
+          : undefined,
+        email: formatted.email?._errors?.[0]
+          ? t(formatted.email._errors[0])
+          : undefined,
+        guests: formatted.guests?._errors?.[0]
+          ? t(formatted.guests._errors[0])
+          : undefined,
       };
-      if (!selectedDate) newErrors.date = "Please select a date";
-      if (!selectedTime) newErrors.time = "Please select a time";
+
+      if (!selectedDate) newErrors.date = t("errors.date-required");
+      if (!selectedTime) newErrors.time = t("errors.time-required");
+
       setErrors(newErrors);
       return;
     }
@@ -180,7 +190,7 @@ export function useReservationForm(): {
       const result = await response.json();
 
       if (response.ok) {
-        setMessage("Reservation has been created successfully. Thank you!");
+        setMessage(t("reservation.form-success"));
         setForm({ name: "", email: "", guests: 1 });
         setSelectedDate(null);
         setSelectedTime(null);
@@ -188,7 +198,9 @@ export function useReservationForm(): {
         setRemainingSeats(null);
       } else {
         setErrorMessage(
-          result.message || result.errorMessage || "Reservation failed.",
+          result.message ||
+            result.errorMessage ||
+            t("reservation.error-message"),
         );
       }
     } catch (_err) {
