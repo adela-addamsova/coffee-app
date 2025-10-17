@@ -1,4 +1,4 @@
-import React, { JSX, useState } from "react";
+import { JSX, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -13,6 +13,7 @@ import galleryGrid5 from "@assets/main-page/gallery-grid-5.png";
 import { Navigation } from "swiper/modules";
 import Lightbox, { Slide } from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import { useTranslation } from "react-i18next";
 
 /**
  * FullWidthSwiper component
@@ -33,6 +34,8 @@ import "yet-another-react-lightbox/styles.css";
  */
 
 const FullWidthSwiper = (): JSX.Element => {
+  const { t } = useTranslation();
+
   const [open, setOpen] = useState<boolean>(false);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -70,10 +73,7 @@ const FullWidthSwiper = (): JSX.Element => {
         <SwiperSlide>
           <div className="slide-content-1">
             <div className="gallery-text" data-testid="gallery-text">
-              <p>
-                We create a cozy place with delicious coffee where you can work,
-                read, meet a friend or just enjoy a moment...
-              </p>
+              <p>{t("home.gallery-text")}</p>
             </div>
             <div className="gallery-images">
               {[img1, img2, img3].map((img, i) => (
@@ -138,10 +138,7 @@ const FullWidthSwiper = (): JSX.Element => {
 
       {/* Mobile Swiper */}
       <div className="mobile-gallery-swiper" data-testid="mobile-swiper">
-        <p>
-          We create a cozy place with delicious coffee where you can work, read,
-          meet a friend or just enjoy a moment...
-        </p>
+        <p>{t("home.gallery-text")}</p>
         <Swiper
           spaceBetween={10}
           slidesPerView={1}

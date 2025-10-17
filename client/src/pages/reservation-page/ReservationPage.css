@@ -134,6 +134,10 @@
     @apply text-[#757575];
 }
 
+.react-calendar__navigation__label__labelText {
+    @apply capitalize
+}
+
 input:-webkit-autofill,
 input:not([type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]) {
     box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset !important;

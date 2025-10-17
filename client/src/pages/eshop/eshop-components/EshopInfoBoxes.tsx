@@ -2,30 +2,13 @@ import React, { JSX } from "react";
 import Freshness from "@assets/e-shop/eshop-components/freshness.svg";
 import Story from "@assets/e-shop/eshop-components/story.svg";
 import Shipping from "@assets/e-shop/eshop-components/shipping.svg";
+import { useTranslation } from "react-i18next";
 
 export interface Category {
   title: string;
   text: string;
   image: string;
 }
-
-export const categories: Category[] = [
-  {
-    title: "FRESHNESS GUARANTEE",
-    text: "We roast our coffee to ensure\nmaximum flavor.",
-    image: Freshness,
-  },
-  {
-    title: "COFFEE WITH A STORY",
-    text: "We choose local and fair producers\nand sellers of coffee",
-    image: Story,
-  },
-  {
-    title: "FREE SHIPPING",
-    text: "For all registered users and club\nmembers.",
-    image: Shipping,
-  },
-];
 
 /**
  * EshopInfoBoxes component
@@ -39,6 +22,26 @@ export const categories: Category[] = [
  */
 
 export default function EshopInfoBoxes(): JSX.Element {
+  const { t } = useTranslation();
+
+  const categories: Category[] = [
+    {
+      title: t("eshop.info-box-head-1"),
+      text: t("eshop.info-box-text-1"),
+      image: Freshness,
+    },
+    {
+      title: t("eshop.info-box-head-2"),
+      text: t("eshop.info-box-text-2"),
+      image: Story,
+    },
+    {
+      title: t("eshop.info-box-head-3"),
+      text: t("eshop.info-box-text-3"),
+      image: Shipping,
+    },
+  ];
+
   return (
     <div className="eshop-info-boxes-section" data-testid="eshop-info-boxes">
       <div className="eshop-info-boxes">

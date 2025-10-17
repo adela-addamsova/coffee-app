@@ -63,11 +63,22 @@ export default function productRouter() {
     async (req: Request<{ category: string; id: string }>, res: Response) => {
       try {
         const { category, id } = req.params;
+        const lang = req.query.lang === "cs" ? "cs" : "en";
+
         const product = await getProductById(Number(id), category);
         if (!product) {
           return res.status(404).json({ error: "Product not found" });
         }
-        res.json(product);
+
+        const tasteProfile =
+          lang === "cs" && product.taste_profile_cs
+            ? product.taste_profile_cs
+            : product.taste_profile;
+
+        res.json({
+          ...product,
+          taste_profile: tasteProfile,
+        });
       } catch (_err) {
         res.status(500).json({ error: "Failed to fetch product" });
       }

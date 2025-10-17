@@ -1,4 +1,4 @@
-import React, { JSX, useEffect } from "react";
+import { JSX, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "@components/Header";
 import HeroSection from "@components/HeroSection";
@@ -10,6 +10,7 @@ import Menu from "./MenuSection";
 import GallerySection from "./GallerySection";
 import ReservationSection from "./ReservationSection";
 import Footer from "@components/Footer";
+import { useTranslation } from "react-i18next";
 
 /**
  * LandingPage component
@@ -34,6 +35,12 @@ const LandingPage = (): JSX.Element => {
     }
   }, [location.state?.scrollToId]);
 
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
     <div data-testid="landing-page">
       <Header />
@@ -41,8 +48,8 @@ const LandingPage = (): JSX.Element => {
         <HeroSection
           imgSrc={HeroImg}
           heading="Morning Mist Coffee"
-          subheading="Fresh filter coffee, ready with the first light of morning."
-          buttonText="EXPLORE MORE"
+          subheading={t("home.hero-subtitle")}
+          buttonText={t("home.hero-btn")}
           buttonHref="#hero-text-section"
           buttonColor="white"
           className="home-hero"

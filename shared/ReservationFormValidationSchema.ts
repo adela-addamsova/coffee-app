@@ -5,11 +5,11 @@ export const MAX_CAPACITY = 10;
 const baseReservationSchema = z.object({
   name: z
     .string()
-    .min(1, "Please enter your full name")
+    .min(1, "errors.name-required")
     .refine((val: string) => val.trim().split(/\s+/).length >= 2, {
-      message: "Please enter your full name",
+      message: "errors.name-required",
     }),
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email("errors.invalid-email"),
   guests: z.number().min(1, "At least one guest required"),
   datetime: z.string().datetime(),
   remainingSeats: z.number().optional(),

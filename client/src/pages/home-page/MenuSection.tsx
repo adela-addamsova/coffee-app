@@ -1,5 +1,6 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import coffeeCup from "@assets/main-page/cup.png";
+import { useTranslation } from "react-i18next";
 
 /**
  * MenuSection component
@@ -10,6 +11,8 @@ import coffeeCup from "@assets/main-page/cup.png";
  */
 
 const MenuSection = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="menu-section"
@@ -21,10 +24,7 @@ const MenuSection = (): JSX.Element => {
       </div>
       <div className="menu-text-content">
         <h2>Menu</h2>
-        <p>
-          We care about our filter coffees, but you can also enjoy a great
-          espresso.
-        </p>
+        <p>{t("home.menu-text")}</p>
         <table className="menu-table">
           <tbody>
             <tr>
