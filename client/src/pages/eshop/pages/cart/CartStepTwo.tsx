@@ -6,6 +6,7 @@ import { useCart } from "@eshop/pages/cart/CartContext";
 import { addressSchema } from "@shared/AddressFormValidationSchema";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type AddressData = z.infer<typeof addressSchema>;
 
@@ -20,13 +21,14 @@ export default function CartStepTwo() {
   } = useCart();
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const cartUrl = eshopNavItems.find(
-    (item) => item.label === "Shopping Cart",
+    (item) => item.label === "data.eshop-nav-items.cart",
   )?.to;
 
   const paymentUrl = eshopNavItems.find(
-    (item) => item.label === "Shopping Cart Payment",
+    (item) => item.label === "data.eshop-nav-items.payment",
   )?.to;
 
   const [triedSubmit, setTriedSubmit] = useState(false);
@@ -61,7 +63,7 @@ export default function CartStepTwo() {
       const formattedErrors: typeof deliveryErrors = {};
       result.error.errors.forEach((err) => {
         const key = err.path[0] as keyof AddressData;
-        formattedErrors[key] = { message: err.message };
+        formattedErrors[key] = { message: t(err.message) };
       });
       setDeliveryErrors(formattedErrors);
 
@@ -106,25 +108,25 @@ export default function CartStepTwo() {
       <div className="shopping-cart-content" id="delivery-form">
         {/* Delivery address form */}
         <div className="delivery-address-box">
-          <h3 className="cart-heading">Delivery Address</h3>
+          <h3 className="cart-heading">{t("eshop-cart.adr-head")}</h3>
           <form noValidate className="delivery-form">
             <div className="delivery-form-inner">
-              {renderInput("name", "Your Name")}
-              {renderInput("email", "E-mail")}
-              {renderInput("phone", "Phone")}
+              {renderInput("name", t("eshop-cart.adr-name"))}
+              {renderInput("email", t("eshop-cart.adr-email"))}
+              {renderInput("phone", t("eshop-cart.adr-phone"))}
             </div>
 
             <div className="delivery-form-inner">
-              {renderInput("street", "Street and Number")}
-              {renderInput("city", "City")}
-              {renderInput("zipCode", "Postal Code")}
+              {renderInput("street", t("eshop-cart.adr-street"))}
+              {renderInput("city", t("eshop-cart.adr-city"))}
+              {renderInput("zipCode", t("eshop-cart.adr-zip"))}
             </div>
           </form>
         </div>
 
         {/* Shipment method selector */}
         <div className="delivery-shipment-box">
-          <h3 className="cart-heading">Shipment Method</h3>
+          <h3 className="cart-heading">{t("eshop-cart.ship-head")}</h3>
           <form className="radio-form">
             <div className="radio-form-group">
               <input
@@ -136,8 +138,10 @@ export default function CartStepTwo() {
                 onChange={handleShipmentChange}
               />
               <label htmlFor="standard">
-                <span className="font-semibold">Free</span> Standard Delivery
-                (3–5 days)
+                <span className="font-semibold">
+                  {t("eshop-cart.ship-free")}
+                </span>{" "}
+                {t("eshop-cart.ship-standard")}
               </label>
             </div>
 
@@ -150,8 +154,8 @@ export default function CartStepTwo() {
                 onChange={handleShipmentChange}
               />
               <label htmlFor="express">
-                <span className="font-semibold">$5.00</span> Express Delivery
-                (1–2 days)
+                <span className="font-semibold">$5.00</span>{" "}
+                {t("eshop-cart.ship-express")}
               </label>
             </div>
           </form>
@@ -161,8 +165,8 @@ export default function CartStepTwo() {
       <CartSummary
         previousStep={cartUrl!}
         nextStep={paymentUrl!}
-        previousStepText="BACK"
-        nextStepText="NEXT"
+        previousStepText={t("eshop-cart.btn-back")}
+        nextStepText={t("eshop-cart.btn-next")}
         onNext={handleNextClick}
       />
     </CartLayout>

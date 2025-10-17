@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 // import ShoppingCart from "@assets/e-shop/cart/shopping-cart.svg";
 import MenuArrowGray from "@assets/e-shop/eshop-components/menu-arrow-gray.svg";
 import { eshopNavItems, navItems } from "@config/NavItems";
+import { useTranslation } from "react-i18next";
 
 type NavItem = {
   label: string;
@@ -28,6 +29,7 @@ type ProductResponse = {
  */
 
 export default function InlineMenu(): JSX.Element | null {
+  const { t } = useTranslation();
   const location = useLocation();
   const path = location.pathname;
   const { category } = useParams<{ category?: string }>();
@@ -35,19 +37,24 @@ export default function InlineMenu(): JSX.Element | null {
   const [productName, setProductName] = useState<string | null>(null);
 
   const homeNavItem = navItems.find(
-    (item): item is NavItem => !!item.to && item.label === "E-shop",
+    (item): item is NavItem =>
+      !!item.to && item.label === "data.nav-items.eshop",
   );
   const allProductsNavItem = eshopNavItems.find(
-    (item): item is NavItem => !!item.to && item.label === "All Products",
+    (item): item is NavItem =>
+      !!item.to && item.label === "data.eshop-nav-items.all",
   );
   const navLight = eshopNavItems.find(
-    (item): item is NavItem => !!item.to && item.label === "Light Roasted",
+    (item): item is NavItem =>
+      !!item.to && item.label === "data.eshop-nav-items.light",
   );
   const navDark = eshopNavItems.find(
-    (item): item is NavItem => !!item.to && item.label === "Dark Roasted",
+    (item): item is NavItem =>
+      !!item.to && item.label === "data.eshop-nav-items.dark",
   );
   const navDecaf = eshopNavItems.find(
-    (item): item is NavItem => !!item.to && item.label === "Decaf",
+    (item): item is NavItem =>
+      !!item.to && item.label === "data.eshop-nav-items.decaf",
   );
   // const shoppingCart = eshopNavItems.find(
   //   (item): item is NavItem => !!item.to && item.label === "Shopping Cart",
@@ -92,7 +99,7 @@ export default function InlineMenu(): JSX.Element | null {
               onClick={() => scrollToTop(true)}
               className="text-gray-400"
             >
-              {homeNavItem.label}
+              {t(homeNavItem.label)}
             </Link>
           </div>
         )}
@@ -130,7 +137,7 @@ export default function InlineMenu(): JSX.Element | null {
                         }}
                         className="dropdown-link"
                       >
-                        {navItem.label}
+                        {t(navItem.label)}
                       </Link>
                     </li>
                   ),
@@ -145,7 +152,7 @@ export default function InlineMenu(): JSX.Element | null {
             <span className="arrow">
               <img src={MenuArrowGray} alt="Arrow" />
             </span>
-            <span>{currentCategoryItem.label}</span>
+            <span>{t(currentCategoryItem.label)}</span>
           </div>
         )}
 
@@ -162,7 +169,7 @@ export default function InlineMenu(): JSX.Element | null {
                   onClick={() => scrollToTop(true)}
                   className="text-gray-400"
                 >
-                  {currentCategoryItem.label}
+                  {t(currentCategoryItem.label)}
                 </Link>
               </div>
             )}

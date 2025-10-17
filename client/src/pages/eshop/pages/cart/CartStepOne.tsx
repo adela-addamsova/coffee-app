@@ -5,20 +5,24 @@ import ProductCounter from "@eshop-components/ProductCounter";
 import { navItems, eshopNavItems } from "@config/NavItems";
 import { JSX } from "react";
 import CartSummary from "./CartSummary";
+import { useTranslation } from "react-i18next";
 
 export default function CartStepOne(): JSX.Element {
   const { cart, categoryLabels, updateQuantity, removeFromCart } = useCart();
+  const { t } = useTranslation();
 
-  const eshopUrl = navItems.find((item) => item.label === "E-shop")?.to;
+  const eshopUrl = navItems.find(
+    (item) => item.label === "data.nav-items.eshop",
+  )?.to;
   const deliveryUrl = eshopNavItems.find(
-    (item) => item.label === "Shopping Cart Delivery",
+    (item) => item.label === "data.eshop-nav-items.delivery",
   )?.to;
 
   return (
     <CartLayout step="cart">
       <div className="shopping-cart-content">
         {cart.length === 0 ? (
-          <h2 className="empty-cart">Cart is empty</h2>
+          <h2 className="empty-cart">{t("eshop-cart.cart-empty")}</h2>
         ) : (
           <div className="cart-summary">
             {cart.map((item) => (
@@ -58,8 +62,8 @@ export default function CartStepOne(): JSX.Element {
       <CartSummary
         previousStep={eshopUrl!}
         nextStep={deliveryUrl!}
-        previousStepText="BACK TO ESHOP"
-        nextStepText="NEXT"
+        previousStepText={t("eshop-cart.btn-back-eshop")}
+        nextStepText={t("eshop-cart.btn-next")}
       />
     </CartLayout>
   );

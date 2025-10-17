@@ -9,6 +9,7 @@ import ProductCounter from "@eshop-components/ProductCounter";
 import DeliveryIcon from "@assets/e-shop/eshop-components/delivery.svg";
 import StockIcon from "@assets/e-shop/eshop-components/stock.svg";
 import { useCart } from "@eshop/pages/cart/CartContext";
+import { useTranslation } from "react-i18next";
 
 interface Product {
   id: string;
@@ -34,6 +35,7 @@ export default function ProductPageLayout(): JSX.Element {
   const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const { t } = useTranslation();
 
   const { addToCart } = useCart();
 

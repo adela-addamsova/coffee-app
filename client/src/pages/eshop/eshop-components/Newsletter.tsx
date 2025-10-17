@@ -1,7 +1,8 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { useState, FormEvent } from "react";
 import ArrowIcon from "@assets/e-shop/eshop-components/newsletter-arrow.svg";
 import { newsletterSchema } from "@shared/NewsletterValidationSchema";
+import { useTranslation } from "react-i18next";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
@@ -21,6 +22,7 @@ export default function NewsletterSection(): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [status, setStatus] = useState<Status>(null);
   const [validationError, setValidationError] = useState<string>("");
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -30,7 +32,7 @@ export default function NewsletterSection(): JSX.Element {
     const result = newsletterSchema.safeParse({ email });
     if (!result.success) {
       setStatus("validationError");
-      setValidationError(result.error.errors[0].message);
+      setValidationError(t(result.error.errors[0].message));
       return;
     }
 
@@ -59,11 +61,11 @@ export default function NewsletterSection(): JSX.Element {
   return (
     <section className="newsletter-section" data-testid="newsletter-section">
       <div className="newsletter-content">
-        <h2>Stay in the picture. Sign up for the newsletter.</h2>
+        <h2>{t("eshop.newsletter-head")}</h2>
         <form onSubmit={handleSubmit} noValidate aria-label="newsletter form">
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder={t("eshop.newsletter-placeholder")}
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -80,20 +82,16 @@ export default function NewsletterSection(): JSX.Element {
           </p>
         )}
         {status === "success" && (
-          <p className="newsletter-success">Thank you for subscribing!</p>
+          <p className="newsletter-success">{t("eshop.newsletter-msg-1")}</p>
         )}
         {status === "exists" && (
-          <p className="newsletter-error">You are already subscribed.</p>
+          <p className="newsletter-error">{t("errors.newsletter-msg-2")}</p>
         )}
         {status === "error" && (
-          <p className="newsletter-error">
-            Something went wrong. Please try again.
-          </p>
+          <p className="newsletter-error">{t("eshop.newsletter-msg-3")}</p>
         )}
 
-        <p className="newsletter-content-text">
-          By entering your email, you agree to the privacy policy.
-        </p>
+        <p className="newsletter-content-text">{t("eshop.newsletter-info")}</p>
       </div>
     </section>
   );
