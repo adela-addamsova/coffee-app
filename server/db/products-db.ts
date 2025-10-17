@@ -13,6 +13,7 @@ export interface Product {
   weight?: string;
   origin?: string;
   taste_profile?: string;
+  taste_profile_cs?: string;
   full_description?: string;
   stock?: number;
   deleted_at?: string | null;
