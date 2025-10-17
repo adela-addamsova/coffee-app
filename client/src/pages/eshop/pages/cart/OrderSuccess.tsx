@@ -4,16 +4,20 @@ import CartLayout from "./CartLayout";
 import { useCart } from "@eshop/pages/cart/CartContext";
 import MainButton from "@/components/MainButton";
 import { navItems, eshopNavItems } from "@config/NavItems";
+import { useTranslation } from "react-i18next";
 
 export default function OrderSuccess() {
   const { paymentMethod, orderId } = useCart();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const cartUrl = eshopNavItems.find(
-    (item) => item.label === "Shopping Cart",
+    (item) => item.label === "data.eshop-nav-items.cart",
   )?.to;
 
-  const eshopUrl = navItems.find((item) => item.label === "E-shop")?.to;
+  const eshopUrl = navItems.find(
+    (item) => item.label === "data.nav-items.eshop",
+  )?.to;
 
   /**
    * Redirects the user back to the shopping cart if there is no order ID
@@ -45,17 +49,18 @@ export default function OrderSuccess() {
       <div className="thank-you-container">
         <h2 className="order-success-title">Your order has been created!</h2>
         <p className="order-success-message">
-          {paymentMethod === "card" &&
-            `Thank you for your purchase! Your order with ID ${orderId} has been successfully paid and is now being processed. We’ve sent you a confirmation email with the details. You will be notified once your order has been dispatched.`}
-
+          {t("eshop-cart.success-start")} <strong>{orderId}</strong>{" "}
+          {paymentMethod === "card" && t("eshop-cart.success-card")}
           {paymentMethod === "bank-transfer" &&
-            `Thank you for your purchase! Your order with ID ${orderId} is now being processed. We’ve sent you a confirmation email with the details. Please make the payment to our bank account (000000/0000) using your Order ID as the reference. You will be notified once your order has been dispatched.`}
-
-          {paymentMethod === "cash" &&
-            `Thank you for your purchase! Your order with ID ${orderId} is now being processed. We’ve sent you a confirmation email with the details. Please have the cash ready upon delivery. You will be notified once your order has been dispatched.`}
+            t("eshop-cart.success-transfer")}
+          {paymentMethod === "cash" && t("eshop-cart.success-cash")}
         </p>
 
-        <MainButton text="BACK TO ESHOP" to={eshopUrl} color="white" />
+        <MainButton
+          text={t("eshop-cart.btn-back-eshop")}
+          to={eshopUrl}
+          color="white"
+        />
       </div>
     </CartLayout>
   );

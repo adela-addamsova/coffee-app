@@ -2,6 +2,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ChangeEvent, JSX } from "react";
 import { useReservationForm } from "@/hooks/useReservationForm";
+import { useTranslation } from "react-i18next";
 
 /**
  * ReservationForm
@@ -32,6 +33,14 @@ export default function ReservationForm(): JSX.Element {
     MAX_CAPACITY,
   } = useReservationForm();
 
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+
+  const localeMap: Record<string, string> = {
+    en: "en-US",
+    cs: "cs-CZ",
+  };
+
   return (
     <div className="reservation-form-container">
       <form
@@ -42,7 +51,7 @@ export default function ReservationForm(): JSX.Element {
       >
         {/* Fullname */}
         <div className="form-group">
-          <label htmlFor="name">Your Name</label>
+          <label htmlFor="name">{t("reservation.form-name")}</label>
           <input
             id="name"
             name="name"
@@ -56,7 +65,7 @@ export default function ReservationForm(): JSX.Element {
 
         {/* Email */}
         <div className="form-group">
-          <label htmlFor="email">Your E-mail</label>
+          <label htmlFor="email">{t("reservation.form-email")}</label>
           <input
             id="email"
             name="email"
@@ -70,7 +79,7 @@ export default function ReservationForm(): JSX.Element {
 
         {/* Calendar */}
         <Calendar
-          locale="en-US"
+          locale={localeMap[i18n.language]}
           value={selectedDate}
           onChange={(value) => {
             if (value instanceof Date) {
@@ -109,10 +118,11 @@ export default function ReservationForm(): JSX.Element {
                 }}
                 className="time-select"
               >
-                <option value="">Select time</option>
+                <option value="">{t("reservation.form-time")}</option>
                 {availableTimes.map((slot) => (
                   <option key={slot.iso} value={slot.iso}>
-                    {slot.label} ({slot.remaining} seats left)
+                    {slot.label} ({slot.remaining}{" "}
+                    {t("reservation.form-seats-left")})
                   </option>
                 ))}
               </select>
@@ -126,8 +136,8 @@ export default function ReservationForm(): JSX.Element {
 
             {/* Guest input */}
             {selectedTime && (
-              <div className="input-column">
-                <label htmlFor="guests">Number of guests</label>
+              <div className="input-column flex items-center gap-2">
+                <label htmlFor="guests">{t("reservation.form-seats")}</label>
                 <input
                   id="guests"
                   name="guests"
@@ -148,7 +158,9 @@ export default function ReservationForm(): JSX.Element {
         {/* Submit button */}
         <div className="form-group">
           <button type="submit" disabled={loading} className="submit-button">
-            {loading ? "Submitting..." : "Make a reservation"}
+            {loading
+              ? t("reservation.form-btn-loading")
+              : t("reservation.form-btn")}
           </button>
         </div>
 

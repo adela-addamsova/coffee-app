@@ -1,6 +1,7 @@
 import { useCart } from "@eshop/pages/cart/CartContext";
 import MainButton from "@/components/MainButton";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type CartSummaryProps = {
   nextStep: string;
@@ -18,6 +19,7 @@ export default function CartSummary({
   onNext,
 }: CartSummaryProps) {
   const { cart, shippingFee, paymentFee } = useCart();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -40,13 +42,13 @@ export default function CartSummary({
   return (
     <>
       <div className="total-price">
-        <h3>Order Summary</h3>
+        <h3>{t("eshop-cart.summary-head")}</h3>
         <div className="total-inner">
-          <h4>Total</h4>
+          <h4>{t("eshop-cart.summary-total")}</h4>
           <h4>${totalPrice.toFixed(2)}</h4>
         </div>
         <div className="total-inner">
-          <h5>Price without DPH</h5>
+          <h5>{t("eshop-cart.summary-dph")}</h5>
           <h5>${totalPriceWithoutDPH.toFixed(2)}</h5>
         </div>
       </div>

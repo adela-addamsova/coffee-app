@@ -1,17 +1,17 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import CoffeeSack from "@assets/main-page/coffee-sack.png";
+import { useTranslation } from "react-i18next";
 
 /**
  * HeroTextSection component
- *
  * Displays an informational section on the homepage
- *
- *  Styled as a two-column layout (text + image).
- *
+ * Styled as a two-column layout (text + image).
  * @returns {JSX.Element} A JSX section element containing descriptive text and an image
  */
 
 const HeroTextSection = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="hero-text-section"
@@ -19,19 +19,8 @@ const HeroTextSection = (): JSX.Element => {
       data-testid="hero-text-section"
     >
       <div className="hero-text-content">
-        <h2>We pick the best coffee beans</h2>
-        <p data-testid="hero-text-description">
-          At Morning Mist Coffee, we take pride in sourcing premium-quality
-          beans from carefully selected regions. Our light roast features
-          handpicked beans from South America, known for their bright acidity
-          and smooth, citrusy notes. For those who prefer a richer profile, our
-          medium and dark roasts bring out deeper chocolate and caramel flavors,
-          sourced from Central American and African plantations. Every batch is
-          freshly ground and brewed to perfection, ensuring a full-bodied taste
-          that highlights the unique characteristics of each origin. Whether
-          you're looking for a delicate morning sip or a bold espresso kick, our
-          coffee is crafted to elevate your experience with every cup.
-        </p>
+        <h2>{t("home.hero-story-head")}</h2>
+        <p data-testid="hero-text-description">{t("home.hero-story-text")}</p>
       </div>
       <div className="hero-image-content">
         <img src={CoffeeSack} alt="Coffee Sack" />

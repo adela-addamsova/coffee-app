@@ -2,6 +2,7 @@ import React, { JSX } from "react";
 import { Link } from "react-router-dom";
 import ShoppingCart from "@assets/e-shop/cart/shopping-cart.svg";
 import { useCart } from "@eshop/pages/cart/CartContext";
+import { useTranslation } from "react-i18next";
 
 export type ProductMiniatureProps = {
   id: string | number;
@@ -36,13 +37,14 @@ export default function ProductMiniature({
   weight,
   stock,
 }: ProductMiniatureProps): JSX.Element {
-  const categoryLabels: Record<string, string> = {
-    light: "Light roasted",
-    dark: "Dark roasted",
-    decaf: "Decaf",
-  };
-
+  const { t } = useTranslation();
   const { addToCart } = useCart();
+
+  const categoryLabels: Record<string, string> = {
+    light: t("data.eshop-nav-items.light"),
+    dark: t("data.eshop-nav-items.dark"),
+    decaf: t("data.eshop-nav-items.decaf"),
+  };
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -75,7 +77,7 @@ export default function ProductMiniature({
         <div className="product-miniature-info-inner">
           <div className="flex flex-col gap-2">
             <p className="product-miniature-description font-light text-nowrap">
-              {categoryLabels[category] || category}
+              {t(`data.eshop-nav-items.${category}`)}
             </p>
             <p className="product-miniature-price">${price}</p>
           </div>

@@ -18,7 +18,7 @@
 }
 
 .nav-link {
-    @apply text-white whitespace-nowrap text-[20px] font-light border-b border-transparent transition-all duration-400 ease-in-out lg:text-[16px] lg:mx-8 xl:mx-10 cursor-pointer;
+    @apply text-white whitespace-nowrap text-[20px] font-light border-b border-transparent transition-all duration-400 ease-in-out lg:text-[16px] lg:mx-8 xl:mx-10 cursor-pointer flex items-center;
 }
 
 .nav-link:hover {
@@ -38,7 +38,7 @@
 }
 
 .mobile-nav {
-    @apply fixed top-0 right-0 w-full bg-white shadow-lg z-[200] h-[80%];
+    @apply fixed top-0 right-0 w-full bg-white shadow-lg z-[200] h-full;
 }
 
 .mobile-nav-head {
@@ -161,4 +161,11 @@
 .info-box p,
 .info-box a {
     @apply text-[16px] font-thin text-white mb-2;
+}
+
+/*--------------------
+  Language Switcher
+--------------------*/
+.language-switcher {
+    @apply flex items-center justify-center gap-2 mt-5;   
 }

@@ -6,18 +6,19 @@ import HeroSection from "@components/HeroSection";
 import HeroImg from "@assets/reservation-page/reservation-hero.jpg";
 import BeansBackground from "@assets/reservation-page/beans-bck.png";
 import InfoBoxes from "@components/InfoBoxes";
+import { useTranslation } from "react-i18next";
 
 /**
  * ReservationPage
- *
  * Page component for the reservation section
  * Displays a hero section, informational boxes, the reservation form, and an image
  * Wraps content with site Header and Footer
- *
  * @returns {JSX.Element}
  */
 
 const ReservationPage = (): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <div data-testid="reservation-page">
       <Header />
@@ -25,7 +26,10 @@ const ReservationPage = (): JSX.Element => {
         className="reservation-page-hero"
         data-testid="reservation-page-hero"
       >
-        <HeroSection imgSrc={HeroImg} heading="Reservation" />
+        <HeroSection
+          imgSrc={HeroImg}
+          heading={t("reservation.reservation-head")}
+        />
       </div>
       <div
         className="reservation-page-container"

@@ -2,6 +2,7 @@ import { useCart } from "@eshop/pages/cart/CartContext";
 import MainButton from "@/components/MainButton";
 import { eshopNavItems } from "@config/NavItems";
 import deleteIcon from "@assets/e-shop/cart/delete.svg";
+import { useTranslation } from "react-i18next";
 
 export default function CartSidePanel() {
   const {
@@ -22,8 +23,10 @@ export default function CartSidePanel() {
     .padStart(2, "0");
 
   const eshopUrl = eshopNavItems.find(
-    (item) => item.label === "Shopping Cart",
+    (item) => item.label === "data.eshop-nav-items.cart",
   )?.to;
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -38,7 +41,7 @@ export default function CartSidePanel() {
         className={`cart-side-panel ${isCartOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="cart-side-panel-header">
-          <h3 className="cart-heading">Shopping Cart</h3>
+          <h3 className="cart-heading">{t("eshop-cart.cart-head")}</h3>
           <button
             onClick={() => setIsCartOpen(false)}
             className="cart-side-panel-close"
@@ -49,7 +52,7 @@ export default function CartSidePanel() {
 
         <div className="cart-side-panel-content">
           {cart.length === 0 ? (
-            <p>Your cart is empty</p>
+            <p>{t("eshop-cart.cart-empty")}</p>
           ) : (
             cart.map((item) => (
               <div key={item.id} className="cart-side-panel-item">
@@ -80,14 +83,14 @@ export default function CartSidePanel() {
         {cart.length > 0 && (
           <div className="cart-side-panel-timer">
             <p>
-              Products will stay in your cart for {minutes}:{seconds}
+              {t("eshop-cart.cart-counter")} {minutes}:{seconds}
             </p>
           </div>
         )}
 
         <div className="cart-side-panel-btn">
           <MainButton
-            text="GO TO CART"
+            text={t("eshop-cart.cart-btn")}
             color="white"
             onClick={() => setIsCartOpen(false)}
             to={eshopUrl}

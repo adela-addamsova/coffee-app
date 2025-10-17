@@ -1,19 +1,20 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 import phoneBackground from "@assets/main-page/phone.png";
 import MainButton from "@components/MainButton";
 import { navItems, NavItem } from "@config/NavItems";
+import { useTranslation } from "react-i18next";
 
 /**
  * ReservationSection component
- *
  * Displays a call-to-action section for reservation
- *
  * @returns {JSX.Element} The reservation call-to-action section of the homepage
  */
 
 const ReservationSection = (): JSX.Element => {
+  const { t } = useTranslation();
+
   const reservationPageLink: NavItem | undefined = navItems.find(
-    (item) => item.label === "Reservation",
+    (item) => item.label === "data.nav-items.reservation",
   );
 
   return (
@@ -29,15 +30,11 @@ const ReservationSection = (): JSX.Element => {
         className="reservation-content reservation-text"
         data-testid="reservation-text"
       >
-        <p>
-          Do you want to make sure you’ll have a free seat when you come? You
-          can contact us on our email, social media or make a reservation in our
-          system.
-        </p>
+        <p>{t("home.reservation-text")}</p>
 
         {reservationPageLink?.to && (
           <MainButton
-            text="RESERVATION"
+            text={t("home.reservation-btn")}
             to={reservationPageLink.to}
             color="black"
           />
