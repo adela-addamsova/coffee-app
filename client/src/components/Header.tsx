@@ -7,6 +7,8 @@ import logoBlack from "@assets/components/coffee-beans-black.svg";
 import ShoppingCart from "@assets/e-shop/cart/shopping-cart-white.svg";
 import { scrollToTop } from "@/utils/navigationFunctions";
 import { useCart } from "@eshop/pages/cart/CartContext";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 /**
  * Header component
@@ -24,6 +26,7 @@ const Header = (): JSX.Element => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const { setIsCartOpen } = useCart();
+  const { t } = useTranslation();
 
   // Change header style on scroll
   useEffect(() => {
@@ -38,7 +41,7 @@ const Header = (): JSX.Element => {
     navItems.map((item) => (
       <NavLink
         key={item.label}
-        item={item}
+        item={{ ...item, label: t(item.label) }}
         className={className}
         closeMenu={() => setShowMenu(false)}
         data-testid="nav-link"
@@ -46,7 +49,7 @@ const Header = (): JSX.Element => {
     ));
 
   const shoppingCartLink = eshopNavItems.find(
-    (item) => !!item.to && item.label === "Shopping Cart",
+    (item) => !!item.to && item.label === "data.eshop-nav-items.cart",
   );
 
   return (
@@ -62,15 +65,19 @@ const Header = (): JSX.Element => {
       </div>
 
       {/* Desktop nav */}
-      <nav className="nav-desktop">
+      <nav className="nav-desktop flex items-center gap-4">
         {renderNavItems("nav-link")}
-        <button
-          onClick={() => setIsCartOpen(true)}
-          className="cursor-pointer"
-          aria-label="Open cart"
-        >
-          <img src={ShoppingCart} alt="Shopping Cart" className="w-7" />
-        </button>
+
+        <div className="item-center gap-4 flex">
+          {/* Cart button */}
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="cursor-pointer"
+            aria-label="Open cart"
+          >
+            <img src={ShoppingCart} alt="Shopping Cart" className="w-7" />
+          </button>
+        </div>
       </nav>
 
       {/* Burger for mobile */}
@@ -104,7 +111,10 @@ const Header = (): JSX.Element => {
       {showMenu && (
         <div className="mobile-nav" data-testid="mobile-nav">
           <div className="mobile-nav-head">
-            <img src={logoBlack} alt="Logo" className="nav-logo" />
+            <Link to="/" onClick={scrollToTop}>
+              <img src={logoBlack} alt="Logo" />
+            </Link>
+
             <button
               onClick={() => setShowMenu(false)}
               className="x-icon"
@@ -116,6 +126,8 @@ const Header = (): JSX.Element => {
           <div className="mobile-nav-body">
             {renderNavItems("nav-link-mobile")}
           </div>
+
+          <LanguageSwitcher />
         </div>
       )}
     </header>
