@@ -65,7 +65,9 @@ export default function ProductPageLayout(): JSX.Element {
       return;
     }
 
-    const url = `${import.meta.env.VITE_API_URL}/products/${category}/${id}`;
+    const lang = localStorage.getItem("i18nextLng") || "en";
+
+    const url = `${import.meta.env.VITE_API_URL}/products/${category}/${id}?lang=${lang}`;
 
     fetch(url)
       .then((res) => {
@@ -131,8 +133,12 @@ export default function ProductPageLayout(): JSX.Element {
             <div className="product-info-text">
               <p>{product.ingredients}</p>
               <p>{product.weight}</p>
-              <p>Origin: {product.origin}</p>
-              <p>Taste profile: {product.taste_profile}</p>
+              <p>
+                {t("eshop.product-origin")} {product.origin}
+              </p>
+              <p>
+                {t("eshop.product-taste")} {product.taste_profile}
+              </p>
             </div>
             <div className="product-delivery-info">
               <div className="product-delivery-info-box">
@@ -140,8 +146,10 @@ export default function ProductPageLayout(): JSX.Element {
                   <img src={DeliveryIcon} alt="Delivery Icon" />
                 </div>
                 <div className="product-delivery-info-text">
-                  <p className="font-light text-[#6C6C6C]">Free Delivery</p>
-                  <p>1–2 days</p>
+                  <p className="font-light text-[#6C6C6C]">
+                    {t("eshop.product-delivery")}
+                  </p>
+                  <p>{t("eshop.product-delivery-days")}</p>
                 </div>
               </div>
               <div className="product-delivery-info-box">
@@ -149,13 +157,17 @@ export default function ProductPageLayout(): JSX.Element {
                   <img src={StockIcon} alt="Stock Icon" />
                 </div>
                 <div className="product-delivery-info-text">
-                  <p className="font-light text-[#6C6C6C]">In Stock</p>
-                  <p>{product.stock} pcs</p>
+                  <p className="font-light text-[#6C6C6C]">
+                    {t("eshop.product-stock")}
+                  </p>
+                  <p>
+                    {product.stock} {t("eshop.product-pcs")}
+                  </p>
                 </div>
               </div>
             </div>
             <MainButton
-              text="ADD TO CART"
+              text={t("eshop.product-btn")}
               color="black"
               onClick={handleAddToCart}
             />
