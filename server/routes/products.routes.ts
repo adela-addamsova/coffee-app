@@ -75,6 +75,8 @@ export default function productRouter() {
             ? product.taste_profile_cs
             : product.taste_profile;
 
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
+
         res.json({
           ...product,
           taste_profile: tasteProfile,
