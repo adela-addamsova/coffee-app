@@ -58,34 +58,47 @@ export default function productRouter() {
    * GET /api/products/:category/:id
    * Returns a specific product by ID and category
    */
+  //   router.get(
+  //   "/:category/:id",
+  //   async (req: Request<{ category: string; id: string }>, res: Response) => {
+  //     try {
+  //       const { category, id } = req.params;
+  //       const lang = req.query.lang === "cs" ? "cs" : "en"; // default 'en'
+
+  //       const product = await getProductById(Number(id), category);
+  //       if (!product) {
+  //         return res.status(404).json({ error: "Product not found" });
+  //       }
+
+  //       // choose taste_profile based on language
+  //       const tasteProfile =
+  //         lang === "cs" && product.taste_profile_cs
+  //           ? product.taste_profile_cs
+  //           : product.taste_profile;
+
+  //       res.json({
+  //         ...product,
+  //         taste_profile: tasteProfile, // override with translated if requested
+  //       });
+  //     } catch (_err) {
+  //       res.status(500).json({ error: "Failed to fetch product" });
+  //     }
+  //   }
+  // );
+
   router.get(
     "/:category/:id",
     async (req: Request<{ category: string; id: string }>, res: Response) => {
       try {
         const { category, id } = req.params;
-        const lang = req.query.lang === "cs" ? "cs" : "en";
-
         const product = await getProductById(Number(id), category);
         if (!product) {
           return res.status(404).json({ error: "Product not found" });
         }
-
-        const tasteProfile =
-          lang === "cs" && product.taste_profile_cs
-            ? product.taste_profile_cs
-            : product.taste_profile;
-
-        res.setHeader("Content-Type", "application/json; charset=utf-8");
-
-        res.json({
-          ...product,
-          taste_profile: tasteProfile,
-        });
+        res.json(product);
       } catch (_err) {
         res.status(500).json({ error: "Failed to fetch product" });
       }
     },
   );
-
-  return router;
 }
