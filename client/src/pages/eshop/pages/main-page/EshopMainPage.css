@@ -36,7 +36,7 @@
   Product Categories
 --------------------*/
 .categories {
-    @apply w-[95%] max-w-[1400px] mt-[40px] mb-[100px] lg:mb-[160px] mx-auto md:my-[100px];
+    @apply w-[90%] max-w-[1400px] mt-[40px] mb-[100px] lg:mb-[160px] mx-auto md:my-[100px];
 }
 
 .categories .eshop-heading {
@@ -64,18 +64,18 @@
 }
 
 .product-category .category-name {
-    @apply text-[20px] font-semibold mt-2;
+    @apply text-[24px] font-semibold mt-2 text-left uppercase;
 }
 
 /*--------------------
   E-shop Story Section
 --------------------*/
 .eshop-story-section {
-    @apply w-[95%] max-w-[1400px] mx-auto flex flex-col gap-15 md:flex-row justify-between mb-[100px] lg:mb-[160px];
+    @apply w-[90%] max-w-[1400px] mx-auto flex flex-col gap-15 md:flex-row justify-between mb-[100px] lg:mb-[160px];
 }
 
 .eshop-story-text-content {
-    @apply flex flex-col w-[95%] justify-around mx-auto gap-10 lg:w-[60%] lg:pr-[60px] lg:gap-0 xl:w-[50%] lg:mx-0;
+    @apply flex flex-col w-full justify-around mx-auto gap-10 lg:w-[60%] lg:pr-[60px] lg:gap-0 xl:w-[50%] lg:mx-0;
 }
 
 .eshop-story-image-content img {
@@ -90,7 +90,7 @@
   New Products Section
 --------------------*/
 .selection {
-    @apply w-[80%] sm:w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px];
+    @apply w-[90%] sm:w-[95%] lg:max-w-[1400px] mx-auto flex flex-col mb-[100px] lg:mb-[160px];
 }
 
 .selection-new-products {
