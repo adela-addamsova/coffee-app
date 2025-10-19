@@ -85,4 +85,6 @@ export default function productRouter() {
       }
     },
   );
+
+  return router;
 }
