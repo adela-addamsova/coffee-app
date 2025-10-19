@@ -118,7 +118,7 @@ export default function InlineMenu(): JSX.Element | null {
             onClick={() => setDropdownOpen((prev) => !prev)}
             className={`relative ${isCategoryPage || isProductPage ? "text-gray-400" : ""}`}
           >
-            Products
+            {t("eshop.inline-menu-btn")}
           </button>
 
           <div

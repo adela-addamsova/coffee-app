@@ -80,7 +80,8 @@
     "product-delivery-days": "1–2 dny",
     "product-stock": "Skladem",
     "product-pcs": "ks",
-    "product-btn": "PŘIDAT DO KOŠÍKU"
+    "product-btn": "PŘIDAT DO KOŠÍKU",
+    "inline-menu-btn": "Produkty"
   },
   "eshop-cart": {
     "cart-head": "Nákupní košík",
