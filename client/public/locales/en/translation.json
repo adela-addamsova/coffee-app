@@ -80,7 +80,8 @@
         "product-delivery-days": "1–2 days",
         "product-stock": "In Stock",
         "product-pcs": "pcs",
-        "product-btn": "ADD TO CART"
+        "product-btn": "ADD TO CART",
+        "inline-menu-btn": "Products"
     },
     "eshop-cart": {
         "cart-head": "Shopping Cart",
