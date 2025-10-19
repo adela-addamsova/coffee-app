@@ -5,12 +5,7 @@ import ProductMiniature from "@eshop-components/ProductMiniature";
 import HeroSection from "@components/HeroSection";
 import HeroImg from "@assets/e-shop/category-hero.jpg";
 import InlineMenu from "@/pages/eshop/eshop-components/InlineMenu";
-
-const categoryLabels: Record<string, string> = {
-  light: "Light Roasted Coffee",
-  dark: "Dark Roasted Coffee",
-  decaf: "Decaf Coffee",
-};
+import { useTranslation } from "react-i18next";
 
 type Product = {
   id: string | number;
@@ -34,6 +29,13 @@ export default function CategoryPageLayout(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
+
+  const categoryLabels: Record<string, string> = {
+    light: t("cat-head-1"),
+    dark: t("cat-head-2"),
+    decaf: t("cat-head-3"),
+  };
 
   const validCategory =
     !category || Object.prototype.hasOwnProperty.call(categoryLabels, category);
