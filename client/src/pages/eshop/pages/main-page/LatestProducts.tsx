@@ -1,5 +1,6 @@
 import { JSX, useEffect, useState } from "react";
 import ProductMiniature from "@eshop-components/ProductMiniature";
+import { useTranslation } from "react-i18next";
 
 interface Product {
   id: string | number;
@@ -22,6 +23,7 @@ export default function LatestProducts(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/products/latest`)
@@ -46,7 +48,7 @@ export default function LatestProducts(): JSX.Element {
   }, []);
 
   if (loading) {
-    return <p data-testid="loading">Loading latest products...</p>;
+    return <p data-testid="loading">{t("eshop.loading-msg-2")}</p>;
   }
 
   if (error) {

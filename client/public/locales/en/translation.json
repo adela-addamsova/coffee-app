@@ -40,7 +40,7 @@
         "menu-text": "We care about our filter coffees, but you can also enjoy a great espresso.",
         "gallery-text": "We create a cozy place with delicious coffee where you can work, read, meet a friend or just enjoy a moment...",
         "reservation-text": "Do you want to make sure you’ll have a free seat when you come? You can contact us on our email, social media or make a reservation in our system.",
-            "reservation-btn": "RESERVATION"
+        "reservation-btn": "RESERVATION"
     },
     "reservation": {
         "reservation-head": "Reservation",
@@ -81,7 +81,9 @@
         "product-stock": "In Stock",
         "product-pcs": "pcs",
         "product-btn": "ADD TO CART",
-        "inline-menu-btn": "Products"
+        "inline-menu-btn": "Products",
+        "loading-msg": "Loading...\nIt may take a while.",
+        "loading-msg-2": "Loading latest products...\nIt may take a while."
     },
     "eshop-cart": {
         "cart-head": "Shopping Cart",

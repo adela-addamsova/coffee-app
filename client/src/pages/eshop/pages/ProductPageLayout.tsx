@@ -97,7 +97,7 @@ export default function ProductPageLayout(): JSX.Element {
   if (!product) {
     return (
       <div className="subpage-error">
-        <p>Loading...</p>
+        <p>{t("eshop.loading-msg")}</p>
       </div>
     );
   }

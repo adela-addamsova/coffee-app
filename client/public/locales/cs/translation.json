@@ -81,7 +81,9 @@
     "product-stock": "Skladem",
     "product-pcs": "ks",
     "product-btn": "PŘIDAT DO KOŠÍKU",
-    "inline-menu-btn": "Produkty"
+    "inline-menu-btn": "Produkty",
+    "loading-msg": "Načítání produktu...\nMůže to chvíli trvat.",
+    "loading-msg-2": "Načítání nejnovějších produktů...\nMůže to chvíli trvat."
   },
   "eshop-cart": {
     "cart-head": "Nákupní košík",
