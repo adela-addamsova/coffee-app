@@ -32,9 +32,9 @@ export default function CategoryPageLayout(): JSX.Element {
   const { t } = useTranslation();
 
   const categoryLabels: Record<string, string> = {
-    light: t("cat-head-1"),
-    dark: t("cat-head-2"),
-    decaf: t("cat-head-3"),
+    light: t("eshop.cat-head-1"),
+    dark: t("eshop.cat-head-2"),
+    decaf: t("eshop.cat-head-3"),
   };
 
   const validCategory =
