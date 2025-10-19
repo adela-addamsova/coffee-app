@@ -2,7 +2,7 @@
   Inline Menu
 --------------------*/
 .inline-menu-section {
-    @apply w-[95%] bg-white flex flex-col-reverse sm:flex-row relative gap-10 mt-5 items-end justify-between md:py-10 mx-auto xl:w-[1280px];
+    @apply w-[95%] bg-white flex flex-col-reverse sm:flex-row relative gap-10 mt-5 items-end justify-between md:py-10 mx-2 md:mx-auto 2xl:w-[1280px];
 }
 
 .inline-menu-items {
