@@ -76,7 +76,11 @@ export default [
       ...baseLanguageOptions,
       parserOptions: {
         ...baseLanguageOptions.parserOptions,
-        project: "./server/tsconfig.json",
+        project: [
+          "./server/tsconfig.json",
+          "./server/tsconfig.test.json"
+        ],
+        tsconfigRootDir: import.meta.dirname,
       },
       globals: {
         ...globals.node,
