@@ -1,6 +1,6 @@
 import request from "supertest";
-import app from "@server/server";
-import { reservationResponseSchema } from "@shared/ReservationFormValidationSchema";
+import app from "../server";
+import { reservationResponseSchema } from "../../shared/ReservationFormValidationSchema";
 
 describe("App Routes", () => {
   test("responds to GET /api/products with JSON array", async () => {
