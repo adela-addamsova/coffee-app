@@ -31,6 +31,7 @@ export default function ReservationForm(): JSX.Element {
     handleSubmit,
     fetchReservations,
     MAX_CAPACITY,
+    loadingReservation,
   } = useReservationForm();
 
   const { t } = useTranslation();
@@ -93,6 +94,14 @@ export default function ReservationForm(): JSX.Element {
           minDate={new Date()}
           selectRange={false}
         />
+
+        {loadingReservation && (
+          <div className="form-group">
+            <div className="loading-message">
+              <p>{t("reservation.form-loading-reservations")}</p>
+            </div>
+          </div>
+        )}
 
         {errors.date && (
           <div className="form-group">

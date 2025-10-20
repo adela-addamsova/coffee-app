@@ -73,6 +73,7 @@ export function useReservationForm(): {
   message: string;
   errorMessage: string;
   loading: boolean;
+  loadingReservation: boolean;
   remainingSeats: number | null;
   setRemainingSeats: React.Dispatch<React.SetStateAction<number | null>>;
   handleInputChange: (
@@ -97,6 +98,7 @@ export function useReservationForm(): {
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingReservation, setLoadingReservation] = useState(false);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -110,6 +112,7 @@ export function useReservationForm(): {
   };
 
   const fetchReservations = async (date: Date) => {
+    setLoadingReservation(true);
     try {
       const res = await fetch(`${API_URL}/reservations`);
       const data: ApiReservation[] = await res.json();
@@ -127,6 +130,7 @@ export function useReservationForm(): {
 
       const slots = generateTimeSlots(date, normalized);
       setAvailableTimes(slots);
+      setLoadingReservation(false);
     } catch (_err) {
       // eslint-disable no-empty
     }
@@ -228,5 +232,6 @@ export function useReservationForm(): {
     handleSubmit,
     fetchReservations,
     MAX_CAPACITY,
+    loadingReservation,
   };
 }
