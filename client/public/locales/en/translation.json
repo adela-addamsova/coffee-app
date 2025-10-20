@@ -51,6 +51,7 @@
         "form-seats-left": "seats left",
         "form-btn": "Make a reservation",
         "form-btn-loading": "Submitting...",
+        "form-loading-reservations": "Checking available times... It may take a while.",
         "form-success": "Reservation has been created successfully. Thank you!",
         "form-error": "Something went wrong. Please try again."
     },

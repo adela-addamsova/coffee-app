@@ -51,6 +51,7 @@
     "form-seats-left": "volných míst",
     "form-btn": "Vytvořit rezervaci",
     "form-btn-loading": "Odesílám...",
+    "form-loading-reservations": "Hledám dostupné časy... Může to chvíli trvat.",
     "form-success": "Rezervace byla úspěšně vytvořena. Děkujeme!",
     "form-error": "Něco se pokazilo. Zkuste to prosím znovu."
   },
