@@ -1,10 +1,11 @@
 # Coffee House Web Application
+https://coffee-app-frontend-chi.vercel.app/
 
 A full-stack app built with:  
 
 - **Frontend:** React + Vite  
 - **Backend:** Node.js + Express + TypeScript  
-- **Database:** SQLite  
+- **Database:** Postgres  
 - **Validation:** Zod (shared schemas between frontend and backend)  
 
 The app features a landing page of coffee house with subpages
