@@ -8,13 +8,18 @@ import productRouter from "./routes/products.routes";
 import newsletterRouter from "./routes/subscribtion.routes";
 import ordersRouter from "./routes/orders.routes";
 
-dotenv.config();
+const envFile =
+  process.env.NODE_ENV === "production"
+    ? ".env.production"
+    : ".env.development";
+
+dotenv.config({ path: envFile });
 
 async function initDb() {
   try {
     await initializeDatabase();
-  } catch (_err) {
-    // Handle silently
+  } catch (err) {
+    console.error("Failed to initialize database:", err);
   }
 }
 
@@ -25,10 +30,7 @@ const app = express();
 app.use(
   cors({
     origin: (origin, callback) => {
-      const allowedOrigins = [
-        process.env.CLIENT_ORIGIN,
-        "http://localhost:5173",
-      ];
+      const allowedOrigins = [process.env.CLIENT_ORIGIN];
 
       const isVercelPreview =
         typeof origin === "string" &&
@@ -48,11 +50,6 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
-  console.log("Request origin:", req.headers.origin);
-  next();
-});
-
 app.use(express.json());
 
 app.use("/api/reservations", reservationRouter());
@@ -62,9 +59,7 @@ app.use("/api/orders", ordersRouter());
 
 function startServer() {
   const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+  app.listen(PORT);
 }
 
 if (require.main === module) {
