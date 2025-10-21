@@ -1,13 +1,14 @@
 import { Router, Request, Response } from "express";
 import { createOrder, OrderData } from "../db/orders-db";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { orderSchema } from "../../shared/OrderValidationSchema";
+import { Pool } from "pg";
 
 /**
  * Orders Router
  * Handles creation of new customer orders
  */
-export default function ordersRouter() {
+export default function ordersRouter(poolInstance?: Pool) {
   const router = Router();
 
   type OrderBody = z.infer<typeof orderSchema>;
@@ -47,14 +48,19 @@ export default function ordersRouter() {
       };
 
       try {
-        // no dbInstance needed, use pool inside createOrder
-        const orderId = await createOrder(orderData);
+        const orderId = await createOrder(orderData, poolInstance);
         res.status(201).json({ success: true, orderId });
       } catch (err) {
-        if (err instanceof Error) {
-          res.status(400).json({ success: false, message: err.message });
+        if (err instanceof ZodError) {
+          res
+            .status(400)
+            .json({
+              success: false,
+              message: "Validation failed",
+              errors: err.format(),
+            });
         } else {
-          res.status(400).json({ success: false, message: "Unknown error" });
+          res.status(500).json({ success: false, message: "Server error" });
         }
       }
     },
