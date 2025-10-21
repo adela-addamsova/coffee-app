@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --config jest.config.ts --runInBand",
     "start": "node dist/server/server.js",
     "build": "tsc",
     "dev": "tsx server.ts"
@@ -18,18 +18,20 @@
     "dotenv": "^17.1.0",
     "express": "^5.1.0",
     "pg": "^8.16.3",
-    "zod": "^3.25.76",
-    "shared": "*"
+    "shared": "*",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.14",
     "@types/pg": "^8.15.5",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
     "nodemon": "^3.1.10",
+    "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3"
   }

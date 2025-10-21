@@ -6,7 +6,8 @@ const envFile =
 
 dotenv.config({ path: envFile });
 
-import { Pool, QueryResult, QueryResultRow } from "pg";
+import { Pool, QueryResultRow } from "pg";
+import { initializeDatabase } from "../db/init-db";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -16,9 +17,18 @@ const pool = new Pool({
 export async function query<T extends QueryResultRow = Record<string, unknown>>(
   text: string,
   params?: unknown[],
+  poolInstance?: Pool,
 ): Promise<T[]> {
-  const res: QueryResult<T> = await pool.query(text, params);
+  const res = await (poolInstance || pool).query(text, params);
   return res.rows;
 }
+
+(async () => {
+  try {
+    await initializeDatabase(pool);
+  } catch (_err) {
+    //
+  }
+})();
 
 export default pool;
