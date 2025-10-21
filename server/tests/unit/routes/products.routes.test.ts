@@ -15,12 +15,21 @@ import {
 import request from "supertest";
 import express from "express";
 import productRouter from "@routes/products.routes";
-
-const app = express();
-app.use(express.json());
-app.use("/api/products", productRouter());
+import { testPool } from "@server/tests/coffee-app-test-db";
 
 describe("Product Routes", () => {
+  let app: express.Express;
+
+  beforeEach(() => {
+    app = express();
+    app.use(express.json());
+    app.use("/api/products", productRouter(testPool));
+  });
+
+  afterAll(async () => {
+    await testPool.end();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -52,7 +61,7 @@ describe("Product Routes", () => {
       const res = await request(app).get("/api/products/latest");
 
       expect(res.status).toBe(200);
-      expect(getLatestProducts).toHaveBeenCalledWith(4, undefined);
+      expect(getLatestProducts).toHaveBeenCalledWith(4, testPool);
       expect(res.body).toEqual(mockLatestProductArray);
       expect(Array.isArray(res.body)).toBe(true);
       expect(res.body.length).toBe(4);
@@ -66,7 +75,7 @@ describe("Product Routes", () => {
 
       expect(res.status).toBe(200);
       expect(res.body).toEqual(mockCategory);
-      expect(getProductsByCategory).toHaveBeenCalledWith("light", undefined);
+      expect(getProductsByCategory).toHaveBeenCalledWith("light", testPool);
     });
 
     test("returns product by id - GET /api/products/:category/:id", async () => {
@@ -87,7 +96,7 @@ describe("Product Routes", () => {
       expect(resCs.status).toBe(200);
       expect(resCs.body.taste_profile).toBe("ovocný");
 
-      expect(getProductById).toHaveBeenCalledWith(4, "light", undefined);
+      expect(getProductById).toHaveBeenCalledWith(4, "light", testPool);
     });
 
     test("returns 404 if product not found - GET /api/products/:category/:id", async () => {
@@ -133,6 +142,56 @@ describe("Product Routes", () => {
         expect(res.status).toBe(500);
         expect(res.body).toEqual({ error: errorMessage });
       });
+    });
+  });
+
+  describe("Correct translation", () => {
+    test("returns taste_profile in English by default", async () => {
+      const mockProduct = {
+        id: 4,
+        title: "Coffee A",
+        category: "light",
+        taste_profile: "fruity",
+        taste_profile_cs: "ovocný",
+      };
+      (getProductById as jest.Mock).mockResolvedValue(mockProduct);
+
+      const res = await request(app).get("/api/products/light/4");
+
+      expect(res.status).toBe(200);
+      expect(res.body.taste_profile).toBe("fruity");
+    });
+
+    test("returns taste_profile in Czech when lang=cs", async () => {
+      const mockProduct = {
+        id: 4,
+        title: "Coffee A",
+        category: "light",
+        taste_profile: "fruity",
+        taste_profile_cs: "ovocný",
+      };
+      (getProductById as jest.Mock).mockResolvedValue(mockProduct);
+
+      const res = await request(app).get("/api/products/light/4?lang=cs");
+
+      expect(res.status).toBe(200);
+      expect(res.body.taste_profile).toBe("ovocný");
+    });
+
+    test("falls back to English if Czech translation is missing", async () => {
+      const mockProduct = {
+        id: 4,
+        title: "Coffee A",
+        category: "light",
+        taste_profile: "fruity",
+        taste_profile_cs: null,
+      };
+      (getProductById as jest.Mock).mockResolvedValue(mockProduct);
+
+      const res = await request(app).get("/api/products/light/4?lang=cs");
+
+      expect(res.status).toBe(200);
+      expect(res.body.taste_profile).toBe("fruity");
     });
   });
 });
