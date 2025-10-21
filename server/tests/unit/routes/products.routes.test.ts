@@ -13,7 +13,12 @@ import {
 } from "@db/products-db";
 
 import request from "supertest";
-import app from "@server/server";
+import express from "express";
+import productRouter from "@routes/products.routes";
+
+const app = express();
+app.use(express.json());
+app.use("/api/products", productRouter());
 
 describe("Product Routes", () => {
   afterEach(() => {
@@ -23,7 +28,7 @@ describe("Product Routes", () => {
   describe("Successful responses", () => {
     test("returns array of products - GET /api/products", async () => {
       const mockProductArray = [{ id: 1, title: "Coffee A" }];
-      (getAllProducts as jest.Mock).mockReturnValue(mockProductArray);
+      (getAllProducts as jest.Mock).mockResolvedValue(mockProductArray);
 
       const res = await request(app).get("/api/products");
 
@@ -40,49 +45,53 @@ describe("Product Routes", () => {
         { id: 3, title: "Coffee C" },
         { id: 4, title: "Coffee D" },
       ];
-      (getLatestProducts as jest.Mock).mockReturnValue(mockLatestProductArray);
+      (getLatestProducts as jest.Mock).mockResolvedValue(
+        mockLatestProductArray,
+      );
 
       const res = await request(app).get("/api/products/latest");
 
       expect(res.status).toBe(200);
-      expect(getLatestProducts).toHaveBeenCalled();
+      expect(getLatestProducts).toHaveBeenCalledWith(4, undefined);
       expect(res.body).toEqual(mockLatestProductArray);
       expect(Array.isArray(res.body)).toBe(true);
       expect(res.body.length).toBe(4);
     });
 
-    test("returns products category - GET /api/products/:category", async () => {
-      const mockCategory = [{ category: "light" }];
-      (getProductsByCategory as jest.Mock).mockReturnValue(mockCategory);
+    test("returns products by category - GET /api/products/:category", async () => {
+      const mockCategory = [{ category: "light", title: "Coffee A" }];
+      (getProductsByCategory as jest.Mock).mockResolvedValue(mockCategory);
 
       const res = await request(app).get("/api/products/light");
 
       expect(res.status).toBe(200);
       expect(res.body).toEqual(mockCategory);
-      expect(getProductsByCategory).toHaveBeenCalledWith(
-        "light",
-        expect.anything(),
-      );
+      expect(getProductsByCategory).toHaveBeenCalledWith("light", undefined);
     });
 
     test("returns product by id - GET /api/products/:category/:id", async () => {
-      const mockProduct = { id: 4, title: "Coffee A", category: "light" };
-      (getProductById as jest.Mock).mockReturnValue(mockProduct);
+      const mockProduct = {
+        id: 4,
+        title: "Coffee A",
+        category: "light",
+        taste_profile: "fruity",
+        taste_profile_cs: "ovocný",
+      };
+      (getProductById as jest.Mock).mockResolvedValue(mockProduct);
 
-      const res = await request(app).get("/api/products/light/4");
+      const resEn = await request(app).get("/api/products/light/4");
+      expect(resEn.status).toBe(200);
+      expect(resEn.body.taste_profile).toBe("fruity");
 
-      expect(res.status).toBe(200);
-      expect(res.body).toEqual(mockProduct);
-      expect(res.body).toHaveProperty("category", "light");
-      expect(getProductById).toHaveBeenCalledWith(
-        4,
-        "light",
-        expect.anything(),
-      );
+      const resCs = await request(app).get("/api/products/light/4?lang=cs");
+      expect(resCs.status).toBe(200);
+      expect(resCs.body.taste_profile).toBe("ovocný");
+
+      expect(getProductById).toHaveBeenCalledWith(4, "light", undefined);
     });
 
-    test("returns 404 if not found - GET /api/products/:category/:id", async () => {
-      (getProductById as jest.Mock).mockReturnValue(null);
+    test("returns 404 if product not found - GET /api/products/:category/:id", async () => {
+      (getProductById as jest.Mock).mockResolvedValue(null);
 
       const res = await request(app).get("/api/products/light/999");
 
@@ -117,9 +126,7 @@ describe("Product Routes", () => {
 
     errorCases.forEach(({ route, mockFn, errorMessage }) => {
       test(`responds with 500 on internal error for ${route}`, async () => {
-        (mockFn as jest.Mock).mockImplementation(() => {
-          throw new Error("DB error");
-        });
+        (mockFn as jest.Mock).mockRejectedValue(new Error("DB error"));
 
         const res = await request(app).get(route);
 

@@ -1,72 +1,67 @@
 import request from "supertest";
 import express from "express";
-import Database from "better-sqlite3";
-import type { Database as DBType } from "better-sqlite3";
+import { testPool, initializeTestDb, clearTestDb } from "../coffee-app-test-db";
 import productRouter from "@routes/products.routes";
 import { Product } from "@db/products-db";
-import { initializeProducts } from "@db/init-db";
 
-let testDb: DBType;
 let app: express.Express;
 
-beforeEach(() => {
-  testDb = new Database(":memory:");
-  initializeProducts(testDb);
+beforeAll(async () => {
+  await initializeTestDb();
+});
 
-  const insert = testDb.prepare(`
+afterAll(async () => {
+  await testPool.end();
+});
+
+beforeEach(async () => {
+  await clearTestDb();
+
+  await testPool.query(
+    `
     INSERT INTO products (title, image_url, category, price, ingredients, weight, origin, taste_profile, full_description, stock)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-  `);
-
-  insert.run(
-    "Coffee A",
-    "/img/a.png",
-    "light",
-    10,
-    "beans",
-    "250g",
-    "Brazil",
-    "fruity",
-    "desc A",
-    5,
-  );
-  insert.run(
-    "Coffee B",
-    "/img/b.png",
-    "light",
-    15,
-    "beans",
-    "250g",
-    "Brazil",
-    "chocolate",
-    "desc B",
-    0,
-  );
-  insert.run(
-    "Coffee C",
-    "/img/c.png",
-    "dark",
-    12,
-    "beans",
-    "250g",
-    "Brazil",
-    "strong",
-    "desc C",
-    10,
+    VALUES 
+      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10),
+      ($11, $12, $13, $14, $15, $16, $17, $18, $19, $20),
+      ($21, $22, $23, $24, $25, $26, $27, $28, $29, $30)
+    `,
+    [
+      "Coffee A",
+      "/img/a.png",
+      "light",
+      10,
+      "beans",
+      "250g",
+      "Brazil",
+      "fruity",
+      "desc A",
+      5,
+      "Coffee B",
+      "/img/b.png",
+      "light",
+      15,
+      "beans",
+      "250g",
+      "Brazil",
+      "chocolate",
+      "desc B",
+      0,
+      "Coffee C",
+      "/img/c.png",
+      "dark",
+      12,
+      "beans",
+      "250g",
+      "Brazil",
+      "strong",
+      "desc C",
+      10,
+    ],
   );
 
   app = express();
   app.use(express.json());
-
-  app.use("/api/products", productRouter(testDb));
-});
-
-afterEach(() => {
-  try {
-    testDb.close();
-  } catch {
-    // Ignore
-  }
+  app.use("/api/products", productRouter(testPool));
 });
 
 function parseProductsResponse(res: request.Response): Product[] {
@@ -108,9 +103,13 @@ describe("Products API integration tests", () => {
   });
 
   test("returns single product by id and category - GET /api/products/:category/:id", async () => {
-    const row = testDb
-      .prepare("SELECT id FROM products WHERE title = ?")
-      .get("Coffee A") as { id: number };
+    const result = await testPool.query<{ id: number }>(
+      `SELECT id FROM products WHERE title = $1`,
+      ["Coffee A"],
+    );
+
+    const row = result.rows[0];
+
     expect(row).toBeDefined();
 
     const res = await request(app).get(`/api/products/light/${row.id}`);

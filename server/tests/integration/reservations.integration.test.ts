@@ -1,39 +1,50 @@
 import request from "supertest";
 import express from "express";
-import Database from "better-sqlite3";
-import type { Database as DBType } from "better-sqlite3";
+import { testPool, initializeTestDb, clearTestDb } from "../coffee-app-test-db";
 import reservationRouter from "@routes/reservations.routes";
 import { Reservation } from "@db/reservations-db";
-import { initializeReservations } from "@db/init-db";
 
-let testDb: DBType;
 let app: express.Express;
 
-beforeEach(() => {
-  testDb = new Database(":memory:");
-  initializeReservations(testDb);
+beforeAll(async () => {
+  await initializeTestDb();
+});
 
-  const insert = testDb.prepare(`
+afterAll(async () => {
+  await testPool.end();
+});
+
+beforeEach(async () => {
+  await clearTestDb();
+
+  await testPool.query(
+    `
     INSERT INTO reservations (name, email, datetime, guests)
-    VALUES (?, ?, ?, ?);
-  `);
-
-  insert.run("John Doe", "test1@example.com", "2025-07-26T08:00:00.000Z", 2);
-  insert.run("Jane Doe", "test2@example.com", "2025-07-26T08:00:00.000Z", 2);
-  insert.run("John Smith", "test3@example.com", "2025-07-26T08:00:00.000Z", 2);
+    VALUES 
+    ($1, $2, $3, $4),
+    ($5, $6, $7, $8),
+    ($9, $10, $11, $12)
+  `,
+    [
+      "John Doe",
+      "test1@example.com",
+      "2025-07-26T08:00:00.000Z",
+      2,
+      "Jane Doe",
+      "test2@example.com",
+      "2025-07-26T08:00:00.000Z",
+      2,
+      "John Smith",
+      "test3@example.com",
+      "2025-07-26T08:00:00.000Z",
+      2,
+    ],
+  );
 
   app = express();
   app.use(express.json());
 
-  app.use("/api/reservations", reservationRouter(testDb));
-});
-
-afterEach(() => {
-  try {
-    testDb.close();
-  } catch {
-    // Ignore
-  }
+  app.use("/api/reservations", reservationRouter(testPool));
 });
 
 describe("Reservations API integration tests - GET /api/reservations", () => {
@@ -89,13 +100,15 @@ describe("Reservations API integration tests - POST /api/reservations/reserve", 
   });
 
   test("returns 500 if db is closed", async () => {
-    testDb.close();
-
+    const originalQuery = testPool.query;
+    testPool.query = jest.fn().mockRejectedValue(new Error("DB error"));
     const res = await request(app)
       .post("/api/reservations/reserve")
       .send(validReservation);
 
     expect(res.status).toBe(500);
     expect(res.body).toHaveProperty("message", "Server error");
+
+    testPool.query = originalQuery;
   });
 });
