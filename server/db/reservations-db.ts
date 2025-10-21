@@ -1,4 +1,5 @@
 import { query } from "./coffee-app-db";
+import type { Pool } from "pg";
 
 const MAX_CAPACITY = 10;
 
@@ -15,7 +16,7 @@ export interface ReservationSummary {
 }
 
 /**
- * Core hours configuration.
+ * Checks if a datetime is within core hours
  */
 function isValidReservationTime(datetimeStr: string): boolean {
   const date = new Date(datetimeStr);
@@ -25,12 +26,12 @@ function isValidReservationTime(datetimeStr: string): boolean {
   const hour = date.getHours();
   const minute = date.getMinutes();
 
-  // Weekdays: 9:00–17:00
+  // Weekdays: 6:00–17:00
   if (day >= 1 && day <= 5) {
     return hour >= 6 && (hour < 17 || (hour === 17 && minute === 0));
   }
 
-  // Weekends: 10:00–14:00
+  // Weekends: 7:00–17:00
   if (day === 0 || day === 6) {
     return hour >= 7 && (hour < 17 || (hour === 17 && minute === 0));
   }
@@ -39,10 +40,12 @@ function isValidReservationTime(datetimeStr: string): boolean {
 }
 
 /**
- * Returns all reservations from the DB.
+ * Returns all reservations from the DB
  */
-export async function getAllReservations(): Promise<Reservation[]> {
-  return query<Reservation>("SELECT * FROM reservations");
+export async function getAllReservations(
+  poolInstance?: Pool,
+): Promise<Reservation[]> {
+  return query<Reservation>("SELECT * FROM reservations", [], poolInstance);
 }
 
 /**
@@ -54,32 +57,23 @@ export async function createReservationIfAvailable(
   email: string,
   datetime: string,
   guests: number,
+  poolInstance?: Pool,
 ): Promise<boolean> {
-  if (!isValidReservationTime(datetime)) {
-    return false;
-  }
+  if (!isValidReservationTime(datetime)) return false;
 
   const result = await query<ReservationSummary>(
-    `
-    SELECT SUM(guests) AS totalguests
-    FROM reservations
-    WHERE datetime = $1
-    `,
+    "SELECT SUM(guests) AS totalguests FROM reservations WHERE datetime = $1",
     [datetime],
+    poolInstance,
   );
 
-  const currentGuests = result[0]?.totalguests ?? 0;
-
-  if (currentGuests + guests > MAX_CAPACITY) {
-    return false;
-  }
+  const currentGuests = Number(result[0]?.totalguests ?? 0);
+  if (currentGuests + guests > MAX_CAPACITY) return false;
 
   await query(
-    `
-    INSERT INTO reservations (name, email, datetime, guests)
-    VALUES ($1, $2, $3, $4)
-    `,
+    "INSERT INTO reservations (name, email, datetime, guests) VALUES ($1, $2, $3, $4)",
     [name, email, datetime, guests],
+    poolInstance,
   );
 
   return true;

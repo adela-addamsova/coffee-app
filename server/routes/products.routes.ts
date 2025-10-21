@@ -5,11 +5,12 @@ import {
   getProductsByCategory,
   getProductById,
 } from "../db/products-db";
+import { Pool } from "pg";
 
 /**
  * Creates and returns a router that handles product-related API endpoints
  */
-export default function productRouter() {
+export default function productRouter(poolInstance?: Pool) {
   const router = Router();
 
   /**
@@ -18,7 +19,7 @@ export default function productRouter() {
    */
   router.get("/", async (req: Request, res: Response) => {
     try {
-      const products = await getAllProducts();
+      const products = await getAllProducts(poolInstance);
       res.json(products);
     } catch (_err) {
       res.status(500).json({ error: "Failed to fetch products" });
@@ -31,7 +32,7 @@ export default function productRouter() {
    */
   router.get("/latest", async (req: Request, res: Response) => {
     try {
-      const products = await getLatestProducts(4);
+      const products = await getLatestProducts(4, poolInstance);
       res.json(products);
     } catch (_err) {
       res.status(500).json({ error: "Failed to fetch products" });
@@ -46,7 +47,10 @@ export default function productRouter() {
     "/:category",
     async (req: Request<{ category: string }>, res: Response) => {
       try {
-        const products = await getProductsByCategory(req.params.category);
+        const products = await getProductsByCategory(
+          req.params.category,
+          poolInstance,
+        );
         res.json(products);
       } catch (_err) {
         res.status(500).json({ error: "Failed to fetch category products" });
@@ -65,7 +69,11 @@ export default function productRouter() {
         const { category, id } = req.params;
         const lang = req.query.lang === "cs" ? "cs" : "en";
 
-        const product = await getProductById(Number(id), category);
+        const product = await getProductById(
+          Number(id),
+          category,
+          poolInstance,
+        );
         if (!product) {
           return res.status(404).json({ error: "Product not found" });
         }

@@ -4,8 +4,9 @@ import {
   isEmailSubscribed,
 } from "../db/newsletter-db";
 import { newsletterSchema } from "../../shared/NewsletterValidationSchema";
+import { Pool } from "pg";
 
-export default function newsletterRouter() {
+export default function newsletterRouter(poolInstance?: Pool) {
   const router = Router();
 
   /**
@@ -29,14 +30,19 @@ export default function newsletterRouter() {
     const ip_address = req.ip;
 
     try {
-      const alreadySubscribed = await isEmailSubscribed(email);
+      const alreadySubscribed = await isEmailSubscribed(email, poolInstance);
       if (alreadySubscribed) {
         return res
           .status(409)
           .json({ error: "This email is already subscribed" });
       }
 
-      const result = await insertNewsletterSubscriber(email, ip_address);
+      const result = await insertNewsletterSubscriber(
+        email,
+        ip_address,
+        poolInstance,
+      );
+
       return res.status(201).json({
         message: "Subscription successful",
         id: result.id,
