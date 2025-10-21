@@ -26,6 +26,7 @@ dist-ssr
 *.db
 
 /reports/
+server/reports/test-report.html
 coverage/
 
 .env
