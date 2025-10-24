@@ -47,7 +47,9 @@ export default function OrderSuccess() {
   return (
     <CartLayout step="summary">
       <div className="thank-you-container">
-        <h2 className="order-success-title">Your order has been created!</h2>
+        <h2 className="order-success-title">
+          {t("eshop-cart.success-card-head")}
+        </h2>
         <p className="order-success-message">
           {t("eshop-cart.success-start")} <strong>{orderId}</strong>{" "}
           {paymentMethod === "card" && t("eshop-cart.success-card")}
