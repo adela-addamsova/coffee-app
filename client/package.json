@@ -9,7 +9,8 @@
     "vercel-build": "npm install vite && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "test-coverage": "npx vitest run --coverage"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.10",
