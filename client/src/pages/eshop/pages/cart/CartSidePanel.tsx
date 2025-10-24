@@ -33,6 +33,7 @@ export default function CartSidePanel() {
       {isCartOpen && (
         <div
           className="cart-side-panel-page"
+          data-testid="cart-bg"
           onClick={() => setIsCartOpen(false)}
         />
       )}
@@ -72,8 +73,13 @@ export default function CartSidePanel() {
                 <div
                   className="product-info-button"
                   onClick={() => removeFromCart(item.id)}
+                  data-testid={`remove-btn-${item.id}`}
                 >
-                  <img src={deleteIcon} alt={item.title} className="!w-6" />
+                  <img
+                    src={deleteIcon}
+                    alt={`Remove ${item.title}`}
+                    className="!w-6"
+                  />
                 </div>
               </div>
             ))
