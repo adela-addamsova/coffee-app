@@ -100,7 +100,7 @@
     "btn-back-eshop": "E-SHOP",
     "btn-back": "ZPĚT",
     "btn-next": "DALŠÍ",
-    "btn-send": "ODESLAT OBJEDNÁVKU",
+    "btn-send": "ODESLAT",
     "adr-head": "Dodací adresa",
     "adr-name": "Jméno",
     "adr-email": "E-mail",
@@ -122,7 +122,8 @@
     "success-start": "Děkujeme za váš nákup! Vaše objednávka s ID",
     "success-card": "byla úspěšně zaplacena a nyní ji zpracováváme. Poslali jsme vám potvrzující e-mail s podrobnostmi. Ozveme se, jakmile bude objednávka odeslána.",
     "success-transfer": "je nyní zpracovávána. Poslali jsme vám potvrzující e-mail s podrobnostmi. Proveďte prosím platbu na náš bankovní účet (000000/0000) s ID objednávky jako variabilním symbolem. Ozveme se, jakmile bude objednávka odeslána.",
-    "success-cash": "je nyní zpracovávána. Poslali jsme vám potvrzující e-mail s podrobnostmi. Připravte si prosím hotovost při doručení. Ozveme se, jakmile bude objednávka odeslána."
+    "success-cash": "je nyní zpracovávána. Poslali jsme vám potvrzující e-mail s podrobnostmi. Připravte si prosím hotovost při doručení. Ozveme se, jakmile bude objednávka odeslána.",
+    "success-card-head": "Objednávka byla úspěšně vytvořená!"
   },
   "errors": {
     "name-required": "Zadejte prosím celé jméno",
