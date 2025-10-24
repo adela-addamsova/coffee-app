@@ -6,6 +6,10 @@ import { renderHook, act } from "@testing-library/react";
 import { useReservationForm } from "@/hooks/useReservationForm";
 import * as reservationLogic from "@/utils/reservationFormLogic";
 import * as validationSchema from "@shared/ReservationFormValidationSchema";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../test-i18n";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 vi.mock("@/utils/reservationFormLogic", () => ({
   generateTimeSlots: vi.fn(),
@@ -18,30 +22,37 @@ vi.mock("@shared/ReservationFormValidationSchema", () => ({
   MAX_CAPACITY: 10,
 }));
 
+const renderReservationHook = () =>
+  renderHook(() => useReservationForm(), {
+    wrapper: ({ children }) => (
+      <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+    ),
+  });
+
 describe("useReservationForm - Unit Tests", () => {
+  beforeAll(async () => {
+    i18n = await createTestI18n();
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
     global.fetch = vi.fn();
   });
 
   test("updates form state on input change", () => {
-    const { result } = renderHook(() => useReservationForm());
+    const { result } = renderReservationHook();
 
     act(() => {
       result.current.handleInputChange({
         target: { name: "name", value: "Alice" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
+      } as React.ChangeEvent<HTMLInputElement>);
     });
 
     expect(result.current.form.name).toBe("Alice");
   });
 
   test("validates and sets errors on submit with empty fields", async () => {
-    (
-      validationSchema.reservationSchema.safeParse as unknown as Mock
-    ).mockReturnValueOnce({
+    (validationSchema.reservationSchema.safeParse as Mock).mockReturnValueOnce({
       success: false,
       error: {
         format: () => ({
@@ -52,14 +63,12 @@ describe("useReservationForm - Unit Tests", () => {
       },
     });
 
-    const { result } = renderHook(() => useReservationForm());
+    const { result } = renderReservationHook();
 
     await act(async () => {
       await result.current.handleSubmit({
         preventDefault: () => {},
-      } as Partial<
-        React.FormEvent<HTMLFormElement>
-      > as React.FormEvent<HTMLFormElement>);
+      } as React.FormEvent<HTMLFormElement>);
     });
 
     expect(result.current.errors.name).toBe("Name required");
@@ -74,16 +83,16 @@ describe("useReservationForm - Unit Tests", () => {
       { datetime: "2025-08-10T10:00:00Z", guests: 2 },
       { datetime: "2025-08-10T12:00:00Z", guests: 1 },
     ];
-    (global.fetch as unknown as Mock).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: () => Promise.resolve(mockReservations),
     });
 
-    (reservationLogic.generateTimeSlots as unknown as Mock).mockReturnValue([
+    (reservationLogic.generateTimeSlots as Mock).mockReturnValue([
       { iso: "2025-08-10T10:00:00Z", label: "10:00", remaining: 3 },
       { iso: "2025-08-10T12:00:00Z", label: "12:00", remaining: 5 },
     ]);
 
-    const { result } = renderHook(() => useReservationForm());
+    const { result } = renderReservationHook();
 
     await act(async () => {
       await result.current.fetchReservations(new Date("2025-08-10"));
@@ -97,15 +106,15 @@ describe("useReservationForm - Unit Tests", () => {
 
   test("updates remainingSeats when selectedTime or availableTimes change", async () => {
     const mockReservations = [{ datetime: "2025-08-10T10:00:00Z", guests: 2 }];
-    (global.fetch as unknown as Mock).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: () => Promise.resolve(mockReservations),
     });
 
-    (reservationLogic.generateTimeSlots as unknown as Mock).mockReturnValue([
+    (reservationLogic.generateTimeSlots as Mock).mockReturnValue([
       { iso: "2025-08-10T10:00:00Z", label: "10:00", remaining: 3 },
     ]);
 
-    const { result } = renderHook(() => useReservationForm());
+    const { result } = renderReservationHook();
 
     await act(async () => {
       await result.current.fetchReservations(new Date("2025-08-10"));
@@ -119,19 +128,16 @@ describe("useReservationForm - Unit Tests", () => {
   });
 
   test("handleSubmit submits successfully and resets form", async () => {
-    (
-      validationSchema.reservationSchema.safeParse as unknown as Mock
-    ).mockReturnValueOnce({
+    (validationSchema.reservationSchema.safeParse as Mock).mockReturnValueOnce({
       success: true,
       data: {},
     });
-
-    (global.fetch as unknown as Mock).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: () => Promise.resolve({}),
     });
 
-    const { result } = renderHook(() => useReservationForm());
+    const { result } = renderReservationHook();
 
     act(() => {
       result.current.setSelectedDate(new Date("2025-08-10"));
@@ -139,29 +145,19 @@ describe("useReservationForm - Unit Tests", () => {
 
       result.current.handleInputChange({
         target: { name: "name", value: "John" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
-
+      } as React.ChangeEvent<HTMLInputElement>);
       result.current.handleInputChange({
         target: { name: "email", value: "john@example.com" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
-
+      } as React.ChangeEvent<HTMLInputElement>);
       result.current.handleInputChange({
         target: { name: "guests", value: "2" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
+      } as React.ChangeEvent<HTMLInputElement>);
     });
 
     await act(async () => {
       await result.current.handleSubmit({
         preventDefault: () => {},
-      } as Partial<
-        React.FormEvent<HTMLFormElement>
-      > as React.FormEvent<HTMLFormElement>);
+      } as React.FormEvent<HTMLFormElement>);
     });
 
     expect(result.current.message).toBe(
@@ -179,19 +175,16 @@ describe("useReservationForm - Unit Tests", () => {
   });
 
   test("handleSubmit sets errorMessage on API error response", async () => {
-    (
-      validationSchema.reservationSchema.safeParse as unknown as Mock
-    ).mockReturnValueOnce({
+    (validationSchema.reservationSchema.safeParse as Mock).mockReturnValueOnce({
       success: true,
       data: {},
     });
-
-    (global.fetch as unknown as Mock).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: false,
       json: () => Promise.resolve({ errorMessage: "Reservation failed" }),
     });
 
-    const { result } = renderHook(() => useReservationForm());
+    const { result } = renderReservationHook();
 
     act(() => {
       result.current.setSelectedDate(new Date("2025-08-10"));
@@ -199,29 +192,19 @@ describe("useReservationForm - Unit Tests", () => {
 
       result.current.handleInputChange({
         target: { name: "name", value: "John" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
-
+      } as React.ChangeEvent<HTMLInputElement>);
       result.current.handleInputChange({
         target: { name: "email", value: "john@example.com" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
-
+      } as React.ChangeEvent<HTMLInputElement>);
       result.current.handleInputChange({
         target: { name: "guests", value: "2" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
+      } as React.ChangeEvent<HTMLInputElement>);
     });
 
     await act(async () => {
       await result.current.handleSubmit({
         preventDefault: () => {},
-      } as Partial<
-        React.FormEvent<HTMLFormElement>
-      > as React.FormEvent<HTMLFormElement>);
+      } as React.FormEvent<HTMLFormElement>);
     });
 
     expect(result.current.errorMessage).toBe("Reservation failed");
@@ -230,18 +213,13 @@ describe("useReservationForm - Unit Tests", () => {
   });
 
   test("handleSubmit sets server error on fetch failure", async () => {
-    (
-      validationSchema.reservationSchema.safeParse as unknown as Mock
-    ).mockReturnValueOnce({
+    (validationSchema.reservationSchema.safeParse as Mock).mockReturnValueOnce({
       success: true,
       data: {},
     });
+    (global.fetch as Mock).mockRejectedValueOnce(new Error("Network error"));
 
-    (global.fetch as unknown as Mock).mockRejectedValueOnce(
-      new Error("Network error"),
-    );
-
-    const { result } = renderHook(() => useReservationForm());
+    const { result } = renderReservationHook();
 
     act(() => {
       result.current.setSelectedDate(new Date("2025-08-10"));
@@ -249,29 +227,19 @@ describe("useReservationForm - Unit Tests", () => {
 
       result.current.handleInputChange({
         target: { name: "name", value: "John" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
-
+      } as React.ChangeEvent<HTMLInputElement>);
       result.current.handleInputChange({
         target: { name: "email", value: "john@example.com" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
-
+      } as React.ChangeEvent<HTMLInputElement>);
       result.current.handleInputChange({
         target: { name: "guests", value: "2" },
-      } as Partial<
-        React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      > as React.ChangeEvent<HTMLInputElement | HTMLSelectElement>);
+      } as React.ChangeEvent<HTMLInputElement>);
     });
 
     await act(async () => {
       await result.current.handleSubmit({
         preventDefault: () => {},
-      } as Partial<
-        React.FormEvent<HTMLFormElement>
-      > as React.FormEvent<HTMLFormElement>);
+      } as React.FormEvent<HTMLFormElement>);
     });
 
     expect(result.current.errorMessage).toBe("Server error.");

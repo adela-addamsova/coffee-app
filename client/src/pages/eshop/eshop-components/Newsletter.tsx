@@ -85,7 +85,7 @@ export default function NewsletterSection(): JSX.Element {
           <p className="newsletter-success">{t("eshop.newsletter-msg-1")}</p>
         )}
         {status === "exists" && (
-          <p className="newsletter-error">{t("errors.newsletter-msg-2")}</p>
+          <p className="newsletter-error">{t("eshop.newsletter-msg-2")}</p>
         )}
         {status === "error" && (
           <p className="newsletter-error">{t("eshop.newsletter-msg-3")}</p>

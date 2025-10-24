@@ -7,10 +7,20 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { vi, type Mock } from "vitest";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../../../test-i18n";
 
-beforeEach(() => {
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
+
+beforeEach(async () => {
   global.fetch = vi.fn() as Mock;
-  render(<NewsletterSection />);
+  i18n = await createTestI18n();
+
+  render(
+    <I18nextProvider i18n={i18n}>
+      <NewsletterSection />
+    </I18nextProvider>,
+  );
 });
 
 afterEach(() => {
@@ -75,5 +85,17 @@ describe("NewsletterSection Component - Unit Tests", () => {
     expect(
       await screen.findByText(/something went wrong/i),
     ).toBeInTheDocument();
+  });
+
+  test("checks correct czech translation", async () => {
+    await i18n.changeLanguage("cs");
+
+    (fetch as Mock).mockResolvedValueOnce({ ok: true });
+
+    fillAndSubmitForm("test@email.com");
+
+    await waitFor(() => {
+      expect(screen.getByText(/děkujeme za přihlášení/i)).toBeInTheDocument();
+    });
   });
 });

@@ -1,16 +1,30 @@
 import InfoBoxes from "@components/InfoBoxes";
 import { coffeeHouseData } from "@config/CoffeeHouseData";
 import { render, screen } from "@testing-library/react";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../test-i18n";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 describe("InfoBoxes - Unit Tests", () => {
+  beforeAll(async () => {
+    i18n = await createTestI18n();
+  });
+
   beforeEach(() => {
-    render(<InfoBoxes />);
+    render(
+      <I18nextProvider i18n={i18n}>
+        <InfoBoxes />
+      </I18nextProvider>,
+    );
   });
 
   test("renders all info box titles", () => {
-    ["CONTACT", "OPENING HOURS", "LOCATION"].forEach((title) => {
-      expect(screen.getByText(title)).toBeInTheDocument();
-    });
+    ["info-boxes.title-1", "info-boxes.title-2", "info-boxes.title-3"].forEach(
+      (title) => {
+        expect(screen.getByText(title)).toBeInTheDocument();
+      },
+    );
   });
 
   test("renders contact information", () => {

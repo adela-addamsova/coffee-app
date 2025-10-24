@@ -2,13 +2,23 @@ import Footer from "@components/Footer";
 import { coffeeHouseData } from "@config/CoffeeHouseData";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../test-i18n";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 describe("Footer integration tests", () => {
+  beforeAll(async () => {
+    i18n = await createTestI18n();
+  });
+
   beforeEach(() => {
     render(
-      <MemoryRouter>
-        <Footer />
-      </MemoryRouter>,
+      <I18nextProvider i18n={i18n}>
+        <MemoryRouter>
+          <Footer />
+        </MemoryRouter>
+      </I18nextProvider>,
     );
   });
 
@@ -27,8 +37,11 @@ describe("Footer integration tests", () => {
     expect(
       screen.getByText(coffeeHouseData.address.street),
     ).toBeInTheDocument();
-    expect(screen.getByText(coffeeHouseData.address.city)).toBeInTheDocument();
-    expect(screen.getByText(coffeeHouseData.address.zip)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        `${coffeeHouseData.address.city}, ${coffeeHouseData.address.zip}`,
+      ),
+    ).toBeInTheDocument();
   });
 
   test("renders social icons", () => {

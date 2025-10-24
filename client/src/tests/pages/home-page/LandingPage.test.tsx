@@ -2,13 +2,26 @@ import LandingPage from "@/pages/home-page/LandingPage";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { vi } from "vitest";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../../test-i18n";
+import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 describe("LandingPage - Unit Tests", () => {
+  beforeAll(async () => {
+    i18n = await createTestI18n();
+  });
+
   test("renders layout with section components", () => {
     render(
-      <MemoryRouter>
-        <LandingPage />
-      </MemoryRouter>,
+      <I18nextProvider i18n={i18n}>
+        <CartProvider>
+          <MemoryRouter>
+            <LandingPage />
+          </MemoryRouter>
+        </CartProvider>
+      </I18nextProvider>,
     );
 
     const sectionsByTestID = [
@@ -38,15 +51,19 @@ describe("LandingPage - Unit Tests", () => {
     vi.spyOn(window.history, "replaceState").mockImplementation(() => {});
 
     render(
-      <MemoryRouter
-        initialEntries={[
-          { pathname: "/", state: { scrollToId: "hero-text-section" } },
-        ]}
-      >
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-        </Routes>
-      </MemoryRouter>,
+      <I18nextProvider i18n={i18n}>
+        <CartProvider>
+          <MemoryRouter
+            initialEntries={[
+              { pathname: "/", state: { scrollToId: "hero-text-section" } },
+            ]}
+          >
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+            </Routes>
+          </MemoryRouter>
+        </CartProvider>
+      </I18nextProvider>,
     );
 
     vi.runAllTimers();
