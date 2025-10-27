@@ -156,6 +156,7 @@ export default function ReservationForm(): JSX.Element {
                   max={remainingSeats || MAX_CAPACITY}
                   value={form.guests}
                   onChange={handleInputChange}
+                  onKeyDown={(e) => e.preventDefault()}
                 />
                 {errors.guests && (
                   <div className="field-error-message">{errors.guests}</div>
