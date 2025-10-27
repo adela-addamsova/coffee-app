@@ -1,4 +1,4 @@
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 import ReservationForm from "@/pages/reservation-page/ReservationForm";
@@ -127,14 +127,11 @@ describe("ReservationForm - Integration tests", () => {
 
     await user.click(screen.getByTestId("select-future-date"));
 
-    const timeSelect = (await screen.findByRole("combobox", {
-      name: /select time/i,
-    })) as HTMLSelectElement;
+    const timeDropdown = await screen.findByText(/select time/i);
+    await user.click(timeDropdown);
 
-    const firstOptionValue = timeSelect.options[1].value;
-    fireEvent.change(timeSelect, { target: { value: firstOptionValue } });
-
-    expect(timeSelect.value).toBe(firstOptionValue);
+    const firstOption = await screen.findByText(/10:00/); // or whatever label you expect
+    await user.click(firstOption);
 
     await waitFor(() => {
       expect(screen.getByTestId("guests-input")).toBeInTheDocument();

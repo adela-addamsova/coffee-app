@@ -33,7 +33,7 @@
 }
 
 .reservation-form-box {
-    @apply w-full flex items-center justify-center pt-[40px] lg:px-[20px] lg:w-1/2 lg:pt-0;
+    @apply w-full flex items-center justify-center pt-[40px] lg:px-[20px] lg:w-1/2 lg:pt-0 lg:mt-10;
 }
 
 .reservation-form-box form {
@@ -59,24 +59,76 @@
     @apply w-[90%] flex flex-col mb-3 lg:w-[80%] 2xl:w-[70%] 3xl:w-[50%];
 }
 
-.reservation-form .form-group input {
-    @apply p-2 border border-solid border-black;
+.reservation-form input {
+    @apply border border-solid py-2
 }
 
 .reservation-form .row-group {
-    @apply flex flex-col justify-between sm:flex-row;
+    @apply flex flex-col justify-between xl:flex-row;
 }
 
-.reservation-form .guest-input label {
-    @apply mr-1;   
+.time-select {
+    @apply w-full xl:w-1/2;
 }
 
-.reservation-form select, .reservation-form input {
-    @apply border border-solid border-black rounded-none; 
+.custom-select__control {
+  @apply !bg-white !border !border-[#867A6E] !rounded-none pl-3! !py-1 !font-slab cursor-pointer!;
 }
 
-.reservation-form .time-select {
-    @apply w-full p-2 my-6 font-slab sm:my-0;
+.custom-select__value-container {
+  @apply !p-0 !gap-2;
+}
+
+.custom-select__input-container {
+    @apply px-4!;
+}
+
+.custom-select__placeholder {
+  @apply !text-[#999] !font-slab;
+}
+
+.custom-select__input {
+  @apply !text-[#333] !font-slab p-2;
+}
+
+input.custom-select__input {
+    display: none !important
+}
+
+.custom-select__menu {
+  @apply !z-[9999] !bg-white !border !border-none !rounded-none !shadow-lg;
+}
+
+.custom-select__option {
+  @apply !bg-white !text-[#333] !cursor-pointer !px-3 !py-2 !font-slab;
+}
+
+.custom-select__option--is-focused {
+  @apply !bg-[#F5F5F5];
+}
+
+.custom-select__option--is-selected {
+  @apply !bg-[#867a6e8e] !text-white;
+}
+
+.custom-select__single-value {
+  @apply !text-[#333] !font-slab;
+}
+
+.custom-select__indicator-separator {
+  @apply !bg-white;
+}
+
+.custom-select__dropdown-indicator {
+  @apply !text-[#867A6E];
+}
+
+.guests-container {
+    @apply flex items-center gap-2 mt-4 xl:mt-0;
+}
+
+.guests-container label {
+    @apply text-end;
 }
 
 .reservation-form .submit-button {
