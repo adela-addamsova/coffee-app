@@ -160,7 +160,7 @@ export default function ReservationForm(): JSX.Element {
 
             {/* Guests Select */}
             {selectedTime && (
-              <div className="guests-container">
+              <div className="guests-container" data-testid="guests-input">
                 <label htmlFor="guests-select">
                   {t("reservation.form-seats")}
                 </label>

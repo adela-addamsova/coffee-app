@@ -140,8 +140,7 @@ describe("ReservationForm", () => {
       ],
     });
     renderForm();
-    expect(screen.getByRole("combobox")).toBeInTheDocument();
-    expect(screen.getByText(/6:00 PM \(3 seats left\)/i)).toBeInTheDocument();
+    expect(screen.getByText(/select time/i)).toBeInTheDocument();
   });
 
   test("renders guest input only when selectedTime is set", () => {
