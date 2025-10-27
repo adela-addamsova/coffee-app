@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import initializeDatabase from "./db/init-db";
 
 import reservationRouter from "./routes/reservations.routes";
 import productRouter from "./routes/products.routes";
@@ -14,16 +13,6 @@ const envFile =
     : ".env.development";
 
 dotenv.config({ path: envFile });
-
-async function initDb() {
-  try {
-    await initializeDatabase();
-  } catch (err) {
-    console.error("Failed to initialize database:", err);
-  }
-}
-
-initDb();
 
 const app = express();
 

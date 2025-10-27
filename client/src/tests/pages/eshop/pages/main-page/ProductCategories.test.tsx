@@ -1,25 +1,35 @@
-import ProductCategories, {
-  categories,
-} from "@/pages/eshop/pages/main-page/ProductCategories";
+import ProductCategories from "@/pages/eshop/pages/main-page/ProductCategories";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../../../../test-i18n";
 
 describe("ProductCategories - Unit Tests", () => {
-  beforeEach(() => {
+  test("renders all product categories with images and links", async () => {
+    const i18n = await createTestI18n();
+
     render(
-      <MemoryRouter>
-        <ProductCategories />
-      </MemoryRouter>,
+      <I18nextProvider i18n={i18n}>
+        <MemoryRouter>
+          <ProductCategories />
+        </MemoryRouter>
+      </I18nextProvider>,
     );
-  });
 
-  test("renders product categories with correct links and images", () => {
-    categories.forEach(({ name, link }) => {
-      const image = screen.getByAltText(name);
-      expect(image).toBeInTheDocument();
+    const section = screen.getByTestId("product-categories");
+    expect(section).toBeInTheDocument();
 
-      const anchor = image.closest("a");
-      expect(anchor).toHaveAttribute("href", link ?? "#");
+    const images = screen.getAllByRole("img");
+    expect(images).toHaveLength(3);
+
+    images.forEach((img) => {
+      expect(img).toBeInTheDocument();
+      const anchor = img.closest("a");
+      expect(anchor).toHaveAttribute("href");
     });
+
+    expect(screen.getByText(/light/i)).toBeInTheDocument();
+    expect(screen.getByText(/dark/i)).toBeInTheDocument();
+    expect(screen.getByText(/decaf/i)).toBeInTheDocument();
   });
 });

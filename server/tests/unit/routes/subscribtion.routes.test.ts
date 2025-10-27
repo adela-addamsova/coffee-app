@@ -4,26 +4,35 @@ jest.mock("@db/newsletter-db", () => ({
 }));
 
 import request from "supertest";
-import app from "@server/server";
+import express from "express";
 
-import subscribtionRoutes from "@routes/subscribtion.routes";
+import newsletterRouter from "@routes/subscribtion.routes";
 import {
   insertNewsletterSubscriber,
   isEmailSubscribed,
 } from "@db/newsletter-db";
-
-app.use("/api/subscribe", subscribtionRoutes);
+import { testPool } from "@server/tests/coffee-app-test-db";
 
 describe("POST /api/subscribe", () => {
+  let app: express.Express;
+
+  beforeEach(() => {
+    app = express();
+    app.use(express.json());
+    app.use("/api/subscribe", newsletterRouter(testPool));
+  });
+
+  afterAll(async () => {
+    await testPool.end();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   test("should subscribe successfully", async () => {
-    (isEmailSubscribed as jest.Mock).mockReturnValue(false);
-    (insertNewsletterSubscriber as jest.Mock).mockReturnValue({
-      lastInsertRowid: 123,
-    });
+    (isEmailSubscribed as jest.Mock).mockResolvedValue(false);
+    (insertNewsletterSubscriber as jest.Mock).mockResolvedValue({ id: 123 });
 
     const response = await request(app)
       .post("/api/subscribe")
@@ -56,7 +65,7 @@ describe("POST /api/subscribe", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      error: "Please enter a valid email address",
+      error: "eshop.newsletter-msg-2",
     });
   });
 

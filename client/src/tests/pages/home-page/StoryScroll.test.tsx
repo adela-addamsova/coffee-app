@@ -3,13 +3,23 @@ import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { fireEvent } from "@testing-library/dom";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../../test-i18n";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 describe("StoryScroll - Unit Tests", () => {
+  beforeAll(async () => {
+    i18n = await createTestI18n();
+  });
+
   beforeEach(() => {
     render(
-      <MemoryRouter>
-        <StoryScroll />
-      </MemoryRouter>,
+      <I18nextProvider i18n={i18n}>
+        <MemoryRouter>
+          <StoryScroll />
+        </MemoryRouter>
+      </I18nextProvider>,
     );
   });
 

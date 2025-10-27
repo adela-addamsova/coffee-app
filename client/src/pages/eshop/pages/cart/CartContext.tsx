@@ -16,7 +16,7 @@ export type CartItem = {
 
 export type AddressData = z.infer<typeof addressSchema>;
 
-type CartContextType = {
+export type CartContextType = {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
@@ -221,16 +221,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     "bank-transfer" | "card" | "cash"
   >(
     () =>
-      (localStorage.getItem("paymentMethod") as
+      localStorage.getItem("paymentMethod") as
         | "bank-transfer"
         | "card"
-        | "cash") || "bank-transfer",
-  );
-
-  // Persist payment method to localStorage
-  useEffect(
-    () => localStorage.setItem("paymentMethod", paymentMethod),
-    [paymentMethod],
+        | "cash",
   );
 
   // ------------------------------

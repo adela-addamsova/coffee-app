@@ -122,7 +122,8 @@
         "success-start": "Thank you for your purchase! Your order with ID",
         "success-card": "has been successfully paid and is now being processed. We’ve sent you a confirmation email with the details. You will be notified once your order has been dispatched.",
         "success-transfer": "is now being processed. We’ve sent you a confirmation email with the details. Please make the payment to our bank account (000000/0000) using your Order ID as the reference. You will be notified once your order has been dispatched.",
-        "success-cash": "is now being processed. We’ve sent you a confirmation email with the details. Please have the cash ready upon delivery. You will be notified once your order has been dispatched."
+        "success-cash": "is now being processed. We’ve sent you a confirmation email with the details. Please have the cash ready upon delivery. You will be notified once your order has been dispatched.",
+        "success-card-head": "Your order has been created!"
     },
     "errors": {
         "name-required": "Please enter your full name",

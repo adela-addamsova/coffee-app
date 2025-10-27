@@ -1,72 +1,63 @@
-import Database from "better-sqlite3";
-import type { Database as DBType } from "better-sqlite3";
 import {
-  isEmailSubscribed,
+  testPool,
+  initializeTestDb,
+  clearTestDb,
+} from "../../coffee-app-test-db";
+import {
   insertNewsletterSubscriber,
-  NewsletterSubscriber,
+  isEmailSubscribed,
 } from "@db/newsletter-db";
-import { initializeSubscribers } from "@db/init-db";
 
-let testDb: DBType;
-
-beforeEach(() => {
-  testDb = new Database(":memory:");
-  initializeSubscribers(testDb);
+beforeAll(async () => {
+  await initializeTestDb();
 });
 
-afterEach(() => {
-  testDb.close();
+afterAll(async () => {
+  await testPool.end();
+});
+
+beforeEach(async () => {
+  await clearTestDb();
 });
 
 describe("Newsletter DB operations", () => {
-  test("inserts a new subscriber", () => {
-    const result = insertNewsletterSubscriber(
+  test("inserts a new subscriber", async () => {
+    const result = await insertNewsletterSubscriber(
       "test@example.com",
       "127.0.0.1",
-      testDb,
+      testPool,
     );
 
-    expect(result.lastInsertRowid).toBeGreaterThan(0);
-
-    const row = testDb
-      .prepare(`SELECT * FROM newsletter_subscribers WHERE email = ?`)
-      .get("test@example.com") as NewsletterSubscriber;
-
-    expect(row).toBeDefined();
-    expect(row.email).toBe("test@example.com");
-    expect(row.ip_address).toBe("127.0.0.1");
+    expect(result.id).toBeGreaterThan(0);
+    expect(result.email).toBe("test@example.com");
+    expect(result.ip_address).toBe("127.0.0.1");
   });
 
-  test("returns true for existing active email", () => {
-    insertNewsletterSubscriber(
+  test("returns true for existing active email", async () => {
+    await insertNewsletterSubscriber(
       "subscribed@example.com",
       "123.456.789.0",
-      testDb,
+      testPool,
     );
 
-    const result = isEmailSubscribed("subscribed@example.com", testDb);
+    const result = await isEmailSubscribed("subscribed@example.com", testPool);
     expect(result).toBe(true);
   });
 
-  test("returns false for non-existent email", () => {
-    const result = isEmailSubscribed("nonexistent@example.com", testDb);
+  test("returns false for non-existent email", async () => {
+    const result = await isEmailSubscribed("nonexistent@example.com", testPool);
     expect(result).toBe(false);
   });
 
-  test("returns false if email is soft-deleted", () => {
-    insertNewsletterSubscriber("deleted@example.com", "ip", testDb);
+  test("returns false if email is soft-deleted", async () => {
+    await insertNewsletterSubscriber("deleted@example.com", "ip", testPool);
 
-    testDb
-      .prepare(
-        `
-      UPDATE newsletter_subscribers
-      SET deleted_at = datetime('now')
-      WHERE email = ?
-    `,
-      )
-      .run("deleted@example.com");
+    await testPool.query(
+      `UPDATE newsletter_subscribers SET deleted_at = NOW() WHERE email = $1`,
+      ["deleted@example.com"],
+    );
 
-    const result = isEmailSubscribed("deleted@example.com", testDb);
+    const result = await isEmailSubscribed("deleted@example.com", testPool);
     expect(result).toBe(false);
   });
 });

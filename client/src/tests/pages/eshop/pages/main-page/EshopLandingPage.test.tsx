@@ -2,6 +2,7 @@ import EshopLandingPage from "@/pages/eshop/pages/main-page/EshopLandingPage";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
+import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
 
 beforeEach(() => {
   global.fetch = vi.fn().mockResolvedValue({
@@ -18,12 +19,18 @@ beforeEach(() => {
   }) as unknown as typeof fetch;
 });
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("EshopLandingPage - Unit Tests", () => {
-  test("renders all sections", async () => {
+  test("renders all sections and fetches latest products", async () => {
     render(
-      <MemoryRouter>
-        <EshopLandingPage />
-      </MemoryRouter>,
+      <CartProvider>
+        <MemoryRouter>
+          <EshopLandingPage />
+        </MemoryRouter>
+      </CartProvider>,
     );
 
     const staticSections = [
@@ -41,5 +48,9 @@ describe("EshopLandingPage - Unit Tests", () => {
     await waitFor(() => {
       expect(screen.getByTestId("latest-products")).toBeInTheDocument();
     });
+
+    expect(fetch).toHaveBeenCalledWith(
+      "http://localhost:5000/api/products/latest",
+    );
   });
 });

@@ -49,9 +49,10 @@ export default function CartStepOne(): JSX.Element {
                   </h4>
                   <div
                     className="product-info-button"
+                    data-testid={`remove-btn-${item.id}`}
                     onClick={() => removeFromCart(item.id)}
                   >
-                    <img src={deleteIcon} alt={item.title} />
+                    <img src={deleteIcon} alt={`Remove ${item.title}`} />
                   </div>
                 </div>
               </div>

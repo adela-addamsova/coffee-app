@@ -2,15 +2,27 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { vi, type Mock } from "vitest";
 import CategoryPageLayout from "@/pages/eshop/pages/CategoryPageLayout";
+import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../../../test-i18n";
 
-function renderCategoryPageLayout(route = "/category/light") {
+async function renderCategoryPageLayout(route = "/category/light") {
+  const i18n = await createTestI18n();
+
   return render(
-    <MemoryRouter initialEntries={[route]}>
-      <Routes>
-        <Route path="/category/:category" element={<CategoryPageLayout />} />
-        <Route path="/category" element={<CategoryPageLayout />} />
-      </Routes>
-    </MemoryRouter>,
+    <I18nextProvider i18n={i18n}>
+      <CartProvider>
+        <MemoryRouter initialEntries={[route]}>
+          <Routes>
+            <Route
+              path="/category/:category"
+              element={<CategoryPageLayout />}
+            />
+            <Route path="/category" element={<CategoryPageLayout />} />
+          </Routes>
+        </MemoryRouter>
+      </CartProvider>
+    </I18nextProvider>,
   );
 }
 
@@ -46,9 +58,9 @@ describe("CategoryPageLayout - Unit Tests", () => {
   });
 
   test("renders loading, then products for valid category", async () => {
-    renderCategoryPageLayout("/category/light");
+    await renderCategoryPageLayout("/category/light");
 
-    expect(screen.getByText(/loading products/i)).toBeInTheDocument();
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
 
     for (const product of mockProducts) {
       await waitFor(() => {
@@ -61,7 +73,7 @@ describe("CategoryPageLayout - Unit Tests", () => {
     ).toBeInTheDocument();
 
     expect(fetch).toHaveBeenCalledWith(
-      expect.stringMatching(/^http.*\/products\/light$/),
+      "http://localhost:5000/api/products/light",
     );
   });
 
@@ -84,7 +96,7 @@ describe("CategoryPageLayout - Unit Tests", () => {
       }),
     );
 
-    renderCategoryPageLayout("/category");
+    await renderCategoryPageLayout("/category");
 
     expect(screen.getByText(/loading products/i)).toBeInTheDocument();
 
@@ -98,13 +110,11 @@ describe("CategoryPageLayout - Unit Tests", () => {
       screen.getByRole("heading", { name: /all products/i }),
     ).toBeInTheDocument();
 
-    expect(fetch).toHaveBeenCalledWith(
-      expect.stringMatching(/^http.*\/products/),
-    );
+    expect(fetch).toHaveBeenCalledWith("http://localhost:5000/api/products");
   });
 
-  test("shows error for invalid category param", () => {
-    renderCategoryPageLayout("/category/invalid");
+  test("shows error for invalid category param", async () => {
+    await renderCategoryPageLayout("/category/invalid");
 
     expect(screen.getByText(/category not found/i)).toBeInTheDocument();
     expect(screen.getByText(/invalid/i)).toBeInTheDocument();
@@ -115,7 +125,7 @@ describe("CategoryPageLayout - Unit Tests", () => {
       Promise.reject(new Error("fail")),
     );
 
-    renderCategoryPageLayout("/category/light");
+    await renderCategoryPageLayout("/category/light");
 
     await waitFor(() => {
       expect(screen.getByText(/failed to load products/i)).toBeInTheDocument();
@@ -123,14 +133,14 @@ describe("CategoryPageLayout - Unit Tests", () => {
   });
 
   test("shows no products message if empty list returned", async () => {
-    (fetch as jest.Mock).mockImplementationOnce(() =>
+    (fetch as Mock).mockImplementationOnce(() =>
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve([]),
       }),
     );
 
-    renderCategoryPageLayout("/category/light");
+    await renderCategoryPageLayout("/category/light");
 
     await waitFor(() => {
       expect(screen.getByText(/no products found/i)).toBeInTheDocument();
@@ -142,9 +152,9 @@ describe("CategoryPageLayout - Unit Tests", () => {
       Promise.resolve({ ok: false }),
     );
 
-    renderCategoryPageLayout("/category");
+    await renderCategoryPageLayout("/category");
 
-    expect(screen.getByText(/loading products/i)).toBeInTheDocument();
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText(/failed to load products/i)).toBeInTheDocument();

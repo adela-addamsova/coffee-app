@@ -109,6 +109,10 @@ export default function CartStepThree(): JSX.Element {
 
         setOrderId(data.orderId);
         localStorage.setItem("lastOrderId", data.orderId.toString());
+        localStorage.setItem(
+          "paymentMethod",
+          orderPayload.payment_method.toString(),
+        );
       };
 
       /**
@@ -140,23 +144,19 @@ export default function CartStepThree(): JSX.Element {
     }
   };
 
-  {
-    /* Spinner with message */
-  }
+  /* Spinner with message */
   if (isProcessing) {
     return (
       <CartLayout step="payment">
         <div className="spinner-box">
-          <div className="spinner"></div>
+          <div className="spinner" data-testid="spinner"></div>
           <p className="spinner-text">{processingMessage}</p>
         </div>
       </CartLayout>
     );
   }
 
-  {
-    /* Payment method selector */
-  }
+  /* Payment method selector */
   return (
     <CartLayout step="payment">
       <div className="shopping-cart-content" id="delivery-form">
@@ -174,7 +174,7 @@ export default function CartStepThree(): JSX.Element {
                   checked={paymentMethod === "bank-transfer"}
                   onChange={() => handlePaymentChange("bank-transfer")}
                 />
-                <label htmlFor="bank-transfer">
+                <label htmlFor="bank-transfer" data-testid="transfer">
                   <span className="font-semibold">
                     {t("eshop-cart.ship-free")}
                   </span>{" "}
@@ -194,7 +194,7 @@ export default function CartStepThree(): JSX.Element {
                   checked={paymentMethod === "card"}
                   onChange={() => handlePaymentChange("card")}
                 />
-                <label htmlFor="card">
+                <label htmlFor="card" data-testid="card">
                   <span className="font-semibold">
                     {t("eshop-cart.ship-free")}
                   </span>{" "}
@@ -221,7 +221,7 @@ export default function CartStepThree(): JSX.Element {
                 checked={paymentMethod === "cash"}
                 onChange={() => handlePaymentChange("cash")}
               />
-              <label htmlFor="cash">
+              <label htmlFor="cash" data-testid="cash">
                 <span className="font-semibold">$2.00</span>{" "}
                 {t("eshop-cart.payment-cash")}
               </label>

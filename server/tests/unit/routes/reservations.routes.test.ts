@@ -9,9 +9,23 @@ import {
 } from "@db/reservations-db";
 
 import request from "supertest";
-import app from "@server/server";
+import express from "express";
+import reservationRouter from "@routes/reservations.routes";
+import { testPool } from "@server/tests/coffee-app-test-db";
 
 describe("Reservations API", () => {
+  let app: express.Express;
+
+  beforeEach(() => {
+    app = express();
+    app.use(express.json());
+    app.use("/api/reservations", reservationRouter(testPool));
+  });
+
+  afterAll(async () => {
+    await testPool.end();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });

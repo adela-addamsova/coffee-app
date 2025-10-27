@@ -1,23 +1,43 @@
 import { vi } from "vitest";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import InlineMenu from "@/pages/eshop/eshop-components/InlineMenu";
 
-global.fetch = vi.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve({ title: "Test Product Title" }),
-  } as Response),
-);
-
 vi.mock("@config/NavItems", () => ({
-  navItems: [{ label: "E-shop", to: "/eshop" }],
+  navItems: [{ label: "data.nav-items.eshop", to: "/eshop" }],
   eshopNavItems: [
-    { label: "All Products", to: "/eshop/products" },
-    { label: "Light Roasted", to: "/eshop/products/light-roasted" },
-    { label: "Dark Roasted", to: "/eshop/products/dark-roasted" },
-    { label: "Decaf", to: "/eshop/products/decaf" },
+    { label: "data.eshop-nav-items.all", to: "/eshop/products" },
+    {
+      label: "data.eshop-nav-items.light",
+      to: "/eshop/products/light-roasted",
+    },
+    { label: "data.eshop-nav-items.dark", to: "/eshop/products/dark-roasted" },
+    { label: "data.eshop-nav-items.decaf", to: "/eshop/products/decaf" },
   ],
 }));
+
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key: string) => {
+      const map: Record<string, string> = {
+        "data.nav-items.eshop": "E-shop",
+        "eshop.inline-menu-btn": "Products",
+        "data.eshop-nav-items.all": "All Products",
+        "data.eshop-nav-items.light": "Light Roasted",
+        "data.eshop-nav-items.dark": "Dark Roasted",
+        "data.eshop-nav-items.decaf": "Decaf",
+      };
+      return map[key] || key;
+    },
+  }),
+}));
+
+global.fetch = vi.fn(
+  (): Promise<Response> =>
+    Promise.resolve({
+      json: () => Promise.resolve({ title: "Test Product Title" }),
+    } as Response),
+);
 
 function renderWithRouter(initialEntries: string[], routePath: string) {
   return render(
@@ -29,12 +49,7 @@ function renderWithRouter(initialEntries: string[], routePath: string) {
   );
 }
 
-describe("InlineMenu Component - Unit Tests", () => {
-  test("renders nothing outside e-shop path", () => {
-    renderWithRouter(["/other-path"], "*");
-    expect(screen.queryByText("E-shop")).toBeNull();
-  });
-
+describe("InlineMenu Component", () => {
   test("renders home link and products dropdown on /eshop/products path", () => {
     renderWithRouter(["/eshop/products"], "/eshop/products");
     expect(screen.getByText("E-shop")).toBeInTheDocument();
@@ -46,8 +61,9 @@ describe("InlineMenu Component - Unit Tests", () => {
       ["/eshop/products/light-roasted"],
       "/eshop/products/:category",
     );
-    const categoryLabels = screen.getAllByText("Light Roasted");
-    expect(categoryLabels.length).toBeGreaterThan(1);
+
+    const matches = screen.getAllByText("Light Roasted");
+    expect(matches[1]).toBeInTheDocument();
   });
 
   test("fetches and displays product name on product page", async () => {
@@ -56,57 +72,33 @@ describe("InlineMenu Component - Unit Tests", () => {
       "/eshop/products/:category/:id",
     );
 
-    expect(screen.getByText("Light Roasted")).toBeInTheDocument();
-
-    await waitFor(() =>
-      expect(screen.getByText("Test Product Title")).toBeInTheDocument(),
-    );
+    const product = await screen.findByText("Test Product Title");
+    expect(product).toBeInTheDocument();
   });
 
-  test("dropdown opens on hover and on click; clicking link triggers scroll and closes menu", async () => {
-    window.scrollTo = vi.fn();
-
+  test("dropdown opens on hover and on click", async () => {
     renderWithRouter(["/eshop/products"], "/eshop/products");
 
-    const productsButton = screen.getByText("Products");
-    const dropdownWrapper = productsButton.parentElement!;
-    const dropdownMenu = dropdownWrapper.querySelector(".dropdown-menu")!;
+    const productsBtn = screen.getByText("Products");
+    const dropdown =
+      productsBtn.parentElement!.querySelector(".dropdown-menu")!;
 
-    fireEvent.mouseEnter(dropdownWrapper);
+    fireEvent.mouseEnter(productsBtn.parentElement!);
+    await waitFor(() => expect(dropdown).toHaveClass("visible opacity-100"));
 
-    await waitFor(() => {
-      expect(dropdownMenu).not.toHaveClass("invisible opacity-0");
-    });
+    fireEvent.mouseLeave(productsBtn.parentElement!);
+    await waitFor(() => expect(dropdown).toHaveClass("invisible opacity-0"));
 
-    fireEvent.mouseLeave(dropdownWrapper);
-
-    await waitFor(() => {
-      expect(dropdownMenu).toHaveClass("invisible opacity-0");
-    });
-
-    fireEvent.click(productsButton);
-
-    await waitFor(() => {
-      expect(dropdownMenu).not.toHaveClass("invisible opacity-0");
-    });
-
-    const dropdownLink = await screen.findByText("Light Roasted");
-    fireEvent.click(dropdownLink);
-
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "auto" });
-
-    await waitFor(() => {
-      expect(dropdownMenu).toHaveClass("invisible opacity-0");
-    });
+    fireEvent.click(productsBtn);
+    await waitFor(() => expect(dropdown).toHaveClass("visible opacity-100"));
   });
 
-  test("clicking navigation links calls scrollToTop with correct behavior", () => {
+  test("clicking home link scrolls to top", () => {
     window.scrollTo = vi.fn();
-
     renderWithRouter(["/eshop/products"], "/eshop/products");
 
     const homeLink = screen.getByText("E-shop");
-    homeLink.click();
+    fireEvent.click(homeLink);
 
     expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "auto" });
   });

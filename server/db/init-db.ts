@@ -1,6 +1,6 @@
-import pool from "./coffee-app-db";
+import type { Pool } from "pg";
 
-export async function initializeReservations(): Promise<void> {
+export async function initializeReservations(pool: Pool): Promise<void> {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS reservations (
       id SERIAL PRIMARY KEY,
@@ -14,7 +14,7 @@ export async function initializeReservations(): Promise<void> {
   `);
 }
 
-export async function initializeProducts(): Promise<void> {
+export async function initializeProducts(pool: Pool): Promise<void> {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS products (
       id SERIAL PRIMARY KEY,
@@ -35,7 +35,7 @@ export async function initializeProducts(): Promise<void> {
   `);
 }
 
-export async function initializeSubscribers(): Promise<void> {
+export async function initializeSubscribers(pool: Pool): Promise<void> {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS newsletter_subscribers (
       id SERIAL PRIMARY KEY,
@@ -48,7 +48,7 @@ export async function initializeSubscribers(): Promise<void> {
   `);
 }
 
-export async function initializeOrders(): Promise<void> {
+export async function initializeOrders(pool: Pool): Promise<void> {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS orders (
       id SERIAL PRIMARY KEY,
@@ -69,7 +69,7 @@ export async function initializeOrders(): Promise<void> {
   `);
 }
 
-export async function initializeOrderItems(): Promise<void> {
+export async function initializeOrderItems(pool: Pool): Promise<void> {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS order_items (
       id SERIAL PRIMARY KEY,
@@ -81,10 +81,10 @@ export async function initializeOrderItems(): Promise<void> {
   `);
 }
 
-export default async function initializeDatabase(): Promise<void> {
-  await initializeReservations();
-  await initializeProducts();
-  await initializeSubscribers();
-  await initializeOrders();
-  await initializeOrderItems();
+export async function initializeDatabase(pool: Pool): Promise<void> {
+  await initializeReservations(pool);
+  await initializeProducts(pool);
+  await initializeSubscribers(pool);
+  await initializeOrders(pool);
+  await initializeOrderItems(pool);
 }

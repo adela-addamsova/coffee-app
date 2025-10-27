@@ -31,7 +31,7 @@ export default function MockPaymentForm({
   };
 
   return (
-    <div className="payment-form">
+    <div className="payment-form" data-testid="payment-form">
       <div className="payment-form-img">
         <img src={creditCard} alt="Credit card" />
       </div>

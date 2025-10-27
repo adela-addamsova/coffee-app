@@ -1,4 +1,5 @@
 import { query } from "./coffee-app-db";
+import type { Pool } from "pg";
 
 /**
  * Full product record from the database
@@ -36,6 +37,7 @@ export type ProductPreview = Pick<
  */
 export async function getLatestProducts(
   limit: number,
+  poolInstance?: Pool,
 ): Promise<ProductPreview[]> {
   return query<ProductPreview>(
     `
@@ -47,6 +49,7 @@ export async function getLatestProducts(
     LIMIT $1
     `,
     [limit],
+    poolInstance,
   );
 }
 
@@ -55,7 +58,9 @@ export async function getLatestProducts(
  *
  * @returns An array of all product previews
  */
-export async function getAllProducts(): Promise<ProductPreview[]> {
+export async function getAllProducts(
+  poolInstance?: Pool,
+): Promise<ProductPreview[]> {
   return query<ProductPreview>(
     `
     SELECT id, title, category, price, image_url, weight, stock
@@ -64,6 +69,8 @@ export async function getAllProducts(): Promise<ProductPreview[]> {
       AND stock > 0
     ORDER BY created_at DESC
     `,
+    [],
+    poolInstance,
   );
 }
 
@@ -75,6 +82,7 @@ export async function getAllProducts(): Promise<ProductPreview[]> {
  */
 export async function getProductsByCategory(
   category: string,
+  poolInstance?: Pool,
 ): Promise<ProductPreview[]> {
   return query<ProductPreview>(
     `
@@ -84,6 +92,7 @@ export async function getProductsByCategory(
     ORDER BY created_at DESC
     `,
     [category],
+    poolInstance,
   );
 }
 
@@ -97,6 +106,7 @@ export async function getProductsByCategory(
 export async function getProductById(
   id: number,
   category: string,
+  poolInstance?: Pool,
 ): Promise<Product | undefined> {
   const result = await query<Product>(
     `
@@ -105,6 +115,7 @@ export async function getProductById(
     WHERE deleted_at IS NULL AND stock > 0 AND id = $1 AND category = $2
     `,
     [id, category],
+    poolInstance,
   );
   return result[0];
 }

@@ -5,11 +5,12 @@ import {
 } from "../db/reservations-db";
 import { reservationSchema } from "../../shared/ReservationFormValidationSchema";
 import { z } from "zod";
+import { Pool } from "pg";
 
 /**
  * Creates and returns a router that handles reservation-related API endpoints
  */
-export default function reservationRouter() {
+export default function reservationRouter(poolInstance?: Pool) {
   const router = Router();
 
   type ReservationBody = z.infer<typeof reservationSchema>;
@@ -20,7 +21,7 @@ export default function reservationRouter() {
    */
   router.get("/", async (req: Request, res: Response) => {
     try {
-      const reservations = await getAllReservations();
+      const reservations = await getAllReservations(poolInstance);
       res.json(reservations);
     } catch (_err) {
       res.status(500).json({ message: "Failed to fetch reservations" });
@@ -37,12 +38,9 @@ export default function reservationRouter() {
       req: Request<Record<string, never>, unknown, ReservationBody>,
       res: Response,
     ) => {
-      console.log("Incoming reservation request:", req.body);
-
       const result = reservationSchema.safeParse(req.body);
 
       if (!result.success) {
-        console.log("Validation failed:", result.error.format());
         return res.status(400).json({
           message: "Validation failed",
           errors: result.error.format(),
@@ -50,7 +48,6 @@ export default function reservationRouter() {
       }
 
       const { name, email, datetime, guests } = result.data;
-      console.log("Validated reservation:", { name, email, datetime, guests });
 
       try {
         const success = await createReservationIfAvailable(
@@ -58,20 +55,17 @@ export default function reservationRouter() {
           email,
           datetime,
           guests,
+          poolInstance,
         );
-        console.log("Reservation creation result:", success);
 
         if (!success) {
-          console.log("Reservation rejected: time slot full or unavailable");
           return res
             .status(400)
             .json({ message: "Time slot already booked out" });
         }
 
-        console.log("Reservation successful");
         res.json({ message: "Reservation successful" });
       } catch (err) {
-        console.error("Reservation error:", err);
         res.status(500).json({ message: "Server error" });
       }
     },

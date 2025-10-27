@@ -4,8 +4,15 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Header from "@components/Header";
 import * as navigationFunctions from "@/utils/navigationFunctions";
+import { createTestI18n } from "../test-i18n";
+import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 describe("Header - Unit Tests", () => {
+  beforeAll(async () => {
+    i18n = await createTestI18n();
+  });
   beforeEach(() => {
     window.scrollY = 0;
 
@@ -15,9 +22,11 @@ describe("Header - Unit Tests", () => {
     );
 
     render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>,
+      <CartProvider>
+        <MemoryRouter>
+          <Header />
+        </MemoryRouter>
+      </CartProvider>,
     );
   });
 
@@ -114,14 +123,16 @@ describe("Header - Unit Tests", () => {
 describe("Header - Integration Tests", () => {
   function renderWithRoutes(initialRoute = "/") {
     return render(
-      <MemoryRouter initialEntries={[initialRoute]}>
-        <Header />
-        <Routes>
-          <Route path="/" element={<div>Home Page</div>} />
-          <Route path="/reservation" element={<div>Reservation Page</div>} />
-          <Route path="/e-shop" element={<div>E-shop Page</div>} />
-        </Routes>
-      </MemoryRouter>,
+      <CartProvider>
+        <MemoryRouter initialEntries={[initialRoute]}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<div>Home Page</div>} />
+            <Route path="/reservation" element={<div>Reservation Page</div>} />
+            <Route path="/e-shop" element={<div>E-shop Page</div>} />
+          </Routes>
+        </MemoryRouter>
+      </CartProvider>,
     );
   }
 

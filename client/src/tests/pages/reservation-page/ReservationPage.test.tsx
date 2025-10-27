@@ -1,13 +1,24 @@
 import ReservationPage from "@/pages/reservation-page/ReservationPage";
 import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { CartProvider } from "@/pages/eshop/pages/cart/CartContext";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../../test-i18n";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 describe("ReservationPage - Unit Tests", () => {
-  test("renders all sections", () => {
+  test("renders all sections", async () => {
+    i18n = await createTestI18n();
+
     render(
-      <MemoryRouter>
-        <ReservationPage />
-      </MemoryRouter>,
+      <I18nextProvider i18n={i18n}>
+        <CartProvider>
+          <MemoryRouter>
+            <ReservationPage />
+          </MemoryRouter>
+        </CartProvider>
+      </I18nextProvider>,
     );
 
     const sectionsByTestID = [

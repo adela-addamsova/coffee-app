@@ -151,6 +151,7 @@ export default function ReservationForm(): JSX.Element {
                   id="guests"
                   name="guests"
                   type="number"
+                  data-testid="guests-input"
                   min={1}
                   max={remainingSeats || MAX_CAPACITY}
                   value={form.guests}

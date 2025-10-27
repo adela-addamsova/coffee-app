@@ -5,30 +5,28 @@ import {
 import { render, screen, fireEvent } from "@testing-library/react";
 import ReservationForm from "@/pages/reservation-page/ReservationForm";
 import { useReservationForm } from "@/hooks/useReservationForm";
-import { vi } from "vitest";
+import { vi, type Mock } from "vitest";
+import { I18nextProvider } from "react-i18next";
+import { createTestI18n } from "../../test-i18n";
+
+let i18n: Awaited<ReturnType<typeof createTestI18n>>;
 
 vi.mock("@/hooks/useReservationForm");
-
 const mockedUseReservationForm = useReservationForm as unknown as jest.Mock;
 
 const baseMockReturnValue = {
   selectedDate: new Date(),
   setSelectedDate: vi.fn(),
-  availableTimes: [] as { iso: string; label: string; remaining: number }[],
-  selectedTime: null as string | null,
+  availableTimes: [],
+  selectedTime: null,
   setSelectedTime: vi.fn(),
-  form: {
-    name: "",
-    email: "",
-    phone: "",
-    guests: 1,
-  },
-  errors: {} as Record<string, string>,
+  form: { name: "", email: "", phone: "", guests: 1 },
+  errors: {},
   setErrors: vi.fn(),
   message: "",
   errorMessage: "",
   loading: false,
-  remainingSeats: null as number | null,
+  remainingSeats: null,
   setRemainingSeats: vi.fn(),
   handleInputChange: vi.fn(),
   handleSubmit: vi.fn((e) => e.preventDefault()),
@@ -36,45 +34,64 @@ const baseMockReturnValue = {
   MAX_CAPACITY: 10,
 };
 
-beforeEach(() => {
+const renderForm = () =>
+  render(
+    <I18nextProvider i18n={i18n}>
+      <ReservationForm />
+    </I18nextProvider>,
+  );
+
+const withMockedForm = (overrides = {}) =>
+  mockedUseReservationForm.mockReturnValueOnce({
+    ...baseMockReturnValue,
+    ...overrides,
+  });
+
+beforeEach(async () => {
+  global.fetch = vi.fn() as Mock;
+  i18n = await createTestI18n();
   mockedUseReservationForm.mockReturnValue({ ...baseMockReturnValue });
 });
 
-describe("getOpeningHours - Unit Tests", () => {
+describe("getOpeningHours", () => {
   test("returns 6–17 for weekdays", () => {
-    const date = new Date("2025-08-06"); // Wednesday
-    expect(getOpeningHours(date)).toEqual({ start: 6, end: 17 });
+    expect(getOpeningHours(new Date("2025-08-06"))).toEqual({
+      start: 6,
+      end: 17,
+    });
   });
 
   test("returns 7–17 for weekends", () => {
-    const date = new Date("2025-08-03"); // Sunday
-    expect(getOpeningHours(date)).toEqual({ start: 7, end: 17 });
+    expect(getOpeningHours(new Date("2025-08-03"))).toEqual({
+      start: 7,
+      end: 17,
+    });
   });
 });
 
-describe("generateTimeSlots - Unit Tests", () => {
+describe("generateTimeSlots", () => {
   test("returns correct slots with no reservations", () => {
-    const date = new Date("2025-08-06T00:00:00");
-    const result = generateTimeSlots(date, [], 10);
+    const result = generateTimeSlots(new Date("2025-08-06"), [], 10);
     expect(result.length).toBeGreaterThan(0);
-    expect(result[0]).toHaveProperty("label");
-    expect(result[0]).toHaveProperty("iso");
-    expect(result[0]).toHaveProperty("remaining");
+    expect(result[0]).toMatchObject({
+      label: expect.any(String),
+      iso: expect.any(String),
+      remaining: expect.any(Number),
+    });
   });
 
   test("excludes fully booked slots", () => {
-    const date = new Date("2025-08-06T00:00:00");
     const reservations = [
       { datetime: new Date("2025-08-06T09:00:00").toISOString(), guests: 10 },
     ];
-    const result = generateTimeSlots(date, reservations, 10);
+    const result = generateTimeSlots(new Date("2025-08-06"), reservations, 10);
     expect(result.find((slot) => slot.label === "09:00")).toBeUndefined();
   });
 });
 
-describe("ReservationForm - Unit Tests", () => {
+describe("ReservationForm", () => {
   test("renders all fields", () => {
-    render(<ReservationForm />);
+    renderForm();
     expect(screen.getByLabelText(/Your Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Your E-mail/i)).toBeInTheDocument();
     expect(
@@ -84,162 +101,85 @@ describe("ReservationForm - Unit Tests", () => {
 
   test("submits the form when clicked", () => {
     const handleSubmit = vi.fn((e) => e.preventDefault());
-
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      handleSubmit,
-    });
-
-    render(<ReservationForm />);
-    const button = screen.getByRole("button", { name: /make a reservation/i });
-    fireEvent.click(button);
+    withMockedForm({ handleSubmit });
+    renderForm();
+    fireEvent.click(
+      screen.getByRole("button", { name: /make a reservation/i }),
+    );
     expect(handleSubmit).toHaveBeenCalled();
   });
 
-  test("shows validation error if provided by hook", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      errors: { name: "Name is required" },
+  test.each([
+    ["name", /name is required/i],
+    ["email", /invalid email address/i],
+    ["date", /please select a date/i],
+    ["time", /please select a time/i],
+    ["datetime", /please select date and time/i],
+    ["guests", /guest count is required/i],
+  ])("shows %s error when passed in", (field, message) => {
+    withMockedForm({
+      errors: { [field]: message.source },
+      availableTimes: [
+        { iso: "2025-08-07T18:00:00", label: "6:00 PM", remaining: 3 },
+      ],
+      selectedTime: "2025-08-07T18:00:00",
     });
-
-    render(<ReservationForm />);
-    expect(screen.getByText(/name is required/i)).toBeInTheDocument();
-  });
-
-  test("shows email error when passed in", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      errors: { email: "Invalid email address" },
-    });
-
-    render(<ReservationForm />);
-    expect(screen.getByText(/invalid email address/i)).toBeInTheDocument();
-  });
-
-  test("shows date error when passed in", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      errors: { date: "Please select a date" },
-    });
-
-    render(<ReservationForm />);
-    expect(screen.getByText(/please select a date/i)).toBeInTheDocument();
+    renderForm();
+    expect(screen.getByText(message)).toBeInTheDocument();
   });
 
   test("renders calendar", () => {
-    render(<ReservationForm />);
-    const calendarElement = document.querySelector(".react-calendar");
-    expect(calendarElement).toBeInTheDocument();
+    renderForm();
+    expect(document.querySelector(".react-calendar")).toBeInTheDocument();
   });
 
   test("renders time select when availableTimes are provided", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
+    withMockedForm({
       availableTimes: [
         { iso: "2025-08-07T18:00:00", label: "6:00 PM", remaining: 3 },
       ],
     });
-
-    render(<ReservationForm />);
+    renderForm();
     expect(screen.getByRole("combobox")).toBeInTheDocument();
     expect(screen.getByText(/6:00 PM \(3 seats left\)/i)).toBeInTheDocument();
   });
 
-  test("shows time error when passed in", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      errors: { time: "Please select a time" },
-      availableTimes: [
-        { iso: "2025-08-07T18:00:00", label: "6:00 PM", remaining: 3 },
-      ],
-    });
-
-    render(<ReservationForm />);
-    expect(screen.getByText(/please select a time/i)).toBeInTheDocument();
-  });
-
-  test("shows datetime error when passed in", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      errors: { datetime: "Please select date and time" },
-      availableTimes: [
-        { iso: "2025-08-07T18:00:00", label: "6:00 PM", remaining: 3 },
-      ],
-    });
-
-    render(<ReservationForm />);
-    expect(
-      screen.getByText(/please select date and time/i),
-    ).toBeInTheDocument();
-  });
-
   test("renders guest input only when selectedTime is set", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
+    withMockedForm({
+      selectedTime: "2025-08-07T18:00:00",
       availableTimes: [
         { iso: "2025-08-07T18:00:00", label: "6:00 PM", remaining: 3 },
       ],
-      selectedTime: "2025-08-07T18:00:00",
-      form: { ...baseMockReturnValue.form, guests: 2 },
     });
-
-    render(<ReservationForm />);
+    renderForm();
     expect(screen.getByLabelText(/guests/i)).toBeInTheDocument();
   });
 
   test("does not render guest input when selectedTime is null", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      selectedTime: null,
-    });
-
-    render(<ReservationForm />);
+    withMockedForm({ selectedTime: null });
+    renderForm();
     expect(screen.queryByLabelText(/guests/i)).not.toBeInTheDocument();
   });
 
-  test("shows guest input error if provided", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      errors: { guests: "Guest count is required" },
-      availableTimes: [
-        { iso: "2025-08-07T18:00:00", label: "6:00 PM", remaining: 3 },
-      ],
-      selectedTime: "2025-08-07T18:00:00",
-    });
-
-    render(<ReservationForm />);
-    expect(screen.getByText(/guest count is required/i)).toBeInTheDocument();
-  });
-
   test("shows success message when reservation is completed", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
+    withMockedForm({
       message: "Reservation has been created successfully. Thank you!",
     });
-
-    render(<ReservationForm />);
+    renderForm();
     expect(
       screen.getByText(/reservation has been created successfully/i),
     ).toBeInTheDocument();
   });
 
   test("shows error message when reservation fails", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      errorMessage: "Server error",
-    });
-
-    render(<ReservationForm />);
+    withMockedForm({ errorMessage: "Server error" });
+    renderForm();
     expect(screen.getByText(/server error/i)).toBeInTheDocument();
   });
 
   test("disables submit button and shows loading text when loading is true", () => {
-    mockedUseReservationForm.mockReturnValueOnce({
-      ...baseMockReturnValue,
-      loading: true,
-    });
-
-    render(<ReservationForm />);
+    withMockedForm({ loading: true });
+    renderForm();
     const button = screen.getByRole("button", { name: /submitting/i });
     expect(button).toBeDisabled();
   });

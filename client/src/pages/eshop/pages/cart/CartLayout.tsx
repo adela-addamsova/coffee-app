@@ -34,8 +34,11 @@ export default function CartLayout({
           {step !== "summary" && (
             <div className="cart-menu-container">
               <div className="cart-menu-line"></div>
-              <div className="cart-menu-line-progress" data-step={step}></div>
-
+              <div
+                className="cart-menu-line-progress"
+                data-step={step}
+                data-testid="cart-progress"
+              ></div>
               <div className="cart-menu">
                 {steps.map((s, index) => {
                   const isActive =

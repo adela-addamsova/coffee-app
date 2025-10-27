@@ -1,4 +1,5 @@
 import pool from "./coffee-app-db";
+import type { Pool } from "pg";
 
 /**
  * Single item in an order
@@ -29,11 +30,16 @@ export interface OrderData {
 /**
  * Creates a new order and its items within a database transaction
  * @param order - Order data
+ * @param poolInstance - Optional custom pool (for testing)
  * @returns - Generated order ID
- * @throws Error if stock is insufficient or a database operation fails
  */
-export async function createOrder(order: OrderData): Promise<number> {
-  const client = await pool.connect();
+export async function createOrder(
+  order: OrderData,
+  poolInstance?: Pool,
+): Promise<number> {
+  const activePool = poolInstance ?? pool;
+  const client = await activePool.connect();
+
   try {
     await client.query("BEGIN");
 
@@ -78,7 +84,7 @@ export async function createOrder(order: OrderData): Promise<number> {
       await client.query(
         `
         INSERT INTO order_items (order_id, product_id, quantity, price)
-        VALUES ($1, $2, $3, $4)
+        VALUES ($1, $2, $3, $4);
         `,
         [orderId, item.product_id, item.quantity, item.price],
       );
