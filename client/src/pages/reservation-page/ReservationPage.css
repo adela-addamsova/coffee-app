@@ -59,7 +59,7 @@
     @apply w-[90%] flex flex-col mb-3 lg:w-[80%] 2xl:w-[70%] 3xl:w-[50%];
 }
 
-.reservation-form .form-group input {
+.reservation-form input {
     @apply p-2 border border-solid border-black;
 }
 
@@ -67,16 +67,24 @@
     @apply flex flex-col justify-between sm:flex-row;
 }
 
-.reservation-form .guest-input label {
-    @apply mr-1;   
-}
-
-.reservation-form select, .reservation-form input {
-    @apply border border-solid border-black rounded-none; 
+.reservation-form .guests-container label {
+    @apply mr-1 text-nowrap;   
 }
 
 .reservation-form .time-select {
-    @apply w-full p-2 my-6 font-slab sm:my-0;
+    @apply w-full p-2 my-6 font-slab sm:my-0 border border-solid border-black;
+}
+
+.guests-container {
+    @apply flex items-center gap-2;
+}
+
+.guest-select {
+    @apply p-2 font-slab w-full;
+}
+
+option {
+    @apply hover:bg-[#867A6E]!
 }
 
 .reservation-form .submit-button {

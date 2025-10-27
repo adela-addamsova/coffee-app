@@ -1,8 +1,9 @@
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { ChangeEvent, JSX } from "react";
+import React, { JSX } from "react";
 import { useReservationForm } from "@/hooks/useReservationForm";
 import { useTranslation } from "react-i18next";
+import { Select } from "@headlessui/react";
 
 /**
  * ReservationForm
@@ -32,6 +33,7 @@ export default function ReservationForm(): JSX.Element {
     fetchReservations,
     MAX_CAPACITY,
     loadingReservation,
+    setGuests,
   } = useReservationForm();
 
   const { t } = useTranslation();
@@ -112,13 +114,13 @@ export default function ReservationForm(): JSX.Element {
         {/* Time and guests */}
         {availableTimes.length > 0 && (
           <div className="form-group row-group">
-            {/* Time select */}
-            <div className="input-column">
-              <select
-                aria-label="Select time"
-                value={selectedTime || ""}
-                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                  setSelectedTime(e.target.value);
+            <div className="w-[50%]">
+              <Select
+                name="time"
+                id="time-select"
+                value={selectedTime ?? ""}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setSelectedTime(e.target.value || null);
                   setErrors((prev) => ({
                     ...prev,
                     time: undefined,
@@ -134,7 +136,8 @@ export default function ReservationForm(): JSX.Element {
                     {t("reservation.form-seats-left")})
                   </option>
                 ))}
-              </select>
+              </Select>
+
               {errors.time && (
                 <div className="field-error-message">{errors.time}</div>
               )}
@@ -143,20 +146,29 @@ export default function ReservationForm(): JSX.Element {
               )}
             </div>
 
-            {/* Guest input */}
+            {/* Guests Popover */}
             {selectedTime && (
-              <div className="input-column flex items-center gap-2">
-                <label htmlFor="guests">{t("reservation.form-seats")}</label>
-                <input
-                  id="guests"
+              <div className="guests-container">
+                <label htmlFor="guests-select">
+                  {t("reservation.form-seats")}
+                </label>
+                <Select
                   name="guests"
-                  type="number"
-                  data-testid="guests-input"
-                  min={1}
-                  max={remainingSeats || MAX_CAPACITY}
+                  id="guests-select"
                   value={form.guests}
-                  onChange={handleInputChange}
-                />
+                  onChange={(value) => setGuests(Number(value))}
+                  className="w-full p-2 border-2 border-[#867A6E] font-slab text-left"
+                >
+                  {Array.from(
+                    { length: remainingSeats || MAX_CAPACITY },
+                    (_, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        {i + 1}
+                      </option>
+                    ),
+                  )}
+                </Select>
+
                 {errors.guests && (
                   <div className="field-error-message">{errors.guests}</div>
                 )}

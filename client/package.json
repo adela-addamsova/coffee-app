@@ -13,6 +13,7 @@
     "test-coverage": "npx vitest run --coverage"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
     "@tailwindcss/postcss": "^4.1.10",
     "@tailwindcss/vite": "^4.1.8",
     "aos": "^2.3.4",

@@ -68,6 +68,7 @@ export function useReservationForm(): {
   selectedTime: string | null;
   setSelectedTime: React.Dispatch<React.SetStateAction<string | null>>;
   form: FormState;
+  setForm: React.Dispatch<React.SetStateAction<FormState>>;
   errors: Errors;
   setErrors: React.Dispatch<React.SetStateAction<Errors>>;
   message: string;
@@ -81,6 +82,7 @@ export function useReservationForm(): {
   ) => void;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
   fetchReservations: (date: Date) => Promise<void>;
+  setGuests: (guests: number) => void;
   MAX_CAPACITY: number;
 } {
   const API_URL = import.meta.env.VITE_API_URL as string;
@@ -111,6 +113,11 @@ export function useReservationForm(): {
     setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
+  const setGuests = (guests: number) => {
+    setForm((prev) => ({ ...prev, guests }));
+    setErrors((prev) => ({ ...prev, guests: undefined }));
+  };
+
   const fetchReservations = async (date: Date) => {
     setLoadingReservation(true);
     try {
@@ -130,9 +137,10 @@ export function useReservationForm(): {
 
       const slots = generateTimeSlots(date, normalized);
       setAvailableTimes(slots);
-      setLoadingReservation(false);
     } catch (_err) {
-      // eslint-disable no-empty
+      // ignore
+    } finally {
+      setLoadingReservation(false);
     }
   };
 
@@ -221,6 +229,7 @@ export function useReservationForm(): {
     selectedTime,
     setSelectedTime,
     form,
+    setForm,
     errors,
     setErrors,
     message,
@@ -231,6 +240,7 @@ export function useReservationForm(): {
     handleInputChange,
     handleSubmit,
     fetchReservations,
+    setGuests,
     MAX_CAPACITY,
     loadingReservation,
   };
