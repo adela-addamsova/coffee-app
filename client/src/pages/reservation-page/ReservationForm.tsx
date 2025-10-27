@@ -1,9 +1,9 @@
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import React, { JSX } from "react";
+import { JSX } from "react";
 import { useReservationForm } from "@/hooks/useReservationForm";
 import { useTranslation } from "react-i18next";
-import { Select } from "@headlessui/react";
+import Select from "react-select";
 
 /**
  * ReservationForm
@@ -43,6 +43,19 @@ export default function ReservationForm(): JSX.Element {
     en: "en-US",
     cs: "cs-CZ",
   };
+
+  const timeOptions = availableTimes.map((slot) => ({
+    value: slot.iso,
+    label: `${slot.label} (${slot.remaining} ${t("reservation.form-seats-left")})`,
+  }));
+
+  const guestOptions = Array.from(
+    { length: remainingSeats || MAX_CAPACITY },
+    (_, i) => ({
+      value: i + 1,
+      label: `${i + 1}`,
+    }),
+  );
 
   return (
     <div className="reservation-form-container">
@@ -114,29 +127,28 @@ export default function ReservationForm(): JSX.Element {
         {/* Time and guests */}
         {availableTimes.length > 0 && (
           <div className="form-group row-group">
-            <div className="w-[50%]">
+            {/* Time Select */}
+            <div className="time-select">
               <Select
-                name="time"
-                id="time-select"
-                value={selectedTime ?? ""}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                  setSelectedTime(e.target.value || null);
-                  setErrors((prev) => ({
-                    ...prev,
-                    time: undefined,
-                    datetime: undefined,
-                  }));
+                options={timeOptions}
+                value={
+                  timeOptions.find((opt) => opt.value === selectedTime) || null
+                }
+                onChange={(selected) => {
+                  if (
+                    selected?.value !== undefined &&
+                    selected?.value !== null
+                  ) {
+                    setSelectedTime(String(selected.value));
+                  } else {
+                    setSelectedTime(null);
+                  }
                 }}
-                className="time-select"
-              >
-                <option value="">{t("reservation.form-time")}</option>
-                {availableTimes.map((slot) => (
-                  <option key={slot.iso} value={slot.iso}>
-                    {slot.label} ({slot.remaining}{" "}
-                    {t("reservation.form-seats-left")})
-                  </option>
-                ))}
-              </Select>
+                placeholder={t("reservation.form-time")}
+                menuPortalTarget={document.body}
+                className="react-select-container"
+                classNamePrefix="custom-select"
+              />
 
               {errors.time && (
                 <div className="field-error-message">{errors.time}</div>
@@ -146,29 +158,29 @@ export default function ReservationForm(): JSX.Element {
               )}
             </div>
 
-            {/* Guests Popover */}
+            {/* Guests Select */}
             {selectedTime && (
               <div className="guests-container">
                 <label htmlFor="guests-select">
                   {t("reservation.form-seats")}
                 </label>
                 <Select
-                  name="guests"
-                  id="guests-select"
-                  value={form.guests}
-                  onChange={(value) => setGuests(Number(value))}
-                  className="w-full p-2 border-2 border-[#867A6E] font-slab text-left"
-                >
-                  {Array.from(
-                    { length: remainingSeats || MAX_CAPACITY },
-                    (_, i) => (
-                      <option key={i + 1} value={i + 1}>
-                        {i + 1}
-                      </option>
-                    ),
-                  )}
-                </Select>
-
+                  inputId="guests-select"
+                  options={guestOptions}
+                  value={
+                    guestOptions.find((opt) => opt.value === form.guests) ||
+                    null
+                  }
+                  onChange={(selected) => {
+                    if (typeof selected?.value === "number") {
+                      setGuests(selected.value);
+                    }
+                  }}
+                  placeholder={t("reservation.form-seats")}
+                  menuPortalTarget={document.body}
+                  className="react-select-container"
+                  classNamePrefix="custom-select"
+                />
                 {errors.guests && (
                   <div className="field-error-message">{errors.guests}</div>
                 )}
