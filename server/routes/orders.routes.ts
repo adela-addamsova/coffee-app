@@ -50,17 +50,18 @@ export default function ordersRouter(poolInstance?: Pool) {
       try {
         const orderId = await createOrder(orderData, poolInstance);
         res.status(201).json({ success: true, orderId });
+        return;
       } catch (err) {
         if (err instanceof ZodError) {
-          res
-            .status(400)
-            .json({
-              success: false,
-              message: "Validation failed",
-              errors: err.format(),
-            });
+          res.status(400).json({
+            success: false,
+            message: "Validation failed",
+            errors: err.format(),
+          });
+          return;
         } else {
           res.status(500).json({ success: false, message: "Server error" });
+          return;
         }
       }
     },
