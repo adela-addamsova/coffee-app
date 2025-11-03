@@ -157,7 +157,7 @@ export function useReservationForm(): {
 
     const adjustedTime = selectedTime
       ? new Date(
-          new Date(selectedTime).getTime() + 2 * 60 * 60 * 1000,
+          new Date(selectedTime).getTime() + 1 * 60 * 60 * 1000,
         ).toISOString()
       : undefined;
 
