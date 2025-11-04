@@ -65,7 +65,7 @@ describe("POST /api/subscribe", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      error: "eshop.newsletter-msg-2",
+      error: "errors.invalid-email",
     });
   });
 

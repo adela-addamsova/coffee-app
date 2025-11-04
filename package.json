@@ -8,11 +8,15 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@playwright/test": "^1.56.1",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.9.2",
     "@types/supertest": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
     "babel-jest": "^30.0.5",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
     "eslint": "^9.31.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -34,7 +38,8 @@
     "prepare": "test $HUSKY != 0 && husky install || echo 'Skipping husky install'",
     "lint:md": "markdownlint *.md",
     "test": "jest",
-    "build": "tsc -p server"
+    "build": "tsc -p server",
+    "dev:all": "concurrently --raw -k -s first -n CLIENT,SERVER \"npm run dev --prefix client\" \"cross-env NODE_ENV=test DATABASE_URL=postgres://postgres:pernicek@localhost:5432/coffee-app-test-db npm run dev --prefix server\""
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

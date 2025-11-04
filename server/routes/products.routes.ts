@@ -34,8 +34,10 @@ export default function productRouter(poolInstance?: Pool) {
     try {
       const products = await getLatestProducts(4, poolInstance);
       res.json(products);
-    } catch (_err) {
+      return;
+    } catch (err) {
       res.status(500).json({ error: "Failed to fetch products" });
+      return;
     }
   });
 

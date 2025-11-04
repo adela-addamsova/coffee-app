@@ -87,7 +87,10 @@
     "product-btn": "PŘIDAT DO KOŠÍKU",
     "inline-menu-btn": "Produkty",
     "loading-msg": "Načítání produktu...\nMůže to chvíli trvat.",
-    "loading-msg-2": "Načítání nejnovějších produktů...\nMůže to chvíli trvat."
+    "loading-msg-2": "Načítání nejnovějších produktů...\nMůže to chvíli trvat.",
+    "loading-products-msg": "Načítání produktů...",
+    "no-products-msg": "V této kategorii momentálně nejsou žádné produkty.",
+    "no-category-msg": "Tato kategorie neexistuje."
   },
   "eshop-cart": {
     "cart-head": "Nákupní košík",

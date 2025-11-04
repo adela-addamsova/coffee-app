@@ -81,8 +81,7 @@ export default function CategoryPageLayout(): JSX.Element {
   if (!validCategory) {
     return (
       <div className="subpage-error pt-[100px]">
-        <p className="font-bold">Category not found</p>
-        <p>The category "{category}" does not exist.</p>
+        <p className="font-bold">{t("eshop.no-category-msg")}</p>
       </div>
     );
   }
@@ -99,7 +98,7 @@ export default function CategoryPageLayout(): JSX.Element {
       {/* Loading / error states */}
       {(loading || error) && (
         <div className="subpage-error">
-          {loading && <p>Loading products...</p>}
+          {loading && <p>{t("eshop.loading-products-msg")}</p>}
           {error && <p className="error">{error}</p>}
         </div>
       )}
@@ -115,7 +114,7 @@ export default function CategoryPageLayout(): JSX.Element {
           </section>
         ) : (
           <div className="subpage-error">
-            <p>No products found in this category.</p>
+            <p>{t("eshop.no-products-msg")}</p>
           </div>
         ))}
     </div>

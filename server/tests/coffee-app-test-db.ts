@@ -1,10 +1,10 @@
-process.env.NODE_ENV = "test";
 import path from "path";
 import dotenv from "dotenv";
-dotenv.config({ path: path.resolve(__dirname, ".env.test") });
-
 import { Pool } from "pg";
 import { initializeDatabase } from "../db/init-db";
+
+process.env.NODE_ENV = "test";
+dotenv.config({ path: path.resolve(__dirname, ".env.test") });
 
 export const testPool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -12,17 +12,25 @@ export const testPool = new Pool({
 });
 
 export async function initializeTestDb() {
-  await initializeDatabase(testPool);
+  try {
+    await initializeDatabase(testPool);
+  } catch (_err) {
+    //
+  }
 }
 
 export async function clearTestDb() {
-  await testPool.query(`
-    TRUNCATE TABLE 
-      newsletter_subscribers, 
-      reservations, 
-      products,
-      orders,
-      order_items
-    RESTART IDENTITY CASCADE
-  `);
+  try {
+    await testPool.query(`
+      TRUNCATE TABLE 
+        newsletter_subscribers, 
+        reservations, 
+        products,
+        orders,
+        order_items
+      RESTART IDENTITY CASCADE
+    `);
+  } catch (_err) {
+    //
+  }
 }

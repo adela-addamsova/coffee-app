@@ -120,23 +120,24 @@ export default function CartStepThree(): JSX.Element {
        * Shows processing messages, submits order, clears form data, and navigates
        * to the Order Success page with slight delays for UX
        */
+      const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
       if (paymentMethod === "card") {
-        setTimeout(async () => {
-          setProcessingMessage("Processing your order...");
-          await sendOrder();
-          clearFormData();
-          setTimeout(() => {
-            setIsProcessing(false);
-            navigate(finnishUrl!);
-          }, 1500);
-        }, 1500);
+        setProcessingMessage(t("eshop-cart.payment-proccess"));
+        await delay(1500);
+        await sendOrder();
+        clearFormData();
+        setProcessingMessage(t("eshop-cart.order-proccess"));
+        await delay(1500);
+        setIsProcessing(false);
+        navigate(finnishUrl!);
       } else {
-        setTimeout(async () => {
-          await sendOrder();
-          clearFormData();
-          setIsProcessing(false);
-          navigate(finnishUrl!);
-        }, 1500);
+        setProcessingMessage(t("eshop-cart.order-proccess"));
+        await delay(1500);
+        await sendOrder();
+        clearFormData();
+        setIsProcessing(false);
+        navigate(finnishUrl!);
       }
     } catch (err: unknown) {
       console.error(err instanceof Error ? err.message : String(err));
