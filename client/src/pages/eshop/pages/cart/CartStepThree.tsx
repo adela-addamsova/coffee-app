@@ -123,14 +123,16 @@ export default function CartStepThree(): JSX.Element {
       const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
       if (paymentMethod === "card") {
-        setProcessingMessage("Processing your order...");
+        setProcessingMessage(t("eshop-cart.payment-proccess"));
         await delay(1500);
         await sendOrder();
         clearFormData();
+        setProcessingMessage(t("eshop-cart.order-proccess"));
         await delay(1500);
         setIsProcessing(false);
         navigate(finnishUrl!);
       } else {
+        setProcessingMessage(t("eshop-cart.order-proccess"));
         await delay(1500);
         await sendOrder();
         clearFormData();
