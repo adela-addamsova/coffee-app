@@ -87,7 +87,10 @@
         "product-btn": "ADD TO CART",
         "inline-menu-btn": "Products",
         "loading-msg": "Loading...\nIt may take a while.",
-        "loading-msg-2": "Loading latest products...\nIt may take a while."
+        "loading-msg-2": "Loading latest products...\nIt may take a while.",
+        "loading-products-msg": "Loading products...",
+        "no-products-msg": "No products found in this category.",
+        "no-category-msg": "Category not found."
     },
     "eshop-cart": {
         "cart-head": "Shopping Cart",
