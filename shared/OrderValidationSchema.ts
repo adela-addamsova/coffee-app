@@ -3,6 +3,7 @@ import { addressSchema } from "./AddressFormValidationSchema";
 
 export const orderItemSchema = z.object({
   product_id: z.number().int().positive(),
+  product_title: z.string(),
   quantity: z.number().int().min(1),
   price: z.number().min(0),
 });
@@ -14,4 +15,5 @@ export const orderSchema = z.object({
   items: z.array(orderItemSchema).min(1, "Order must have at least one item"),
   total_amount: z.number().min(0),
   paid: z.boolean(),
+  locale: z.enum(["en", "cs"]).optional(),
 });

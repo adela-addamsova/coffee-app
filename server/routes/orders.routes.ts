@@ -3,6 +3,11 @@ import { createOrder, OrderData } from "../db/orders-db";
 import { z, ZodError } from "zod";
 import { orderSchema } from "../../shared/OrderValidationSchema";
 import { Pool } from "pg";
+import {
+  NodemailerService,
+  SupportedLocale,
+} from "../services/NodemailerService";
+import { orderConfirmationEmail } from "../services/emailTemplates/orderConfirmation";
 
 /**
  * Orders Router
@@ -10,6 +15,7 @@ import { Pool } from "pg";
  */
 export default function ordersRouter(poolInstance?: Pool) {
   const router = Router();
+  const orderMailService = new NodemailerService();
 
   type OrderBody = z.infer<typeof orderSchema>;
 
@@ -25,6 +31,8 @@ export default function ordersRouter(poolInstance?: Pool) {
       res: Response,
     ) => {
       const parsed = orderSchema.safeParse(req.body);
+      const userLocale: SupportedLocale =
+        parsed.data?.locale === "cs" ? "cs" : "en";
 
       if (!parsed.success) {
         const errors = parsed.error.format();
@@ -49,19 +57,32 @@ export default function ordersRouter(poolInstance?: Pool) {
 
       try {
         const orderId = await createOrder(orderData, poolInstance);
+
+        const { subject, html } = orderConfirmationEmail(
+          orderData,
+          orderId,
+          userLocale,
+          (locale) => orderMailService.getSignatureHTML(locale),
+        );
+
+        await orderMailService.sendMail({
+          to: data.email,
+          subject,
+          html,
+        });
+
         res.status(201).json({ success: true, orderId });
-        return;
       } catch (err) {
         if (err instanceof ZodError) {
-          res.status(400).json({
-            success: false,
-            message: "Validation failed",
-            errors: err.format(),
-          });
-          return;
+          res
+            .status(400)
+            .json({
+              success: false,
+              message: "Validation failed",
+              errors: err.format(),
+            });
         } else {
           res.status(500).json({ success: false, message: "Server error" });
-          return;
         }
       }
     },
