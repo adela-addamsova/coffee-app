@@ -154,6 +154,7 @@ export function useReservationForm(): {
     e.preventDefault();
     setErrorMessage("");
     setErrors({});
+    const locale = localStorage.getItem("i18nextLng") || "en";
 
     const adjustedTime = selectedTime
       ? new Date(
@@ -166,6 +167,7 @@ export function useReservationForm(): {
       email: form.email.trim(),
       guests: Number(form.guests),
       ...(adjustedTime ? { datetime: adjustedTime } : {}),
+      locale,
     };
 
     const result = reservationSchema.safeParse(payload);
