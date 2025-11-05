@@ -49,7 +49,7 @@ export class NodemailerService implements MailService {
       <p style="font-size: 16px; line-height: 32px; font-family: Georgia, serif; margin: 0;">
         ${signature}
       </p>
-      <img src="cid:appFavicon" alt="Logo" width="36" height="36" style="margin-top:8px;">
+      <img src="cid:appFavicon" alt="Logo" width="44" height="44" style="margin-top:8px;">
     `;
   }
 
