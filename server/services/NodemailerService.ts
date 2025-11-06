@@ -54,13 +54,30 @@ export class NodemailerService implements MailService {
   /**
    * Sends an email with optional text and HTML
    */
+  // async sendMail({ to, subject, text, html }: MailData): Promise<void> {
+  //   await this.transporter.sendMail({
+  //     from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
+  //     to,
+  //     subject,
+  //     text,
+  //     html,
+  //   });
+  // }
+
   async sendMail({ to, subject, text, html }: MailData): Promise<void> {
-    await this.transporter.sendMail({
-      from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      text,
-      html,
-    });
+    try {
+      console.log("📧 Sending email to:", to);
+      const info = await this.transporter.sendMail({
+        from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
+        to,
+        subject,
+        text,
+        html,
+      });
+      console.log("✅ Email sent:", info.response);
+    } catch (err) {
+      console.error("❌ Email sending failed:", err);
+      throw err; // rethrow so the route logs it too
+    }
   }
 }
