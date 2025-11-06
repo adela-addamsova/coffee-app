@@ -48,7 +48,6 @@ export class NodemailerService implements MailService {
       <p style="font-size: 16px; line-height: 32px; font-family: Georgia, serif; margin: 0;">
         ${signature}
       </p>
-      <img src="https://coffee-app-frontend-5i2ric94e-perniceks-projects.vercel.app/favicon.ico" alt="Logo" width="44" height="44" style="margin-top:8px;">
     `;
   }
 
