@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import path from "path";
 
 export interface MailData {
   to: string;
@@ -49,67 +48,20 @@ export class NodemailerService implements MailService {
       <p style="font-size: 16px; line-height: 32px; font-family: Georgia, serif; margin: 0;">
         ${signature}
       </p>
-      <img src="cid:appFavicon" alt="Logo" width="44" height="44" style="margin-top:8px;">
+      <img src="https://coffee-app-frontend-5i2ric94e-perniceks-projects.vercel.app/favicon.ico" alt="Logo" width="44" height="44" style="margin-top:8px;">
     `;
   }
 
   /**
    * Sends an email with optional text and HTML
    */
-  // async sendMail({ to, subject, text, html }: MailData): Promise<void> {
-  //   await this.transporter.sendMail({
-  //     from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
-  //     to,
-  //     subject,
-  //     text,
-  //     html,
-  //     attachments: [
-  //       {
-  //         filename: "favicon.ico",
-  //         path: path.join(__dirname, "../../client/public/favicon.ico"),
-  //         cid: "appFavicon",
-  //       },
-  //     ],
-  //   });
-  // }
-
   async sendMail({ to, subject, text, html }: MailData): Promise<void> {
-    try {
-      console.log("📧 Attempting to send email...");
-      console.log("🔐 EMAIL_USER:", !!process.env.EMAIL_USER);
-      console.log("🔐 EMAIL_PASS:", !!process.env.EMAIL_PASS);
-      console.log("📨 To:", to);
-      console.log("📨 Subject:", subject);
-
-      const attachmentPath = path.join(
-        __dirname,
-        "../../client/public/favicon.ico",
-      );
-      console.log("📎 Attachment path:", attachmentPath);
-
-      const mailOptions = {
-        from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
-        to,
-        subject,
-        text,
-        html,
-        attachments: [
-          {
-            filename: "favicon.ico",
-            path: attachmentPath,
-            cid: "appFavicon",
-          },
-        ],
-      };
-
-      const info = await this.transporter.sendMail(mailOptions);
-      console.log("✅ Email sent:", info.response);
-    } catch (err) {
-      console.error(
-        "❌ Failed to send email:",
-        err instanceof Error ? err.message : err,
-      );
-      throw err;
-    }
+    await this.transporter.sendMail({
+      from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      text,
+      html,
+    });
   }
 }
