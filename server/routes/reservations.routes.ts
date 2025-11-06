@@ -10,6 +10,7 @@ import {
   NodemailerService,
   SupportedLocale,
 } from "../services/NodemailerService";
+import { reservationConfirmationEmail } from "../services/emailTemplates/reservationConfirmation";
 
 /**
  * Creates and returns a router that handles reservation-related API endpoints
@@ -36,6 +37,7 @@ export default function reservationRouter(poolInstance?: Pool) {
   /**
    * POST /api/reservations/reserve
    * Validates input with Zod and creates a reservation if capacity allows
+   * Sends a confirmation email
    */
   router.post(
     "/reserve",
@@ -71,56 +73,15 @@ export default function reservationRouter(poolInstance?: Pool) {
             .json({ message: "Time slot already booked out" });
         }
 
-        const reservationTexts = {
-          en: {
-            subject: "Reservation Confirmation",
-            text: "Your reservation is confirmed. Thank you for choosing us – we're looking forward to your visit.",
-            summary: "Reservation Summary",
-            summaryTime: "Date and time:",
-            summarySeats: "Guests:",
-          },
-          cs: {
-            subject: "Potvrzení rezervace",
-            text: "Povrzujeme Vaši rezervaci. Děkujeme, že jste si nás vybrali – těšíme se na Vaši návštěvu.",
-            summary: "Shrnutí rezervace",
-            summaryTime: "Datum a čas:",
-            summarySeats: "Počet hostů:",
-          },
-        };
-
-        const formattedDate = new Intl.DateTimeFormat(
-          userLocale === "cs" ? "cs-CZ" : "en-GB",
-          {
-            dateStyle: "long",
-            timeStyle: "short",
-          },
-        ).format(new Date(result.data.datetime));
-
-        const html = `
-          <table width="100%" cellpadding="0" cellspacing="0" style="background-color: white; padding: 24px;">
-              <tr>
-                <td>
-                  <p style="font-size: 16px; font-family: Georgia, serif; margin:0 0 32px 0; line-height: 32px;">
-                    ${reservationTexts[userLocale].text}
-                  </p>
-                  <h4 style="font-size: 20px; font-family: Georgia, serif; margin:0 0 4px 0; line-height: 32px;">
-                    ${reservationTexts[userLocale].summary}
-                  </h4>
-                  <p style="font-size: 16px; line-height: 32px; font-family: Georgia, serif; margin: 0 0 0 20px;">
-                    <strong>${reservationTexts[userLocale].summaryTime}</strong> ${formattedDate}
-                  </p>
-                  <p style="font-size: 16px; line-height: 32px; font-family: Georgia, serif; margin: 0 0 24px 20px;">
-                    <strong>${reservationTexts[userLocale].summarySeats}</strong> ${result.data.guests}
-                  </p>
-                  ${reservationMailService.getSignatureHTML(userLocale)}
-                </td>
-              </tr>
-            </table>
-      `;
+        const { subject, html } = reservationConfirmationEmail(
+          { name, email, datetime, guests },
+          userLocale,
+          (locale) => reservationMailService.getSignatureHTML(locale),
+        );
 
         await reservationMailService.sendMail({
           to: email,
-          subject: reservationTexts[userLocale].subject,
+          subject,
           html,
         });
 

@@ -9,6 +9,7 @@ import {
   NodemailerService,
   SupportedLocale,
 } from "../services/NodemailerService";
+import { subscriptionConfirmationEmail } from "../services/emailTemplates/subscriptionConfirmation";
 
 export default function newsletterRouter(poolInstance?: Pool) {
   const router = Router();
@@ -17,6 +18,7 @@ export default function newsletterRouter(poolInstance?: Pool) {
   /**
    * POST /api/subscribe
    * Validates input with Zod and inserts a subscriber
+   * Sends a subscribtion confirmation email
    *
    * @param req - Express Request object containing email in the body
    * @param res - Express Response object used to send the result
@@ -49,43 +51,19 @@ export default function newsletterRouter(poolInstance?: Pool) {
         poolInstance,
       );
 
-      const newsletterTexts = {
-        en: {
-          subject: "Morning Mist Coffee Newsletter",
-          heading: "Welcome to the Morning Mist Coffee Newsletter!",
-          body: "Thank you for subscribing to our newsletter! We’ll be sending you updates, special offers, and the latest news.",
-        },
-        cs: {
-          subject: "Morning Mist Coffee Newsletter",
-          heading: "Vítejte v newsletteru Morning Mist Coffee!",
-          body: "Děkujeme, že jste se přihlásili k odběru našeho newsletteru! Budeme vám zasílat novinky, speciální nabídky a aktuální informace.",
-        },
-      };
-
-      const html = `
-       <table width="100%" cellpadding="0" cellspacing="0" style="background-color: white; padding: 24px;">
-          <tr>
-            <td>
-              <h4 style="font-size: 32px; font-family: Georgia, serif; margin:0 0 24px 0; line-height: 40px;">
-                ${newsletterTexts[userLocale].heading}
-              </h4>
-              <p style="font-size: 16px; line-height: 32px; font-family: Georgia, serif; margin: 0 0 24px 0;">
-                ${newsletterTexts[userLocale].body}
-              </p>
-              ${newsletterMailService.getSignatureHTML(userLocale)}
-            </td>
-          </tr>
-        </table>
-      `;
+      const { subject, html } = subscriptionConfirmationEmail(
+        userLocale,
+        (locale) => newsletterMailService.getSignatureHTML(locale),
+      );
 
       await newsletterMailService.sendMail({
         to: email,
-        subject: newsletterTexts[userLocale].subject,
+        subject,
         html,
       });
 
       return res.status(201).json({
-        message: "Subscription successful",
+        message: "Subscribtion successful",
         id: result.id,
       });
     } catch (_err) {

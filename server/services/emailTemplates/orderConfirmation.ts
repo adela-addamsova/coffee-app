@@ -1,14 +1,13 @@
 import { OrderData } from "../../db/orders-db";
 import { SupportedLocale } from "../NodemailerService";
 
-// We only need a function type to generate signature
-type SignatureGenerator = (locale: SupportedLocale) => string;
+type Signature = (locale: SupportedLocale) => string;
 
 export function orderConfirmationEmail(
   orderData: OrderData,
   orderId: number,
   userLocale: SupportedLocale,
-  getSignatureHTML: SignatureGenerator, // <- pass the service's function
+  getSignatureHTML: Signature,
 ): { subject: string; html: string } {
   const texts = {
     en: {
@@ -115,7 +114,6 @@ export function orderConfirmationEmail(
                   </tr>
                 </table>
 
-                <!-- Include the signature from NodemailerService -->
                 ${getSignatureHTML(userLocale)}
               </td>
             </tr>

@@ -23,6 +23,7 @@ export default function ordersRouter(poolInstance?: Pool) {
    * @route POST /api/orders/order
    * Validates incoming order data, creates a new order record in the database,
    * and returns the generated order ID
+   * Sends an order confirmation email
    */
   router.post(
     "/order",
@@ -74,13 +75,11 @@ export default function ordersRouter(poolInstance?: Pool) {
         res.status(201).json({ success: true, orderId });
       } catch (err) {
         if (err instanceof ZodError) {
-          res
-            .status(400)
-            .json({
-              success: false,
-              message: "Validation failed",
-              errors: err.format(),
-            });
+          res.status(400).json({
+            success: false,
+            message: "Validation failed",
+            errors: err.format(),
+          });
         } else {
           res.status(500).json({ success: false, message: "Server error" });
         }
