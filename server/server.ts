@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 import reservationRouter from "./routes/reservations.routes";
 import productRouter from "./routes/products.routes";
-import newsletterRouter from "./routes/subscribtion.routes";
+import newsletterRouter from "./routes/subscription.routes";
 import ordersRouter from "./routes/orders.routes";
 
 const envFile =

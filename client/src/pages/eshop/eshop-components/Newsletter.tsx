@@ -29,6 +29,8 @@ export default function NewsletterSection(): JSX.Element {
     setStatus(null);
     setValidationError("");
 
+    const locale = localStorage.getItem("i18nextLng") || "en";
+
     const result = newsletterSchema.safeParse({ email });
     if (!result.success) {
       setStatus("validationError");
@@ -42,7 +44,7 @@ export default function NewsletterSection(): JSX.Element {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
 
       if (response.ok) {

@@ -6,7 +6,7 @@ jest.mock("@db/newsletter-db", () => ({
 import request from "supertest";
 import express from "express";
 
-import newsletterRouter from "@routes/subscribtion.routes";
+import newsletterRouter from "@routes/subscription.routes";
 import {
   insertNewsletterSubscriber,
   isEmailSubscribed,

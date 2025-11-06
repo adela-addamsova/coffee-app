@@ -5,13 +5,20 @@ import {
 } from "../db/newsletter-db";
 import { newsletterSchema } from "../../shared/NewsletterValidationSchema";
 import { Pool } from "pg";
+import {
+  NodemailerService,
+  SupportedLocale,
+} from "../services/NodemailerService";
+import { subscriptionConfirmationEmail } from "../services/emailTemplates/subscriptionConfirmation";
 
 export default function newsletterRouter(poolInstance?: Pool) {
   const router = Router();
+  const newsletterMailService = new NodemailerService();
 
   /**
    * POST /api/subscribe
    * Validates input with Zod and inserts a subscriber
+   * Sends a subscribtion confirmation email
    *
    * @param req - Express Request object containing email in the body
    * @param res - Express Response object used to send the result
@@ -26,8 +33,9 @@ export default function newsletterRouter(poolInstance?: Pool) {
         .json({ error: parseResult.error.errors[0].message });
     }
 
-    const { email } = parseResult.data;
+    const { email, locale } = parseResult.data;
     const ip_address = req.ip;
+    const userLocale: SupportedLocale = locale === "cs" ? "cs" : "en";
 
     try {
       const alreadySubscribed = await isEmailSubscribed(email, poolInstance);
@@ -43,8 +51,19 @@ export default function newsletterRouter(poolInstance?: Pool) {
         poolInstance,
       );
 
+      const { subject, html } = subscriptionConfirmationEmail(
+        userLocale,
+        (locale) => newsletterMailService.getSignatureHTML(locale),
+      );
+
+      await newsletterMailService.sendMail({
+        to: email,
+        subject,
+        html,
+      });
+
       return res.status(201).json({
-        message: "Subscription successful",
+        message: "Subscribtion successful",
         id: result.id,
       });
     } catch (_err) {

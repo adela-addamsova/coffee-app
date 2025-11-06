@@ -30,6 +30,7 @@ export default function CartStepThree(): JSX.Element {
   const [processingMessage, setProcessingMessage] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const locale = localStorage.getItem("i18nextLng") || "en";
 
   const deliveryUrl = eshopNavItems.find(
     (item) => item.label === "data.eshop-nav-items.delivery",
@@ -85,11 +86,13 @@ export default function CartStepThree(): JSX.Element {
         payment_method: paymentMethod,
         items: cart.map((item) => ({
           product_id: item.id,
+          product_title: item.title,
           quantity: item.quantity,
           price: Number(item.price),
         })),
         total_amount: cart.reduce((sum, i) => sum + i.price * i.quantity, 0),
         paid: paymentMethod === "card",
+        locale,
       };
 
       /**

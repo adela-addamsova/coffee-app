@@ -6,6 +6,7 @@ import type { Pool } from "pg";
  */
 export interface OrderItem {
   product_id: number;
+  product_title: string;
   quantity: number;
   price: number;
 }

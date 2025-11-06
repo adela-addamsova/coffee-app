@@ -13,6 +13,7 @@ const baseReservationSchema = z.object({
   guests: z.number().min(1, "At least one guest required"),
   datetime: z.string().datetime(),
   remainingSeats: z.number().optional(),
+  locale: z.enum(["en", "cs"]).optional(),
 });
 
 export const reservationSchema = baseReservationSchema.superRefine(
