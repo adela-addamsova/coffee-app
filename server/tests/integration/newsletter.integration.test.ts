@@ -2,7 +2,7 @@ import request from "supertest";
 import express from "express";
 import { testPool, initializeTestDb, clearTestDb } from "../coffee-app-test-db";
 import type { NewsletterSubscriber } from "@db/newsletter-db";
-import newsletterRouter from "@routes/subscribtion.routes";
+import newsletterRouter from "@routes/subscription.routes";
 
 let app: express.Express;
 
