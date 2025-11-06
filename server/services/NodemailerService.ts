@@ -26,10 +26,19 @@ export class NodemailerService implements MailService {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
+      },
+      logger: true,
+      debug: true,
+      connectionTimeout: 10000,
+      socketTimeout: 10000,
+      tls: {
+        rejectUnauthorized: false,
       },
     });
   }
