@@ -6,6 +6,7 @@ import reservationRouter from "./routes/reservations.routes";
 import productRouter from "./routes/products.routes";
 import newsletterRouter from "./routes/subscription.routes";
 import ordersRouter from "./routes/orders.routes";
+import emailRouter from "./routes/email.routes";
 
 const envFile =
   process.env.NODE_ENV === "production"
@@ -45,6 +46,7 @@ app.use("/api/reservations", reservationRouter());
 app.use("/api/products", productRouter());
 app.use("/api/subscribe", newsletterRouter());
 app.use("/api/orders", ordersRouter());
+app.use("/auth", emailRouter);
 
 function startServer() {
   const PORT = process.env.PORT || 5000;
