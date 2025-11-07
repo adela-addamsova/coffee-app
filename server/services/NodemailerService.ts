@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import { google } from "googleapis";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export interface MailData {
   to: string;
@@ -15,6 +17,7 @@ export type SupportedLocale = "en" | "cs";
 
 export class NodemailerService implements MailService {
   private transporter;
+  private oauth2Client;
 
   private signatures: Record<
     SupportedLocale,
@@ -25,29 +28,32 @@ export class NodemailerService implements MailService {
   };
 
   constructor() {
-    this.transporter = nodemailer.createTransport({
+    this.oauth2Client = new google.auth.OAuth2(
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
+      "https://developers.google.com/oauthplayground",
+    );
+
+    this.oauth2Client.setCredentials({
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+    });
+
+    const transportOptions = new SMTPTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
       auth: {
+        type: "OAuth2",
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-      logger: true,
-      debug: true,
-      connectionTimeout: 10000,
-      socketTimeout: 10000,
-      tls: {
-        rejectUnauthorized: false,
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
       },
     });
+
+    this.transporter = nodemailer.createTransport(transportOptions);
   }
 
-  /**
-   * Returns HTML for the email signature, and embedded favicon
-   * - locale: pick 'en' or 'cs' signature
-   * - Uses CID to embed the image directly in the email
-   */
   public getSignatureHTML(locale: SupportedLocale = "en"): string {
     const { closing, signature } = this.signatures[locale];
     return `
@@ -57,25 +63,12 @@ export class NodemailerService implements MailService {
       <p style="font-size: 16px; line-height: 32px; font-family: Georgia, serif; margin: 0;">
         ${signature}
       </p>
+      <img src="https://coffee-app-frontend-chi.vercel.app/favicon.ico" alt="Logo" width="44" height="44" style="margin-top:8px;">
     `;
   }
 
-  /**
-   * Sends an email with optional text and HTML
-   */
-  // async sendMail({ to, subject, text, html }: MailData): Promise<void> {
-  //   await this.transporter.sendMail({
-  //     from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
-  //     to,
-  //     subject,
-  //     text,
-  //     html,
-  //   });
-  // }
-
   async sendMail({ to, subject, text, html }: MailData): Promise<void> {
     try {
-      console.log("📧 Sending email to:", to);
       const info = await this.transporter.sendMail({
         from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
         to,
@@ -83,10 +76,9 @@ export class NodemailerService implements MailService {
         text,
         html,
       });
-      console.log("✅ Email sent:", info.response);
     } catch (err) {
       console.error("❌ Email sending failed:", err);
-      throw err; // rethrow so the route logs it too
+      throw err;
     }
   }
 }
