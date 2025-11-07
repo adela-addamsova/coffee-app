@@ -1,6 +1,4 @@
-import nodemailer from "nodemailer";
 import { google } from "googleapis";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export interface MailData {
   to: string;
@@ -15,10 +13,8 @@ export interface MailService {
 
 export type SupportedLocale = "en" | "cs";
 
-export class NodemailerService implements MailService {
-  private transporter;
-  private oauth2Client;
-
+export class GmailService implements MailService {
+  private gmail;
   private signatures: Record<
     SupportedLocale,
     { closing: string; signature: string }
@@ -28,30 +24,17 @@ export class NodemailerService implements MailService {
   };
 
   constructor() {
-    this.oauth2Client = new google.auth.OAuth2(
+    const oauth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
       "https://developers.google.com/oauthplayground",
     );
 
-    this.oauth2Client.setCredentials({
+    oauth2Client.setCredentials({
       refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
     });
 
-    const transportOptions = new SMTPTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
-        type: "OAuth2",
-        user: process.env.EMAIL_USER,
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-      },
-    });
-
-    this.transporter = nodemailer.createTransport(transportOptions);
+    this.gmail = google.gmail({ version: "v1", auth: oauth2Client });
   }
 
   public getSignatureHTML(locale: SupportedLocale = "en"): string {
@@ -69,13 +52,30 @@ export class NodemailerService implements MailService {
 
   async sendMail({ to, subject, text, html }: MailData): Promise<void> {
     try {
-      const info = await this.transporter.sendMail({
-        from: `"Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
-        to,
-        subject,
-        text,
-        html,
+      const messageParts = [
+        `From: "Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
+        `To: ${to}`,
+        `Subject: ${subject}`,
+        "MIME-Version: 1.0",
+        `Content-Type: text/html; charset=UTF-8`,
+        "",
+        html || text || "",
+      ];
+
+      const message = Buffer.from(messageParts.join("\r\n"))
+        .toString("base64")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+
+      await this.gmail.users.messages.send({
+        userId: "me",
+        requestBody: {
+          raw: message,
+        },
       });
+
+      console.log(`✅ Email sent to ${to}`);
     } catch (err) {
       console.error("❌ Email sending failed:", err);
       throw err;

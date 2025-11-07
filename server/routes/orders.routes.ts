@@ -3,10 +3,7 @@ import { createOrder, OrderData } from "../db/orders-db";
 import { z, ZodError } from "zod";
 import { orderSchema } from "../../shared/OrderValidationSchema";
 import { Pool } from "pg";
-import {
-  NodemailerService,
-  SupportedLocale,
-} from "../services/NodemailerService";
+import { GmailService, SupportedLocale } from "../services/NodemailerService";
 import { orderConfirmationEmail } from "../services/emailTemplates/orderConfirmation";
 
 /**
@@ -15,7 +12,7 @@ import { orderConfirmationEmail } from "../services/emailTemplates/orderConfirma
  */
 export default function ordersRouter(poolInstance?: Pool) {
   const router = Router();
-  const orderMailService = new NodemailerService();
+  const orderMailService = new GmailService();
 
   type OrderBody = z.infer<typeof orderSchema>;
 

@@ -6,10 +6,7 @@ import {
 import { reservationSchema } from "../../shared/ReservationFormValidationSchema";
 import { z } from "zod";
 import { Pool } from "pg";
-import {
-  NodemailerService,
-  SupportedLocale,
-} from "../services/NodemailerService";
+import { GmailService, SupportedLocale } from "../services/NodemailerService";
 import { reservationConfirmationEmail } from "../services/emailTemplates/reservationConfirmation";
 
 /**
@@ -17,7 +14,7 @@ import { reservationConfirmationEmail } from "../services/emailTemplates/reserva
  */
 export default function reservationRouter(poolInstance?: Pool) {
   const router = Router();
-  const reservationMailService = new NodemailerService();
+  const reservationMailService = new GmailService();
 
   type ReservationBody = z.infer<typeof reservationSchema>;
 

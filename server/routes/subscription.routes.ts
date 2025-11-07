@@ -5,15 +5,12 @@ import {
 } from "../db/newsletter-db";
 import { newsletterSchema } from "../../shared/NewsletterValidationSchema";
 import { Pool } from "pg";
-import {
-  NodemailerService,
-  SupportedLocale,
-} from "../services/NodemailerService";
+import { GmailService, SupportedLocale } from "../services/NodemailerService";
 import { subscriptionConfirmationEmail } from "../services/emailTemplates/subscriptionConfirmation";
 
 export default function newsletterRouter(poolInstance?: Pool) {
   const router = Router();
-  const newsletterMailService = new NodemailerService();
+  const newsletterMailService = new GmailService();
 
   /**
    * POST /api/subscribe
