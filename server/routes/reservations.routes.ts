@@ -83,9 +83,8 @@ export default function reservationRouter(poolInstance?: Pool) {
         });
 
         return res.json({ message: "Reservation successful" });
-      } catch (err) {
-        console.error("❌ Reservation failed:", err);
-        res.status(500).json({ message: "Server error" });
+      } catch (_err) {
+        //
       }
     },
   );
