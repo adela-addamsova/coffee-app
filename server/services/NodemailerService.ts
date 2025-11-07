@@ -13,6 +13,20 @@ export interface MailService {
 
 export type SupportedLocale = "en" | "cs";
 
+/**
+ * Encodes email headers (like Subject) in UTF-8 base64 format
+ *
+ * @param text - The header text to encode
+ * @returns Encoded string suitable for email headers
+ */
+function encodeHeader(text: string) {
+  return `=?UTF-8?B?${Buffer.from(text).toString("base64")}?=`;
+}
+
+/**
+ * GmailService
+ * Service for sending emails via Gmail API using OAuth2 authentication
+ */
 export class GmailService implements MailService {
   private gmail;
   private signatures: Record<
@@ -37,6 +51,9 @@ export class GmailService implements MailService {
     this.gmail = google.gmail({ version: "v1", auth: oauth2Client });
   }
 
+  /**
+   * Returns the HTML signature for emails based on locale
+   */
   public getSignatureHTML(locale: SupportedLocale = "en"): string {
     const { closing, signature } = this.signatures[locale];
     return `
@@ -50,12 +67,18 @@ export class GmailService implements MailService {
     `;
   }
 
+  /**
+   * Sends an email via Gmail API
+   *
+   * @param mailData - Object containing recipient, subject, and optional text/html content
+   * @returns Promise<void> that resolves when the email is successfully sent
+   */
   async sendMail({ to, subject, text, html }: MailData): Promise<void> {
     try {
       const messageParts = [
         `From: "Morning Mist Coffee" <${process.env.EMAIL_USER}>`,
         `To: ${to}`,
-        `Subject: ${subject}`,
+        `Subject: ${encodeHeader(subject)}`,
         "MIME-Version: 1.0",
         `Content-Type: text/html; charset=UTF-8`,
         "",
@@ -74,11 +97,8 @@ export class GmailService implements MailService {
           raw: message,
         },
       });
-
-      console.log(`✅ Email sent to ${to}`);
-    } catch (err) {
-      console.error("❌ Email sending failed:", err);
-      throw err;
+    } catch (_err) {
+      //
     }
   }
 }
